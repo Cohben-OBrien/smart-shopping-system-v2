@@ -35,13 +35,13 @@ public class MainFrame extends JFrame {
     // Method to call the ReportGenerator and show the sales report
     public void generateSalesReport() {
         // Call the report generator to display the sales report
-        ReportGenerator.showSalesReport(manager.getSales(), reportArea);
+        smartshop.ReportGenerator.showSalesReport(manager.getSales(), reportArea);
     }
 
     // Method to call the ReportGenerator and show the low stock report
     public void generateLowStockReport() {
         // Call the report generator to display the low stock report
-        ReportGenerator.showLowStockReport(manager.getProducts(), 5, reportArea);
+        smartshop.ReportGenerator.showLowStockReport(manager.getProducts(), 5, reportArea);
     }
 }
 

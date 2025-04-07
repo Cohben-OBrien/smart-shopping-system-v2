@@ -1,12 +1,14 @@
 package smartshop;
 
 public class Product {
+    private int id;
     private String name;   // Name of the product
     private float price;   // Price in pounds
     private int quantity;  // Quantity available in stock
 
     // Constructor
-    public Product(String name, float price, int quantity) {
+    public Product(int id,String name, float price, int quantity) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
