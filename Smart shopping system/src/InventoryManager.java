@@ -1,9 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class InventoryManager {
+
     private List<smartshop.Product> products;     // List of products
     private List<smartshop.SalesRecord> sales;    // List of sales made
+=======
+    private final List<Product> products;     // List of products
+    private final List<SalesRecord> sales;    // List of sales made
+
 
     public InventoryManager() {
         products = new ArrayList<>();
