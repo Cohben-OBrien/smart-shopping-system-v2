@@ -4,80 +4,62 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="adding connect function to the data class (i know the only on function difine i just testing someing out with jira and github)">
-      <change beforePath="$PROJECT_DIR$/.idea/smart-shopping-system-programming-2-cw-2-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/smart-shopping-system-programming-2-cw-2-.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalesRecord.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/Smart shopping system.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Smart shopping system.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Data.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/MainFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/ReportGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/ReportGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/SalesRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/SalesRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/smart-shopping-system-programming-2-cw-2-/.idea/smart-shopping-system-programming-2-cw-2-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/smart-shopping-system-programming-2-cw-2-/.idea/smart-shopping-system-programming-2-cw-2-.iml" afterDir="false" />
-
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="move code files to src files">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" afterDir="false" />
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="move code files to src files" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;josecastroyupi2025&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Cohben-OBrien/smart-shopping-system-v2.git",
+    "accountId": "a990a71b-5d58-4fc7-9578-e2783e60dc7e"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2vMu7OE2yZRImm174lCwMvqbRkn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Data.executor": "Run",
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "P2CSSS-9-create-database-and-java-class-to-interact-with-it",
+    "git-widget-placeholder": "P2CSSS-2-GUI",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
+    "last_opened_file_path": "C:/Users/cohbe/OneDrive - Edge Hill University/year 1/programming 2/courrse work 1/Part 3/CW1_3_ 26069199/TodoApp",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15136719",
-    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="Data" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Data" />
-      <module name="Smart shopping system" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Data" />
-      </list>
-    </recent_temporary>
-  </component>
-
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ThinkPad/Desktop/GitHubProjects/smart-shopping-system-programming-2-cw-2-&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
-
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.153" />
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.153" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
       </set>
     </attachedChunks>
   </component>
@@ -90,12 +72,8 @@
       <option name="presentableId" value="Default" />
       <updated>1743967095181</updated>
       <workItem from="1744025728975" duration="1920000" />
-
       <workItem from="1744029646274" duration="676000" />
-      <workItem from="1744038990677" duration="5465000" />
-
-      <workItem from="1744052562241" duration="347000" />
-
+      <workItem from="1744038990677" duration="629000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -105,15 +83,7 @@
       <option name="project" value="LOCAL" />
       <updated>1744026171765</updated>
     </task>
-    <task id="LOCAL-00002" summary="adding connect function to the data class (i know the only on function difine i just testing someing out with jira and github)">
-      <option name="closed" value="true" />
-      <created>1744042549805</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1744042549805</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,7 +91,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="move code files to src files" />
-    <MESSAGE value="adding connect function to the data class (i know the only on function difine i just testing someing out with jira and github)" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding connect function to the data class (i know the only on function difine i just testing someing out with jira and github)" />
+    <option name="LAST_COMMIT_MESSAGE" value="move code files to src files" />
   </component>
 </project>
