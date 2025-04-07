@@ -1,12 +1,12 @@
 package smartshop;
 
 public class SalesRecord {
-    private Product product;  // The product being sold
+    private smartshop.Product product;  // The product being sold
     private String date;      // Date of the sale
     private int quantity;     // Quantity sold
     private float totalPrice; // Total price for the sale
 
-    public SalesRecord(Product product, String date, int quantity) {
+    public SalesRecord(smartshop.Product product, String date, int quantity) {
         this.product = product;
         this.date = date;
         this.quantity = quantity;
@@ -14,7 +14,7 @@ public class SalesRecord {
     }
 
     // Getters
-    public Product getProduct() {
+    public smartshop.Product getProduct() {
         return product;
     }
 
