@@ -29,6 +29,7 @@ public class InventoryManager {
         }
         return null;  // Not found
     }
+
     // Record a sale and update stock
     public boolean recordSale(String productName, int quantity, String date) {
         Product product = findProduct(productName);
@@ -47,5 +48,6 @@ public class InventoryManager {
 
     // Get list of sales
     public List<SalesRecord> getSales() {
-        return sales;}
+        return sales;
+    }
 }
