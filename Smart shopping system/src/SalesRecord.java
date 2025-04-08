@@ -1,20 +1,22 @@
 package smartshop;
+// Import the Product class from the same package
+import smartshop.Product;  // Add this line to import the Product class
 
+// This class represents a sales record.
 public class SalesRecord {
-    private smartshop.Product product;  // The product being sold
-    private String date;      // Date of the sale
-    private int quantity;     // Quantity sold
-    private float totalPrice; // Total price for the sale
+    private Product product;  // The product that was sold
+    private String date;      // The date of the sale
+    private int quantity;     // The quantity of the product sold
 
-    public SalesRecord(smartshop.Product product, String date, int quantity) {
+    // Constructor to initialize sales record
+    public SalesRecord(Product product, String date, int quantity) {
         this.product = product;
         this.date = date;
         this.quantity = quantity;
-        this.totalPrice = product.getPrice() * quantity;
     }
 
-    // Getters
-    public smartshop.Product getProduct() {
+    // Getters for the sales record details
+    public Product getProduct() {
         return product;
     }
 
@@ -26,11 +28,10 @@ public class SalesRecord {
         return quantity;
     }
 
-    public float getTotalPrice() {
-        return totalPrice;
+    public double getTotalPrice() {
+        return product.getPrice() * quantity;  // Calculate the total price of the sale
     }
 }
-
 
 
 

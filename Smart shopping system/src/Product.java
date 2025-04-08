@@ -1,34 +1,19 @@
 package smartshop;
 
+// This class represents each product in the inventory.
 public class Product {
-    private int id;
-    private String name;   // Name of the product
-    private float price;   // Price in pounds
-    private int quantity;  // Quantity available in stock
+    private String name;   // The name of the product
+    private float price;   // The price of the product
+    private int quantity;  // The quantity of the product in stock
 
-    // Constructor
-    public Product(int id,String name, float price, int quantity) {
-        this.id = id;
+    // Constructor to initialize product details
+    public Product(String name, float price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-    // Method to sell a product and update quantity
-    public void sell(int amount) {
-        if (this.quantity >= amount) {
-            this.quantity -= amount;
-        } else {
-            System.out.println("Not enough stock!");
-        }
-    }
-
-    // Method to restock the product
-    public void restock(int amount) {
-        this.quantity += amount;
-    }
-
-    // Getter methods
+    // Getters for the product details
     public String getName() {
         return name;
     }
@@ -39,6 +24,11 @@ public class Product {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    // Decrease the quantity when the product is sold
+    public void sell(int quantitySold) {
+        this.quantity -= quantitySold;
     }
 }
 
