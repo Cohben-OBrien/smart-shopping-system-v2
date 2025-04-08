@@ -1,5 +1,7 @@
 package smartshop;
 
+import GUI.New_Item;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -50,13 +52,18 @@ public class Main {
         // Action for the "Add Product" button
         addProductButton.addActionListener(e -> {
             // Ask the user to input product details (name, price, and quantity)
-            String name = JOptionPane.showInputDialog("Enter product name:");
+            /*String name = JOptionPane.showInputDialog("Enter product name:");
             String price = JOptionPane.showInputDialog("Enter product price:");
             String quantity = JOptionPane.showInputDialog("Enter product quantity:");
 
             // Add the product to the inventory
             manager.addProduct(new smartshop.Product(name, Float.parseFloat(price), Integer.parseInt(quantity)));
+            */
+
+            New_Item item = new New_Item();
+            item.newItem();
         });
+
 
         // Action for the "Record Sale" button
         recordSaleButton.addActionListener(e -> {
