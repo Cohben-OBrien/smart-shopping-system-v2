@@ -1,4 +1,6 @@
-/*import smartshop.Product;
+package Database;
+
+import smartshop.Product;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ public class Data {
     public static Statement cur;
 
     public static void connect() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:sqlite:Database/Shop.sqlite");
+        connection = DriverManager.getConnection("jdbc:sqlite:Smart shopping system/Database/Shop.sqlite");
         cur =  connection.createStatement();
 
     }
@@ -29,11 +31,17 @@ public class Data {
         return products;
     }
 
-    public static void main(String[] args) throws SQLException {
-        ArrayList<smartshop.Product> products = getProducts();
-        System.out.println(products.get(0).getName());
-    }
+   public void addProduct(smartshop.Product product) throws SQLException {
+        String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, product.getId());
+        ps.setString(2, product.getName());
+        ps.setFloat(3, product.getPrice());
+        ps.setInt(4, product.getQuantity());
 
+        ps.executeUpdate();
+   }
+
+   //add filter
 
 }
-*/
