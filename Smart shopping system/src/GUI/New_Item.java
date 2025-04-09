@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 
 public class New_Item {
-    public void newItem() {
+    public void newItem(smartshop.InventoryManager manager) {
         JFrame frame = new JFrame("New Item");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(null);
         frame.setSize(500, 200);
 
@@ -50,5 +50,14 @@ public class New_Item {
 
         frame.setVisible(true);
 
+        Add_item_button.addActionListener(e -> {
+            String name = Item_name_textField.getText();
+            float price = Integer.parseInt(Item_price_textField.getText());
+            int quantity = Integer.parseInt(Item_quantity_textField.getText());
+
+
+            manager.addProduct(new smartshop.Product(name, price, quantity));
+            frame.dispose();
+        });
     }
 }

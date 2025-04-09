@@ -12,7 +12,7 @@ public class Main {
     // Main method that starts the application
     public static void main(String[] args) {
         // Create the InventoryManager instance (handles business logic)
-        InventoryManager manager = new InventoryManager();
+        smartshop.InventoryManager manager = new smartshop.InventoryManager();
 
         // Add some sample products to the inventory (for testing purposes)
         manager.addProduct(new smartshop.Product("Socks", 12.0f, 24));  // Product name, price, and quantity
@@ -51,17 +51,8 @@ public class Main {
 
         // Action for the "Add Product" button
         addProductButton.addActionListener(e -> {
-            // Ask the user to input product details (name, price, and quantity)
-            /*String name = JOptionPane.showInputDialog("Enter product name:");
-            String price = JOptionPane.showInputDialog("Enter product price:");
-            String quantity = JOptionPane.showInputDialog("Enter product quantity:");
-
-            // Add the product to the inventory
-            manager.addProduct(new smartshop.Product(name, Float.parseFloat(price), Integer.parseInt(quantity)));
-            */
-
             New_Item item = new New_Item();
-            item.newItem();
+            item.newItem(manager);
         });
 
 
