@@ -51,13 +51,31 @@ public class New_Item {
         frame.setVisible(true);
 
         Add_item_button.addActionListener(e -> {
-            String name = Item_name_textField.getText();
-            float price = Integer.parseInt(Item_price_textField.getText());
-            int quantity = Integer.parseInt(Item_quantity_textField.getText());
+            String name = "";
+            float price = 0;
+            int quantity = 0;
+
+            try {
+                float item_price = Float.parseFloat(Item_price_textField.getText());
+                try {
+                    quantity = Integer.parseInt(Item_quantity_textField.getText());
+
+                    name = Item_name_textField.getText();
+                    if (!name.isEmpty()) {
+                        manager.addProduct(new smartshop.Product(name, price, quantity));
+                        frame.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please enter a name for the item");
+                    }
+
+                }catch (NumberFormatException ex){
+                    JOptionPane.showMessageDialog(null, "Invalid Quantity");
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid price");
+            }
 
 
-            manager.addProduct(new smartshop.Product(name, price, quantity));
-            frame.dispose();
-        });
+       });
     }
 }

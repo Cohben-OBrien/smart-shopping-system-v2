@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="move code files to src files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,12 +35,12 @@
     &quot;assignee&quot;: &quot;josecastroyupi2025&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Cohben-OBrien/smart-shopping-system-v2.git",
-    "accountId": "a990a71b-5d58-4fc7-9578-e2783e60dc7e"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Cohben-OBrien/smart-shopping-system-v2.git&quot;,
+    &quot;accountId&quot;: &quot;a990a71b-5d58-4fc7-9578-e2783e60dc7e&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -57,7 +57,7 @@
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "P2CSSS-2-GUI-ADD-PRODUCT-MENU-FUNCTIONS",
+    "git-widget-placeholder": "P2CSSS-12-create-add-product-gui-functionally",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/cohbe/OneDrive - Edge Hill University/year 1/programming 2/courrse work 1/Part 3/CW1_3_ 26069199/TodoApp",
     "node.js.detected.package.eslint": "true",
@@ -151,5 +151,10 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="manager.products" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
