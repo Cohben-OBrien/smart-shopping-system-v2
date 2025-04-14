@@ -1,5 +1,8 @@
 package smartshop;
 
+import Database.Data;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,5 +64,13 @@ public class InventoryManager {
             }
         }
         return lowStock;
+    }
+
+    public void loadInventory() throws SQLException {
+        products = Data.getProducts();
+    }
+
+    public int next_id() {
+        return products.getLast().getId() + 1;
     }
 }

@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="smart-shopping-system-programming-2-cw-2-" />
+    <orderEntry type="library" name="sqlite-jdbc-3.49.1.0" level="project" />
   </component>
 </module>
