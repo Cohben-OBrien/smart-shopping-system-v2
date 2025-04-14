@@ -18,7 +18,7 @@ public class InventoryManager {
     }
 
     // Add a product to the inventory
-    public void addProduct(smartshop.Product product) {
+    public static void addProduct(smartshop.Product product) {
         products.add(product); // Add product to the list of products
     }
 
