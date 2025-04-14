@@ -129,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744097654782</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="delete gui branch need to recreate">
+      <option name="closed" value="true" />
+      <created>1744106504742</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744106504742</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,7 +145,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="move code files to src files" />
-    <option name="LAST_COMMIT_MESSAGE" value="move code files to src files" />
+    <MESSAGE value="delete gui branch need to recreate" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete gui branch need to recreate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
