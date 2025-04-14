@@ -22,6 +22,8 @@ public class InventoryManager {
         products.add(product); // Add product to the list of products
     }
 
+
+
     // Record a sale (decrease stock and add to sales record)
     public boolean recordSale(String productName, int quantitySold, String date) {
         // Find the product
@@ -46,7 +48,7 @@ public class InventoryManager {
     }
 
     // Get the list of all products
-    public List<smartshop.Product> getProducts() {
+    public static List<smartshop.Product> getProducts() {
         return products;
     }
 
