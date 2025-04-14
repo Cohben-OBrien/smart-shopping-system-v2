@@ -4,19 +4,18 @@ import GUI.New_Item;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.List;
 
 // This is the main class where everything runs (both logic and GUI).
 public class Main {
 
     // Main method that starts the application
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         // Create the InventoryManager instance (handles business logic)
-        InventoryManager manager = new InventoryManager();
+        smartshop.InventoryManager manager = new smartshop.InventoryManager();
 
         // Add some sample products to the inventory (for testing purposes)
-        manager.addProduct(new smartshop.Product("Socks", 12.0f, 24));  // Product name, price, and quantity
-        manager.addProduct(new smartshop.Product("Boxers", 25.0f, 6));  // Another sample product
 
         // Set up the main application window (JFrame)
         JFrame frame = new JFrame("Smart Shop System");  // Title of the window
@@ -106,6 +105,7 @@ public class Main {
             reportArea.setText(report);
         });
 
+        manager.loadInventory();
         // Make the frame visible to the user (show the window)
         frame.setVisible(true);
     }
