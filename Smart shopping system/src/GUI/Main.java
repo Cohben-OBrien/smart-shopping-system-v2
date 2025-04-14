@@ -10,7 +10,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Smart Shopping System v1");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(600, 500); // Adjust height as needed
+            frame.setSize(800, 600); // Adjust height as needed
             frame.setLocationRelativeTo(null);
 
             Container contentPane = frame.getContentPane();
@@ -43,25 +43,6 @@ public class Main {
             buttonPanel.add(settingsButton);
 
             contentPane.add(buttonPanel, BorderLayout.CENTER);
-
-            // 3. Image Loading (under the buttons - BorderLayout.SOUTH)
-            JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            File imageFile = new File("parrot.jpg"); // Ensure "parrot.jpg" is in the correct location
-            if (imageFile.exists()) {
-                ImageIcon originalIcon = new ImageIcon("parrot.jpg");
-                Image originalImage = originalIcon.getImage();
-                int desiredWidth = 200; // Adjust as needed
-                int desiredHeight = 150; // Adjust as needed
-                Image scaledImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
-                ImageIcon scaledIcon = new ImageIcon(scaledImage);
-                JLabel imageLabel = new JLabel(scaledIcon);
-                imagePanel.add(imageLabel);
-                contentPane.add(imagePanel, BorderLayout.SOUTH);
-            } else {
-                JLabel errorLabel = new JLabel("Error: parrot.jpg not found in: " + new File(".").getAbsolutePath());
-                imagePanel.add(errorLabel);
-                contentPane.add(imagePanel, BorderLayout.SOUTH);
-            }
 
             frame.setVisible(true);
         });
