@@ -3,63 +3,61 @@ package smartshop;
 import java.util.ArrayList;
 import java.util.List;
 
-// This class manages all products and sales in the system.
 public class InventoryManager {
-    private List<smartshop.Product> products; // List to store all the products in inventory
-    private List<smartshop.SalesRecord> sales; // List to store all sales made
+    private List<Product> products;  // List to store all the products in inventory
+    private List<SalesRecord> sales; // List to store all sales made
 
-    // Constructor: initializes the lists
+    // Constructor: Initializes the product and sales lists
     public InventoryManager() {
-        products = new ArrayList<>(); // Initialize the products list
-        sales = new ArrayList<>(); // Initialize the sales list
+        products = new ArrayList<>();
+        sales = new ArrayList<>();
     }
 
-    // Add a product to the inventory
-    public void addProduct(smartshop.Product product) {
-        products.add(product); // Add product to the list of products
+    // Method to add a product to the inventory
+    public void addProduct(Product product) {
+        products.add(product);  // Add the product to the inventory
     }
 
-    // Record a sale (decrease stock and add to sales record)
+    // Method to record a sale (reduce stock and add to sales record)
     public boolean recordSale(String productName, int quantitySold, String date) {
-        // Find the product
-        smartshop.Product product = findProduct(productName);
+        Product product = findProduct(productName);  // Find the product by name
         if (product != null && product.getQuantity() >= quantitySold) {
-            // If the product is found and has enough stock, proceed with the sale
-            product.sell(quantitySold);
-            sales.add(new smartshop.SalesRecord(product, date, quantitySold));  // Add to sales records
+            product.sell(quantitySold);  // Reduce the stock of the product
+            sales.add(new SalesRecord(product, date, quantitySold));  // Record the sale
             return true;  // Sale was successful
         }
         return false;  // Sale failed (either product not found or insufficient stock)
     }
 
-    // Find a product by its name
-    public smartshop.Product findProduct(String productName) {
-        for (smartshop.Product p : products) {
+    // Method to find a product by its name
+    public Product findProduct(String productName) {
+        for (Product p : products) {
             if (p.getName().equalsIgnoreCase(productName)) {
-                return p;  // Return the found product
+                return p;  // Return the product if found
             }
         }
-        return null;  // If not found, return null
+        return null;  // Return null if product is not found
     }
 
-    // Get the list of all products
-    public List<smartshop.Product> getProducts() {
-        return products;
+    // Get a list of all products
+    public List<Product> getProducts() {
+        return products;  // Return the list of products
     }
 
-    // Get the list of all sales
-    public List<smartshop.SalesRecord> getSales() {
-        return sales;
+    // Get a list of all sales made
+    public List<SalesRecord> getSales() {
+        return sales;  // Return the list of sales records
     }
 
     // Get a list of products that are low in stock (less than 5 units)
-    public List<smartshop.Product> getLowStockProducts() {
-        List<smartshop.Product> lowStock = new ArrayList<>();
-        for (smartshop.Product p : products) {
+    public List<Product> getLowStockProducts() {
+        List<Product> lowStock = new ArrayList<>();
+        for (Product p : products) {
             if (p.getQuantity() < 5) {
                 lowStock.add(p);  // Add products with low stock to the list
             }
         }
-        return lowStock;
+        return lowStock;  // Return the list of low stock products
     }
 }
+
