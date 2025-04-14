@@ -8,7 +8,7 @@ import java.util.List;
 
 // This class manages all products and sales in the system.
 public class InventoryManager {
-    private List<smartshop.Product> products; // List to store all the products in inventory
+    private static List<smartshop.Product> products; // List to store all the products in inventory
     private List<smartshop.SalesRecord> sales; // List to store all sales made
 
     // Constructor: initializes the lists
@@ -70,7 +70,7 @@ public class InventoryManager {
         products = Data.getProducts();
     }
 
-    public int next_id() {
+    public static int next_id() {
         return products.getLast().getId() + 1;
     }
 }
