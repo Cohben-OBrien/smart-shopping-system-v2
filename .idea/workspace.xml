@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment=" P2CSSS-2 bug fixes for add product gui merge">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-20 add sale gui completed">
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744644252861</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="P2CSSS-20 add sale gui completed">
+      <option name="closed" value="true" />
+      <created>1744708207211</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744708207211</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,7 +150,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="move code files to src files" />
     <MESSAGE value=" P2CSSS-2 bug fixes for add product gui merge" />
-    <option name="LAST_COMMIT_MESSAGE" value=" P2CSSS-2 bug fixes for add product gui merge" />
+    <MESSAGE value="P2CSSS-20 add sale gui completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-20 add sale gui completed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
