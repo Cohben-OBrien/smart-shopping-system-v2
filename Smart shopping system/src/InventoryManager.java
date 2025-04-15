@@ -1,6 +1,7 @@
 package smartshop;
 
 import Database.Data;
+import Records.SalesRecord;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,12 +10,13 @@ import java.util.List;
 // This class manages all products and sales in the system.
 public class InventoryManager {
     private static List<smartshop.Product> products; // List to store all the products in inventory
-    private static List<smartshop.SalesRecord> sales; // List to store all sales made
+    private static List<SalesRecord> sales; // List to store all sales made
+
 
     // Constructor: initializes the lists
     public InventoryManager() {
         products = new ArrayList<>(); // Initialize the products list
-        sales = new ArrayList<>(); // Initialize the sales list
+        sales = new ArrayList<SalesRecord>(); // Initialize the sales list
     }
 
     // Add a product to the inventory
@@ -27,9 +29,8 @@ public class InventoryManager {
 
 
     // Record a sale (decrease stock and add to sales record)
-    public static boolean recordSale(String productName, int quantitySold, String date) {
-
-        return false;
+    public static void recordSale(Product product, String date, double sale) {
+        sales.add(new SalesRecord(product, date, sale));
     }
 
 
@@ -49,7 +50,7 @@ public class InventoryManager {
     }
 
     // Get the list of all sales
-    public List<smartshop.SalesRecord> getSales() {
+    public List<SalesRecord> getSales() {
         return sales;
     }
 

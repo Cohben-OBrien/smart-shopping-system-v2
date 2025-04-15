@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-24 add sale GUI changes">
-      <change afterPath="$PROJECT_DIR$/Smart shopping system/src/Records/ProductSale.java" afterDir="false" />
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-24 data structure for multiple products per sale">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/SalesRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/SalesRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/SalesRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Records/SalesRecord.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +113,7 @@
       <workItem from="1744709798760" duration="17000" />
       <workItem from="1744709838420" duration="42000" />
       <workItem from="1744715418797" duration="3285000" />
-      <workItem from="1744724005033" duration="3094000" />
+      <workItem from="1744724005033" duration="4361000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -157,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744718725364</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="P2CSSS-24 data structure for multiple products per sale">
+      <option name="closed" value="true" />
+      <created>1744727391509</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744727391509</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +174,8 @@
     <MESSAGE value="fixxing broken shit" />
     <MESSAGE value="added create product data base tables (wasnt ment to be working on main branch)" />
     <MESSAGE value="P2CSSS-24 add sale GUI changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-24 add sale GUI changes" />
+    <MESSAGE value="P2CSSS-24 data structure for multiple products per sale" />
+    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-24 data structure for multiple products per sale" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
