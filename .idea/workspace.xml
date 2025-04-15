@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="fixxing broken shit">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="added create product data base tables (wasnt ment to be working on main branch)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +58,7 @@
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "P2CSSS-24-add-sales-record",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
     "node.js.detected.package.eslint": "true",
@@ -113,7 +110,7 @@
       <workItem from="1744191303739" duration="1071000" />
       <workItem from="1744709798760" duration="17000" />
       <workItem from="1744709838420" duration="42000" />
-      <workItem from="1744715418797" duration="896000" />
+      <workItem from="1744715418797" duration="3228000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -139,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744652989330</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added create product data base tables (wasnt ment to be working on main branch)">
+      <option name="closed" value="true" />
+      <created>1744716670335</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744716670335</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,7 +153,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="move code files to src files" />
     <MESSAGE value="fixxing broken shit" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixxing broken shit" />
+    <MESSAGE value="added create product data base tables (wasnt ment to be working on main branch)" />
+    <option name="LAST_COMMIT_MESSAGE" value="added create product data base tables (wasnt ment to be working on main branch)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

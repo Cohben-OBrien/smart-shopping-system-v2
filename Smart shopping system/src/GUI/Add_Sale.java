@@ -1,18 +1,18 @@
 package GUI;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Add_Sale {
-    public static void Add_Sale(smartshop.InventoryManager manager) {
-        JFrame frame = new JFrame();
-        frame.setTitle("Add Sale");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    public static smartshop.Product add_product() {
+        JFrame frame = new JFrame("Add Product");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(null);
         frame.setSize(500, 250);
 
         JLabel ProductName = new JLabel("Product Name: ");
         JLabel quantity = new JLabel("Quantity sold: ");
-        JLabel Date = new JLabel("Date of Sale: ");
 
         JComboBox Product = new JComboBox();
         for (int i = 0; i < smartshop.InventoryManager.getProducts().size(); i++) {
@@ -20,9 +20,8 @@ public class Add_Sale {
         }
 
         JTextField ProductQuantity = new JTextField(15);
-        JTextField SaleDate = new JTextField(15);
 
-        JButton Add = new JButton("Add sale");
+        JButton Add = new JButton("Add product");
 
 
         ProductName.setBounds(10, 10, 100, 20);
@@ -30,9 +29,6 @@ public class Add_Sale {
 
         quantity.setBounds(10, 50, 100, 20);
         ProductQuantity.setBounds(100, 50, 300, 20);
-
-        Date.setBounds(10, 80, 250, 20);
-        SaleDate.setBounds(100, 80, 300, 20);
 
         Add.setBounds(10, 130, 100, 20);
 
@@ -42,19 +38,45 @@ public class Add_Sale {
         frame.add(quantity);
         frame.add(ProductQuantity);
 
+        frame.add(Add);
 
+        frame.setVisible(true);
+        return null;
+    }
+
+    public static void Add_Sale(smartshop.InventoryManager manager) {
+        JFrame frame = new JFrame();
+
+
+
+        frame.setTitle("Add Sale");
+        frame.setLayout(null);
+        frame.setSize(800, 800);
+
+
+        JLabel Date = new JLabel("Date of Sale: ");
+        JTextField SaleDate = new JTextField(15);
+
+        JButton add_product = new JButton("add product");
+        JButton Add = new JButton("Add sale");
+
+        add_product.setBounds(10, 720, 100, 20);
+        Date.setBounds(10, 700, 250, 20);
+        SaleDate.setBounds(100, 700, 350, 20);
+
+        frame.add(add_product);
         frame.add(Date);
         frame.add(SaleDate);
+
+        add_product.addActionListener(e -> {
+            add_product();
+        });
 
         frame.add(Add);
 
         frame.setVisible(true);
 
         Add.addActionListener(e ->{
-            String name = Product.getSelectedItem().toString();
-            boolean sale = manager.recordSale(name, Integer.parseInt(ProductQuantity.getText()), SaleDate.getText());
-            System.out.println(sale);
-            frame.dispose();
         });
 
     }
