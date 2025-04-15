@@ -31,7 +31,7 @@ public class Data {
         return products;
     }
 
-   public void addProduct(smartshop.Product product) throws SQLException {
+   public static void addProduct(smartshop.Product product) throws SQLException {
         String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, product.getId());

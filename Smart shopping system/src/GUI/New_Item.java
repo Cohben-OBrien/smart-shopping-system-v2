@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class New_Item {
     public void newItem(smartshop.InventoryManager manager) {
@@ -68,7 +69,7 @@ public class New_Item {
                         JOptionPane.showMessageDialog(null, "Please enter a name for the item");
                     }
 
-                }catch (NumberFormatException ex){
+                }catch (NumberFormatException | SQLException ex){
                     JOptionPane.showMessageDialog(null, "Invalid Quantity");
                 }
             } catch (NumberFormatException ex) {
