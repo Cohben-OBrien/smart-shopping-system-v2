@@ -52,7 +52,10 @@ public class Main {
         // Action for the "Add Product" button
         addProductButton.addActionListener(e -> {
             New_Item item = new New_Item();
-            item.newItem(manager);
+            try {
+
+                item.newItem(manager);
+            } catch (SQLException A ) {}
         });
 
 

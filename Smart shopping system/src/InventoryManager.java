@@ -18,8 +18,10 @@ public class InventoryManager {
     }
 
     // Add a product to the inventory
-    public void addProduct(smartshop.Product product) {
+    public void addProduct(smartshop.Product product) throws SQLException{
         products.add(product); // Add product to the list of products
+        Data.addProduct(product);
+
     }
 
 

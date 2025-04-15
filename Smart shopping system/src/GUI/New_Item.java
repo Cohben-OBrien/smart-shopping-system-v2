@@ -2,9 +2,10 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class New_Item {
-    public void newItem(smartshop.InventoryManager manager) {
+    public void newItem(smartshop.InventoryManager manager) throws SQLException {
         JFrame frame = new JFrame("New Item");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(null);
@@ -62,7 +63,9 @@ public class New_Item {
 
                     name = Item_name_textField.getText();
                     if (!name.isEmpty()) {
-                        manager.addProduct(new smartshop.Product(smartshop.InventoryManager.next_id(),name, price, quantity));
+                        try {
+                            manager.addProduct(new smartshop.Product(smartshop.InventoryManager.next_id(),name, price, quantity));
+                        } catch (SQLException a ) {}
                         frame.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Please enter a name for the item");
