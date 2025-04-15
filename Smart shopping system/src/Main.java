@@ -1,5 +1,6 @@
 package smartshop;
 
+import GUI.Add_Sale;
 import GUI.New_Item;
 
 import javax.swing.*;
@@ -57,18 +58,8 @@ public class Main {
 
         // Action for the "Record Sale" button
         recordSaleButton.addActionListener(e -> {
-            // Ask the user to input sale details (product name, quantity, and date)
-            String saleName = JOptionPane.showInputDialog("Enter product name for sale:");
-            String saleQty = JOptionPane.showInputDialog("Enter quantity to sell:");
-            String date = JOptionPane.showInputDialog("Enter date (dd/mm/yyyy):");
+            Add_Sale.Add_Sale(manager);
 
-            // Record the sale (check if enough stock is available)
-            boolean success = manager.recordSale(saleName, Integer.parseInt(saleQty), date);
-            if (success) {
-                JOptionPane.showMessageDialog(frame, "Sale recorded!");  // Display success message
-            } else {
-                JOptionPane.showMessageDialog(frame, "Sale failed (check stock or name).");  // Display error message
-            }
         });
 
         // Action for the "Show Sales Report" button
