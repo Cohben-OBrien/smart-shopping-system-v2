@@ -18,8 +18,9 @@ public class InventoryManager {
     }
 
     // Add a product to the inventory
-    public static void addProduct(smartshop.Product product) {
+    public static void addProduct(smartshop.Product product) throws SQLException {
         products.add(product); // Add product to the list of products
+        Data.addProduct(product);
     }
 
     // Record a sale (decrease stock and add to sales record)
