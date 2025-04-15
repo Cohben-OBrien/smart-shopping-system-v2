@@ -50,5 +50,10 @@ public class Add_Sale {
 
         frame.setVisible(true);
 
+        Add.addActionListener(e ->{
+            smartshop.InventoryManager.recordSale(ProductName.getText(), Integer.parseInt(ProductQuantity.getText()), SaleDate.getText());
+            frame.dispose();
+        });
+
     }
 }

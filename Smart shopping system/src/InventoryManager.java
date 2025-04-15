@@ -9,7 +9,7 @@ import java.util.List;
 // This class manages all products and sales in the system.
 public class InventoryManager {
     private static List<smartshop.Product> products; // List to store all the products in inventory
-    private List<smartshop.SalesRecord> sales; // List to store all sales made
+    private static List<smartshop.SalesRecord> sales; // List to store all sales made
 
     // Constructor: initializes the lists
     public InventoryManager() {
@@ -25,7 +25,7 @@ public class InventoryManager {
 
 
     // Record a sale (decrease stock and add to sales record)
-    public boolean recordSale(String productName, int quantitySold, String date) {
+    public static boolean recordSale(String productName, int quantitySold, String date) {
         // Find the product
         smartshop.Product product = findProduct(productName);
         if (product != null && product.getQuantity() >= quantitySold) {
@@ -38,7 +38,7 @@ public class InventoryManager {
     }
 
     // Find a product by its name
-    public smartshop.Product findProduct(String productName) {
+    public static smartshop.Product findProduct(String productName) {
         for (smartshop.Product p : products) {
             if (p.getName().equalsIgnoreCase(productName)) {
                 return p;  // Return the found product
