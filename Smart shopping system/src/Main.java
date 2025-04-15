@@ -2,6 +2,8 @@ package smartshop;
 
 import GUI.Add_Sale;
 import GUI.New_Item;
+import Product.Product;
+import manager.InventoryManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ public class Main {
     // Main method that starts the application
     public static void main(String[] args) throws SQLException {
         // Create the InventoryManager instance (handles business logic)
-        smartshop.InventoryManager manager = new smartshop.InventoryManager();
+        InventoryManager manager = new InventoryManager();
 
         // Add some sample products to the inventory (for testing purposes)
 
@@ -73,8 +75,8 @@ public class Main {
         lowStockButton.addActionListener(e -> {
             // Create a report for products with low stock (less than 5 units)
             String report = "---- LOW STOCK REPORT ----\n";
-            List<smartshop.Product> lowStockProducts = manager.getLowStockProducts();  // Get low stock products
-            for (smartshop.Product product : lowStockProducts) {
+            List<Product> lowStockProducts = manager.getLowStockProducts();  // Get low stock products
+            for (Product product : lowStockProducts) {
                 report += product.getName() + " → only " + product.getQuantity() + " left.\n";
             }
             // Display the low stock report in the text area

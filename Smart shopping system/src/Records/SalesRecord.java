@@ -1,22 +1,26 @@
 package Records;
 // Import the Product class from the same package
-import smartshop.Product;  // Add this line to import the Product class
+import manager.InventoryManager;
+
+import java.util.ArrayList;
 
 // This class represents a sales record.
 public class SalesRecord {
-    private Product product;  // The product that was sold
+    private ArrayList<ProductSale> products;  // The product that was sold
     private String date;      // The date of the sale
     private double total;     // The quantity of the product sold
     private int sale_ID;
 
     // Constructor to initialize sales record
 
-    public SalesRecord(Product product, String date, double total) {
-        this.product = product;
+    public SalesRecord(String date) {
         this.date = date;
-        this.total = total;
+        this.sale_ID = InventoryManager.sales_next_id();
     }
 
+    public int get_id() {
+        return this.sale_ID;
+    }
 
 }
 

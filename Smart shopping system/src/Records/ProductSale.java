@@ -1,12 +1,14 @@
 package Records;
 
+import Product.Product;
+
 public class ProductSale {
-    private smartshop.Product product;
+    private Product product;
     private int quantity;
     private double total;
     private int saleId;
 
-    public ProductSale(smartshop.Product product, int quantity) {
+    public ProductSale(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
         this.total = product.getPrice() * quantity;

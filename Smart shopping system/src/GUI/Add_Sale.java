@@ -1,15 +1,19 @@
 package GUI;
 
+import Product.Product;
 import Records.ProductSale;
+import manager.InventoryManager;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
+import java.awt.color.ProfileDataException;
 import java.util.ArrayList;
 
 public class Add_Sale {
 
     static ArrayList<ProductSale> products = new ArrayList<>();
 
-    public static void add_product(smartshop.InventoryManager manager) {
+    public static void add_product(InventoryManager manager) {
 
         JFrame frame = new JFrame("Add Product");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -20,8 +24,8 @@ public class Add_Sale {
         JLabel quantity = new JLabel("Quantity sold: ");
 
         JComboBox ProductSelect = new JComboBox();
-        for (int i = 0; i < smartshop.InventoryManager.getProducts().size(); i++) {
-            ProductSelect.addItem(smartshop.InventoryManager.getProducts().get(i).getName());
+        for (int i = 0; i < InventoryManager.getProducts().size(); i++) {
+            ProductSelect.addItem(InventoryManager.getProducts().get(i).getName());
         }
 
         JTextField ProductQuantity = new JTextField(15);
@@ -47,7 +51,7 @@ public class Add_Sale {
 
 
         Add.addActionListener(e -> {
-            smartshop.Product product = manager.findProduct(ProductSelect.getSelectedItem().toString());
+            Product product = manager.findProduct(ProductSelect.getSelectedItem().toString());
             products.add(new ProductSale(product, Integer.parseInt(ProductQuantity.getText())));
 
             frame.dispose();
@@ -59,7 +63,7 @@ public class Add_Sale {
 
     }
 
-    public static void Add_Sale(smartshop.InventoryManager manager) {
+    public static void Add_Sale(InventoryManager manager) {
         JFrame frame = new JFrame();
 
 

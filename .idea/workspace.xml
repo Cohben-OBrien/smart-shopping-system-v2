@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-24 data structure for multiple products per sale">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-24 creating local sale records">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/SalesRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Records/SalesRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Product/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Records/ProductSale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Records/ProductSale.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Records/SalesRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Records/SalesRecord.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +60,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Data.executor": "Run",
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -113,7 +117,7 @@
       <workItem from="1744709798760" duration="17000" />
       <workItem from="1744709838420" duration="42000" />
       <workItem from="1744715418797" duration="3285000" />
-      <workItem from="1744724005033" duration="4361000" />
+      <workItem from="1744724005033" duration="7867000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -163,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744727391509</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="P2CSSS-24 creating local sale records">
+      <option name="closed" value="true" />
+      <created>1744728505156</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744728505156</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,19 +187,20 @@
     <MESSAGE value="added create product data base tables (wasnt ment to be working on main branch)" />
     <MESSAGE value="P2CSSS-24 add sale GUI changes" />
     <MESSAGE value="P2CSSS-24 data structure for multiple products per sale" />
-    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-24 data structure for multiple products per sale" />
+    <MESSAGE value="P2CSSS-24 creating local sale records" />
+    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-24 creating local sale records" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java</url>
-          <line>60</line>
+          <line>63</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java</url>
-          <line>52</line>
+          <line>55</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>

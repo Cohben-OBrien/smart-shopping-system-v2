@@ -1,6 +1,8 @@
 package Database;
 
-import smartshop.Product;
+import Records.ProductSale;
+import Product.Product;
+import manager.InventoryManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,10 +17,10 @@ public class Data {
 
     }
 
-    public static ArrayList<smartshop.Product> getProducts() throws SQLException {
+    public static ArrayList<Product> getProducts() throws SQLException {
         connect();
 
-        ArrayList<smartshop.Product> products = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
 
         String query = "SELECT * FROM items";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -31,22 +33,28 @@ public class Data {
         return products;
     }
 
-   public static void addProduct(smartshop.Product product) throws SQLException {
+   public static void addProduct(Product product) throws SQLException {
         String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, product.getId());
-        ps.setString(2, product.getName());
+        ps.setString(2, product.getName().replace(" ", "_"));
         ps.setFloat(3, product.getPrice());
         ps.setInt(4, product.getQuantity());
 
         ps.executeUpdate();
 
-        String name = product.getName() + "_" + product.getId();
+        String name = product.getName().replace(" ", "_") + "_" + product.getId();
         String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_totel real)";
         PreparedStatement ps2 = connection.prepareStatement(query2);
         ps2.executeUpdate();
     }
 
+    public static void Add_Sale(ArrayList<ProductSale> Products) throws SQLException {
+        int sale_id = InventoryManager.getSales().getLast().get_id();
+
+        System.out.println("Sale_id: " + sale_id);
+
+    }
 
    //add filter
 
