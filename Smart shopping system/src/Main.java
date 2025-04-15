@@ -58,7 +58,7 @@ public class Main {
 
         // Action for the "Record Sale" button
         recordSaleButton.addActionListener(e -> {
-            Add_Sale.Add_Sale();
+            Add_Sale.Add_Sale(manager);
 
         });
 

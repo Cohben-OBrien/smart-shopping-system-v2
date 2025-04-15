@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.*;
 
 public class Add_Sale {
-    public static void Add_Sale() {
+    public static void Add_Sale(smartshop.InventoryManager manager) {
         JFrame frame = new JFrame();
         frame.setTitle("Add Sale");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +51,9 @@ public class Add_Sale {
         frame.setVisible(true);
 
         Add.addActionListener(e ->{
-            smartshop.InventoryManager.recordSale(ProductName.getText(), Integer.parseInt(ProductQuantity.getText()), SaleDate.getText());
+            String name = Product.getSelectedItem().toString();
+            boolean sale = manager.recordSale(name, Integer.parseInt(ProductQuantity.getText()), SaleDate.getText());
+            System.out.println(sale);
             frame.dispose();
         });
 
