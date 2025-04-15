@@ -18,8 +18,9 @@ public class newMain {
 
             // 1. Title Label (at the very top - NORTH)
             JLabel titleLabel = new JLabel("Smart Shopping System v1");
-            titleLabel.setFont(new Font("Roboto", Font.BOLD, 36));
+            titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titleLabel.setForeground(Color.BLUE);
             contentPane.add(titleLabel, BorderLayout.NORTH);
 
             // 2. Panel for Buttons (below the title - CENTER of a new panel)
@@ -35,11 +36,11 @@ public class newMain {
             recordSaleButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Record Sale functionality."));
             buttonPanel.add(recordSaleButton);
 
-            JButton salesReportButton = new JButton("Show Sales Report");
+            JButton salesReportButton = new JButton("Sales Report");
             salesReportButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Sales Report functionality."));
             buttonPanel.add(salesReportButton);
 
-            JButton lowStockButton = new JButton("Show Low Stock Report");
+            JButton lowStockButton = new JButton("Stock Report");
             lowStockButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Low Stock Report functionality."));
             buttonPanel.add(lowStockButton);
 
@@ -50,7 +51,7 @@ public class newMain {
             tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
             // Sample table data
-            String[] columnNames = {"Item ID", "Item Name", "Price", "Quantity"};
+            String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels"};
             Object[][] data = {
                     {"101", "Boxers", 10.00, 10},
                     {"102", "Socks", 2.00, 50},
