@@ -28,16 +28,10 @@ public class InventoryManager {
 
     // Record a sale (decrease stock and add to sales record)
     public static boolean recordSale(String productName, int quantitySold, String date) {
-        // Find the product
-        smartshop.Product product = findProduct(productName);
-        if (product != null && product.getQuantity() >= quantitySold) {
-            // If the product is found and has enough stock, proceed with the sale
-            product.sell(quantitySold);
-            sales.add(new smartshop.SalesRecord(product, date, quantitySold));  // Add to sales records
-            return true;  // Sale was successful
-        }
-        return false;  // Sale failed (either product not found or insufficient stock)
+
+        return false;
     }
+
 
     // Find a product by its name
     public static smartshop.Product findProduct(String productName) {

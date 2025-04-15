@@ -67,15 +67,6 @@ public class Main {
 
         // Action for the "Show Sales Report" button
         showSalesButton.addActionListener(e -> {
-            // Create a report for all sales made
-            String report = "---- SALES REPORT ----\n";
-            List<smartshop.SalesRecord> sales = manager.getSales();  // Get the list of sales
-            for (smartshop.SalesRecord record : sales) {
-                report += record.getDate() + " - " + record.getProduct().getName() + " - " +
-                        record.getQuantity() + " units - £" + record.getTotalPrice() + "\n";
-            }
-            // Display the sales report in the text area
-            reportArea.setText(report);
         });
 
         // Action for the "Show Low Stock Report" button

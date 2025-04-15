@@ -1,11 +1,16 @@
 package GUI;
 
+import Records.ProductSale;
+
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class Add_Sale {
 
-    public static smartshop.Product add_product() {
+    static ArrayList<ProductSale> products = new ArrayList<>();
+
+    public static void add_product(smartshop.InventoryManager manager) {
+
         JFrame frame = new JFrame("Add Product");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(null);
@@ -14,9 +19,9 @@ public class Add_Sale {
         JLabel ProductName = new JLabel("Product Name: ");
         JLabel quantity = new JLabel("Quantity sold: ");
 
-        JComboBox Product = new JComboBox();
+        JComboBox ProductSelect = new JComboBox();
         for (int i = 0; i < smartshop.InventoryManager.getProducts().size(); i++) {
-            Product.addItem(smartshop.InventoryManager.getProducts().get(i).getName());
+            ProductSelect.addItem(smartshop.InventoryManager.getProducts().get(i).getName());
         }
 
         JTextField ProductQuantity = new JTextField(15);
@@ -25,7 +30,7 @@ public class Add_Sale {
 
 
         ProductName.setBounds(10, 10, 100, 20);
-        Product.setBounds(100, 10, 300, 30);
+        ProductSelect.setBounds(100, 10, 300, 30);
 
         quantity.setBounds(10, 50, 100, 20);
         ProductQuantity.setBounds(100, 50, 300, 20);
@@ -33,19 +38,31 @@ public class Add_Sale {
         Add.setBounds(10, 130, 100, 20);
 
         frame.add(ProductName);
-        frame.add(Product);
+        frame.add(ProductSelect);
 
         frame.add(quantity);
         frame.add(ProductQuantity);
 
         frame.add(Add);
 
+
+        Add.addActionListener(e -> {
+            smartshop.Product product = manager.findProduct(ProductSelect.getSelectedItem().toString());
+            products.add(new ProductSale(product, Integer.parseInt(ProductQuantity.getText())));
+
+            frame.dispose();
+
+        });
+
         frame.setVisible(true);
-        return null;
+
+
     }
 
     public static void Add_Sale(smartshop.InventoryManager manager) {
         JFrame frame = new JFrame();
+
+
 
 
 
@@ -58,7 +75,7 @@ public class Add_Sale {
         JTextField SaleDate = new JTextField(15);
 
         JButton add_product = new JButton("add product");
-        JButton Add = new JButton("Add sale");
+        JButton Add_sale = new JButton("Add sale");
 
         add_product.setBounds(10, 720, 100, 20);
         Date.setBounds(10, 700, 250, 20);
@@ -69,14 +86,17 @@ public class Add_Sale {
         frame.add(SaleDate);
 
         add_product.addActionListener(e -> {
-            add_product();
+            System.out.println(products.size());
+            add_product(manager);
+            System.out.println(products.size());
         });
 
-        frame.add(Add);
+        frame.add(Add_sale);
 
         frame.setVisible(true);
 
-        Add.addActionListener(e ->{
+        Add_sale.addActionListener(e ->{
+
         });
 
     }
