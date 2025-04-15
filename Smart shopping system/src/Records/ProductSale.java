@@ -15,6 +15,13 @@ public class ProductSale {
         this.saleId = 1; // temp
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 
 
 

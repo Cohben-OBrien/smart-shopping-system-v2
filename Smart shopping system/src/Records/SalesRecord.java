@@ -13,15 +13,24 @@ public class SalesRecord {
 
     // Constructor to initialize sales record
 
-    public SalesRecord(String date) {
+    public SalesRecord(String date, ArrayList<ProductSale> products) {
         this.date = date;
+        this.products = products;
         this.sale_ID = InventoryManager.sales_next_id();
+    }
+
+    private void record() {
+
     }
 
     public int get_id() {
         return this.sale_ID;
     }
 
+
+    public String get_date() {
+        return this.date;
+    }
 }
 
 

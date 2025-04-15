@@ -82,6 +82,7 @@ public class Add_Sale {
         JButton Add_sale = new JButton("Add sale");
 
         add_product.setBounds(10, 720, 100, 20);
+        Add_sale.setBounds(100, 720, 100, 20);
         Date.setBounds(10, 700, 250, 20);
         SaleDate.setBounds(100, 700, 350, 20);
 
@@ -96,11 +97,16 @@ public class Add_Sale {
         });
 
         frame.add(Add_sale);
+        frame.add(Add_sale);
 
         frame.setVisible(true);
 
         Add_sale.addActionListener(e ->{
-
+            try {
+                InventoryManager.recordSale(products, SaleDate.getText());
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         });
 
     }

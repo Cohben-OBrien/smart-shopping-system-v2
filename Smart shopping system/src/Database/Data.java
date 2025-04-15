@@ -2,6 +2,7 @@ package Database;
 
 import Records.ProductSale;
 import Product.Product;
+import Records.SalesRecord;
 import manager.InventoryManager;
 
 import java.sql.*;
@@ -49,11 +50,28 @@ public class Data {
         ps2.executeUpdate();
     }
 
-    public static void Add_Sale(ArrayList<ProductSale> Products) throws SQLException {
-        int sale_id = InventoryManager.getSales().getLast().get_id();
+    public static void Add_Sale(ArrayList<ProductSale> Products, SalesRecord sale) throws SQLException {
+        double total = 0;
 
-        System.out.println("Sale_id: " + sale_id);
+        for (ProductSale productSale : Products) {
+            String table = productSale.getProduct().getName().replace(" ", "_") + "_" + productSale.getProduct().getId();
+            String query = "INSERT INTO " + table + " VALUES (?, ?, ?)";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, sale.get_id());
+            ps.setInt(2, productSale.getQuantity());
+            ps.setDouble(3, productSale.getProduct().getPrice() * productSale.getQuantity());
+            ps.executeUpdate();
+            total =+ productSale.getProduct().getPrice() * productSale.getQuantity();
+        }
 
+
+        String query = "INSERT INTO sales VALUES (?, ?, ?)";
+
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, sale.get_id());
+        ps.setDouble(2, total);
+        ps.setString(3, sale.get_date());
+        ps.executeUpdate();
     }
 
    //add filter

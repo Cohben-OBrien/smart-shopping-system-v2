@@ -31,8 +31,12 @@ public class InventoryManager {
 
 
     // Record a sale (decrease stock and add to sales record)
-    public static void recordSale(Product product, String date, double sale) {
-        sales.add(new SalesRecord(date));
+    public static void recordSale(ArrayList<ProductSale> productSales, String date) throws SQLException{
+        sales.add(new SalesRecord(date, productSales));
+        System.out.println("ID: " + sales.getLast().get_id());
+
+        Data.Add_Sale(productSales, sales.getLast());
+
     }
 
 
@@ -81,11 +85,10 @@ public class InventoryManager {
 
     public static int sales_next_id() {
         try{
-            sales.getLast().get_id();
+            return sales.getLast().get_id() + 1;
         } catch (Exception e) {
             return 0;
         }
-        return 0;
     }
 }
 
