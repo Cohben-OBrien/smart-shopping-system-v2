@@ -55,25 +55,67 @@ public class Data {
 
         ps.executeUpdate();
 
-        String name = product.getName().replace(" ", "_") + "_" + product.getId();
+        String name = product.getName().replace(" ", "_") + product.getId();
         String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_totel real)";
         PreparedStatement ps2 = connection.prepareStatement(query2);
         ps2.executeUpdate();
+    }
+
+    public static boolean check_stock(int id, int requied) throws SQLException {
+        String sql = "SELECT stock FROM items WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        System.out.println("required" + requied);
+        System.out.println("database" + rs.getInt("stock"));
+
+
+        if (rs.getInt("stock") < requied) {
+            System.out.println("Not enough stock");
+            return false;
+        } else {
+            System.out.println("Enough stock");
+            return true;
+        }
+    }
+
+    public static void remove_Stock(int id, int Quantity) throws SQLException {
+        String Query = "SELECT stock FROM items WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(Query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        int current_stock = rs.getInt("stock");
+
+        String update = "UPDATE items SET stock = ? WHERE id = ?";
+        PreparedStatement ps2 = connection.prepareStatement(update);
+        ps2.setInt(1, current_stock - Quantity);
+        ps2.setInt(2, id);
+        ps2.executeUpdate();
+
+        System.out.println("Stock removed, new quantity = " + (current_stock - Quantity));
     }
 
     public static void Add_Sale(ArrayList<ProductSale> Products, SalesRecord sale) throws SQLException {
         double total = 0;
 
         for (ProductSale productSale : Products) {
-            String table = productSale.getProduct().getName().replace(" ", "_") + "_" + productSale.getProduct().getId();
+            String table = productSale.getProduct().getName().replace(" ", "_") + productSale.getProduct().getId();
             String query = "INSERT INTO " + table + " VALUES (?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale.get_id());
             ps.setInt(2, productSale.getQuantity());
             ps.setDouble(3, productSale.getProduct().getPrice() * productSale.getQuantity());
             ps.executeUpdate();
-            total =+ productSale.getProduct().getPrice() * productSale.getQuantity();
+            total = total + (productSale.getProduct().getPrice() * productSale.getQuantity());
+
+            remove_Stock(productSale.getProduct().getId(), productSale.getQuantity());
         }
+
+
+        System.out.println("total" + total);
 
 
         String query = "INSERT INTO sales VALUES (?, ?, ?)";
@@ -83,6 +125,7 @@ public class Data {
         ps.setDouble(2, total);
         ps.setString(3, sale.get_date());
         ps.executeUpdate();
+
     }
 
    //add filter

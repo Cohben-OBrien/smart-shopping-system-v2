@@ -8,13 +8,13 @@ import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.awt.color.ProfileDataException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Add_Sale {
 
     static ArrayList<ProductSale> products = new ArrayList<>();
 
     public static void add_product(InventoryManager manager) {
-
         JFrame frame = new JFrame("Add Product");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(null);
@@ -55,9 +55,19 @@ public class Add_Sale {
 
         Add.addActionListener(e -> {
             Product product = manager.findProduct(ProductSelect.getSelectedItem().toString());
-            products.add(new ProductSale(product, Integer.parseInt(ProductQuantity.getText())));
 
-            frame.dispose();
+            try {
+                if (Database.Data.check_stock(product.getId(), Integer.valueOf(ProductQuantity.getText()))) {
+                    products.add(new ProductSale(product, Integer.parseInt(ProductQuantity.getText())));
+                    frame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Product does not have enough stock");
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "Please enter a valid quantity");
+            }
+
+
 
         });
 
@@ -67,6 +77,7 @@ public class Add_Sale {
     }
 
     public static void Add_Sale(InventoryManager manager) {
+        products.clear();
         JFrame frame = new JFrame();
 
 
@@ -107,6 +118,7 @@ public class Add_Sale {
         Add_sale.addActionListener(e ->{
             try {
                 InventoryManager.recordSale(products, SaleDate.getText());
+                frame.dispose();
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
