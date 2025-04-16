@@ -1,37 +1,37 @@
 package smartshop;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Step 1: Create an InventoryManager instance (handles all business logic like adding products, recording sales, etc.)
+        // Create the inventory manager (handles all logic)
         InventoryManager manager = new InventoryManager();
 
-        // Step 2: Set up the main application window (JFrame)
-        JFrame frame = new JFrame("Smart Shop System");  // Title of the window
-        frame.setSize(600, 400);  // Set the window size
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Close the app when the window is closed
-        frame.setLayout(new BorderLayout());  // Set the layout for the window components
+        // Create the main application window
+        JFrame frame = new JFrame("Smart Shop System");
+        frame.setSize(800, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
-        // Step 3: Create a panel to hold buttons and input fields
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());  // Layout for buttons (horizontal)
+        // Panel for text fields and buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout());
 
-        // Step 4: Create text fields for product name, price, and quantity
+        // Text fields for user input
         JTextField productNameField = new JTextField(10);
         JTextField priceField = new JTextField(10);
         JTextField quantityField = new JTextField(10);
 
-        // Step 5: Create buttons for different actions
+        // Buttons for actions
         JButton addProductButton = new JButton("Add Product");
         JButton recordSaleButton = new JButton("Record Sale");
         JButton showSalesButton = new JButton("Show Sales Report");
         JButton lowStockButton = new JButton("Show Low Stock Report");
 
-        // Step 6: Add the text fields and buttons to the panel
+        // Add input fields and buttons to the panel
         buttonPanel.add(new JLabel("Product Name:"));
         buttonPanel.add(productNameField);
         buttonPanel.add(new JLabel("Price:"));
@@ -43,76 +43,128 @@ public class Main {
         buttonPanel.add(showSalesButton);
         buttonPanel.add(lowStockButton);
 
-        // Step 7: Create a table to display products
+        // Add the panel to the top of the window
+        frame.add(buttonPanel, BorderLayout.NORTH);
+
+        // Table setup
         String[] columnNames = {"Product", "Price", "Quantity"};
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);  // Model for the table
-        JTable productTable = new JTable(tableModel);  // Create the table
-        JScrollPane scrollPane = new JScrollPane(productTable);  // Add scrolling functionality to the table
-        frame.add(scrollPane, BorderLayout.CENTER);  // Add the table to the center of the window
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        JTable productTable = new JTable(tableModel);
 
-        // Step 8: Action for the "Add Product" button
-        addProductButton.addActionListener(e -> {
-            String name = productNameField.getText();  // Get the product name
-            float price = Float.parseFloat(priceField.getText());  // Get the price of the product
-            int quantity = Integer.parseInt(quantityField.getText());  // Get the quantity of the product
+        // Style the table for better appearance
+        productTable.setFont(new Font("Arial", Font.PLAIN, 14));
+        productTable.setRowHeight(25);
+        productTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
+        productTable.getTableHeader().setBackground(Color.LIGHT_GRAY);
 
-            // Add the new product to the inventory
-            Product newProduct = new Product(name, price, quantity);
-            manager.addProduct(newProduct);
-
-            // Add the new product to the table
-            tableModel.addRow(new Object[]{name, price, quantity});
-
-            // Clear the input fields after adding the product
-            productNameField.setText("");
-            priceField.setText("");
-            quantityField.setText("");
-        });
-
-        // Step 9: Action for the "Record Sale" button
-        recordSaleButton.addActionListener(e -> {
-            String saleName = JOptionPane.showInputDialog("Enter product name for sale:");  // Ask for product name
-            int saleQty = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity to sell:"));  // Ask for quantity to sell
-            String date = JOptionPane.showInputDialog("Enter date (dd/mm/yyyy):");  // Ask for sale date
-
-            // Record the sale if there is enough stock
-            boolean success = manager.recordSale(saleName, saleQty, date);
-            if (success) {
-                JOptionPane.showMessageDialog(frame, "Sale recorded!");  // Show success message
-            } else {
-                JOptionPane.showMessageDialog(frame, "Sale failed (check stock or name).");  // Show error message
+        // Highlight rows with low stock (≤ 2) in red
+        productTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus,
+                                                           int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                try {
+                    int quantity = (int) table.getModel().getValueAt(row, 2);
+                    if (quantity <= 2) {
+                        c.setForeground(Color.RED); // Low stock: red text
+                    } else {
+                        c.setForeground(Color.BLACK); // Normal stock: black text
+                    }
+                } catch (Exception ex) {
+                    c.setForeground(Color.BLACK); // Default color in case of error
+                }
+                return c;
             }
         });
 
-        // Step 10: Action for the "Show Sales Report" button
+        // Add the table to a scroll pane and into the main window
+        JScrollPane scrollPane = new JScrollPane(productTable);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        // When "Add Product" button is clicked
+        addProductButton.addActionListener(e -> {
+            try {
+                String name = productNameField.getText().trim();
+                float price = Float.parseFloat(priceField.getText().trim());
+                int quantity = Integer.parseInt(quantityField.getText().trim());
+
+                // Check if product name is empty
+                if (name.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Product name cannot be empty.");
+                    return;
+                }
+
+                // Add product to manager and table
+                Product newProduct = new Product(name, price, quantity);
+                manager.addProduct(newProduct);
+                tableModel.addRow(new Object[]{name, price, quantity});
+
+                // Clear input fields after adding
+                productNameField.setText("");
+                priceField.setText("");
+                quantityField.setText("");
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Please enter valid numbers for price and quantity.");
+            }
+        });
+
+        // When "Record Sale" button is clicked
+        recordSaleButton.addActionListener(e -> {
+            try {
+                String saleName = JOptionPane.showInputDialog("Enter product name:");
+                int saleQty = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity to sell:"));
+                String date = JOptionPane.showInputDialog("Enter date (dd/mm/yyyy):");
+
+                boolean success = manager.recordSale(saleName, saleQty, date);
+
+                if (success) {
+                    JOptionPane.showMessageDialog(frame, "Sale recorded!");
+
+                    // Update the quantity in the table
+                    Product updatedProduct = manager.findProduct(saleName);
+                    for (int i = 0; i < tableModel.getRowCount(); i++) {
+                        if (tableModel.getValueAt(i, 0).toString().equalsIgnoreCase(saleName)) {
+                            tableModel.setValueAt(updatedProduct.getQuantity(), i, 2); // Update quantity
+                            break;
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Sale failed (check product name or stock).");
+                }
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Invalid quantity entered.");
+            }
+        });
+
+        // When "Show Sales Report" button is clicked
         showSalesButton.addActionListener(e -> {
-            // Create the sales report and display it in the text area
             String report = "---- SALES REPORT ----\n";
-            List<SalesRecord> sales = manager.getSales();  // Get all sales records
+            List<SalesRecord> sales = manager.getSales();
             for (SalesRecord record : sales) {
                 report += record.getDate() + " - " + record.getProduct().getName() + " - " +
-                        record.getQuantity() + " units - £" + record.getTotalPrice() + "\n";  // Add sale details
+                        record.getQuantity() + " units - £" + record.getTotalPrice() + "\n";
             }
-            // Show the sales report in a message box
             JOptionPane.showMessageDialog(frame, report);
         });
 
-        // Step 11: Action for the "Show Low Stock Report" button
+        // When "Show Low Stock Report" button is clicked
         lowStockButton.addActionListener(e -> {
-            // Create the low stock report and display it in the text area
             String report = "---- LOW STOCK REPORT ----\n";
-            List<Product> lowStockProducts = manager.getLowStockProducts();  // Get low stock products
+            List<Product> lowStockProducts = manager.getLowStockProducts();
             for (Product product : lowStockProducts) {
-                report += product.getName() + " → only " + product.getQuantity() + " left.\n";  // Show product with low stock
+                report += product.getName() + " → only " + product.getQuantity() + " left.\n";
             }
-            // Show the low stock report in a message box
             JOptionPane.showMessageDialog(frame, report);
         });
 
-        // Step 12: Make the window visible
+        // Show the full application window
         frame.setVisible(true);
     }
 }
+
 
 
 

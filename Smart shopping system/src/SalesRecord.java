@@ -5,31 +5,61 @@ public class SalesRecord {
     private String date;      // The date of the sale
     private int quantity;     // The quantity of the product sold
 
-    // Constructor: Initializes the sales record with product, date, and quantity sold
+    /**
+     * Constructor: Initializes the sales record with product, date, and quantity sold
+     * @param product The product being sold
+     * @param date The date the sale occurred (format: dd/mm/yyyy)
+     * @param quantity The number of items sold
+     */
     public SalesRecord(Product product, String date, int quantity) {
-        this.product = product;  // Set the product sold
-        this.date = date;        // Set the sale date
-        this.quantity = quantity;  // Set the quantity sold
+        this.product = product;      // Store the sold product
+        this.date = date;            // Store the date of the sale
+        this.quantity = quantity;    // Store how many units were sold
     }
 
-    // Getter methods to access the sales record details
+    /**
+     * Returns the product involved in the sale
+     * @return Product object
+     */
     public Product getProduct() {
-        return product;  // Returns the product that was sold
+        return product;
     }
 
+    /**
+     * Returns the date the sale was made
+     * @return String representing the sale date
+     */
     public String getDate() {
-        return date;  // Returns the date of the sale
+        return date;
     }
 
+    /**
+     * Returns how many units of the product were sold
+     * @return int value of quantity
+     */
     public int getQuantity() {
-        return quantity;  // Returns the quantity of the product sold
+        return quantity;
     }
 
-    // This method calculates the total price of the sale (product price * quantity sold)
+    /**
+     * Calculates the total price of the sale
+     * Total = product price * quantity sold
+     * @return float representing total sale value
+     */
     public float getTotalPrice() {
-        return product.getPrice() * quantity;  // Multiply the product price by the quantity sold
+        return product.getPrice() * quantity;
+    }
+
+    /**
+     * Optional: A readable string version of the sales record
+     * This is useful for printing in logs, consoles, or text-based reports
+     */
+    @Override
+    public String toString() {
+        return date + " - " + product.getName() + " - " + quantity + " units - £" + getTotalPrice();
     }
 }
+
 
 
 

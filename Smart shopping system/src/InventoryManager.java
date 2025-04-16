@@ -13,51 +13,75 @@ public class InventoryManager {
         sales = new ArrayList<>();
     }
 
-    // Method to add a product to the inventory
+    /**
+     * Add a product to the inventory list
+     * @param product The product to be added
+     */
     public void addProduct(Product product) {
-        products.add(product);  // Add the product to the inventory
+        products.add(product);
     }
 
-    // Method to record a sale (reduce stock and add to sales record)
+    /**
+     * Record a sale and update product stock
+     * @param productName Name of product sold
+     * @param quantitySold Quantity to sell
+     * @param date Date of the sale
+     * @return true if sale is successful, false otherwise
+     */
     public boolean recordSale(String productName, int quantitySold, String date) {
-        Product product = findProduct(productName);  // Find the product by name
+        Product product = findProduct(productName);
         if (product != null && product.getQuantity() >= quantitySold) {
-            product.sell(quantitySold);  // Reduce the stock of the product
-            sales.add(new SalesRecord(product, date, quantitySold));  // Record the sale
-            return true;  // Sale was successful
+            product.sell(quantitySold);  // Decrease stock
+            sales.add(new SalesRecord(product, date, quantitySold));  // Save the sale
+            return true;
         }
-        return false;  // Sale failed (either product not found or insufficient stock)
+        return false;  // Sale failed: not found or not enough stock
     }
 
-    // Method to find a product by its name
+    /**
+     * Find a product by name (case-insensitive)
+     * @param productName Name to search
+     * @return Product object if found, otherwise null
+     */
     public Product findProduct(String productName) {
         for (Product p : products) {
             if (p.getName().equalsIgnoreCase(productName)) {
-                return p;  // Return the product if found
+                return p;
             }
         }
-        return null;  // Return null if product is not found
+        return null;
     }
 
-    // Get a list of all products
+    /**
+     * Get the full list of products
+     * @return List of all products
+     */
     public List<Product> getProducts() {
-        return products;  // Return the list of products
+        return products;
     }
 
-    // Get a list of all sales made
+    /**
+     * Get the full list of sales
+     * @return List of all sales records
+     */
     public List<SalesRecord> getSales() {
-        return sales;  // Return the list of sales records
+        return sales;
     }
 
-    // Get a list of products that are low in stock (less than 5 units)
+    /**
+     * Get products that are low in stock (2 units or less)
+     * This matches the GUI logic that highlights red rows for critical stock
+     * @return List of products with stock ≤ 2
+     */
     public List<Product> getLowStockProducts() {
         List<Product> lowStock = new ArrayList<>();
         for (Product p : products) {
-            if (p.getQuantity() < 5) {
-                lowStock.add(p);  // Add products with low stock to the list
+            if (p.getQuantity() <= 2) {  // Match with GUI red text logic
+                lowStock.add(p);
             }
         }
-        return lowStock;  // Return the list of low stock products
+        return lowStock;
     }
 }
+
 
