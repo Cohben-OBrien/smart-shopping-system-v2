@@ -28,6 +28,9 @@ public class Add_Sale {
             ProductSelect.addItem(InventoryManager.getProducts().get(i).getName());
         }
 
+        // add table here
+
+        //
         JTextField ProductQuantity = new JTextField(15);
 
         JButton Add = new JButton("Add product");
