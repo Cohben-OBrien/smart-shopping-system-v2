@@ -20,19 +20,21 @@ public class newMain extends JFrame {
             Container contentPane = frame.getContentPane();
             contentPane.setLayout(new BorderLayout());
 
-            // 1. Title Label (at the very top - NORTH)
+            // Title label at the top
             JLabel titleLabel = new JLabel("Smart Shopping System v1");
             titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
             titleLabel.setForeground(Color.BLUE);
             contentPane.add(titleLabel, BorderLayout.NORTH);
 
-            // 2. Panel for Buttons and Search (below the title - NORTH of buttonContainerPanel)
-            JPanel buttonSearchPanel = new JPanel(new BorderLayout(5, 5)); // Add some spacing
+            // Panel for buttons and search
+            JPanel buttonSearchPanel = new JPanel(new BorderLayout(5, 5));
             buttonSearchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-            buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0)); // Reduced top padding
+            buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+
+            // Action buttons
             JButton productsButton = new JButton("Add Products");
             productsButton.setFont(new Font("Arial", Font.PLAIN, 16));
             productsButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Add Products functionality."));
@@ -55,60 +57,108 @@ public class newMain extends JFrame {
 
             buttonSearchPanel.add(buttonPanel, BorderLayout.NORTH);
 
-            JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0)); // Align text to the left
+            // Search bar
+            JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
             JLabel searchLabel = new JLabel("Product Search:");
             searchLabel.setFont(new Font("Arial", Font.PLAIN, 20));
             searchPanel.add(searchLabel);
+
             JTextField searchTextField = new JTextField(30);
             searchTextField.setFont(new Font("Arial", Font.PLAIN, 20));
             searchPanel.add(searchTextField);
+
             buttonSearchPanel.add(searchPanel, BorderLayout.SOUTH);
 
             JPanel buttonContainerPanel = new JPanel(new BorderLayout());
-            buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH); // Buttons and search at the top
-
-            // 3. Middle Panel for Table (below the buttons - CENTER of buttonContainerPanel)
-            JPanel tablePanel = new JPanel(new BorderLayout());
-            tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH);
 
             // Sample table data
             String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels"};
             Object[][] data = {
                     {"101", "Boxers", 10.00, 10},
-                    {"102", "Socks", 2.00, 50},
+                    {"102", "Socks", 2.00, 0},
                     {"103", "T-Shirt", 15.00, 30},
-                    {"104", "Blue Jeans", 35.00, 20},
+                    {"104", "Blue Jeans", 35.00, 8},
                     {"105", "Cotton Socks", 3.50, 75}
             };
 
             DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
-            JTable itemTable = new JTable(tableModel);
+
+            // JTable with price formatting and stock color rules
+            JTable itemTable = new JTable(tableModel) {
+                @Override
+                public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
+                    Component c = super.prepareRenderer(renderer, row, column);
+                    int stockColumn = 3;
+                    int priceColumn = 2;
+
+                    // Always use white background unless we change it
+                    c.setBackground(Color.WHITE);
+
+                    // Format the Price column with £ symbol
+                    if (column == priceColumn) {
+                        Object value = getValueAt(row, column);
+                        if (value instanceof Number) {
+                            float price = ((Number) value).floatValue();
+                            setValueAt("£" + String.format("%.2f", price), row, column);
+                        }
+                    }
+
+                    // Change text color and background for Stock Levels
+                    if (column == stockColumn) {
+                        Object stockValue = getValueAt(row, stockColumn);
+                        try {
+                            int quantity = Integer.parseInt(stockValue.toString());
+                            if (quantity == 0) {
+                                c.setForeground(Color.RED); // Red for out of stock
+                            } else {
+                                c.setForeground(Color.BLACK);
+                            }
+
+                            if (quantity < 10 && quantity > 0) {
+                                c.setBackground(new Color(255, 255, 150)); // Light yellow for low stock
+                            }
+
+                        } catch (NumberFormatException e) {
+                            c.setForeground(Color.BLACK);
+                            c.setBackground(Color.WHITE);
+                        }
+                    } else {
+                        c.setForeground(Color.BLACK);
+                        c.setBackground(Color.WHITE);
+                    }
+
+                    return c;
+                }
+            };
+
             itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
             JScrollPane scrollPane = new JScrollPane(itemTable);
 
-            // Implement Table Row Sorter for Filtering
+            // Search feature
             TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
             itemTable.setRowSorter(sorter);
 
-            // Add Key Listener to the Search Text Field
             searchTextField.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyReleased(KeyEvent e) {
                     String searchText = searchTextField.getText();
-                    if (searchText.trim().length() == 0) {
-                        sorter.setRowFilter(null); // Show all rows when search is empty
+                    if (searchText.trim().isEmpty()) {
+                        sorter.setRowFilter(null); // Show all rows
                     } else {
-                        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText)); // Case-insensitive filter
+                        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText)); // Case-insensitive search
                     }
                 }
             });
 
+            JPanel tablePanel = new JPanel(new BorderLayout());
+            tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             tablePanel.add(scrollPane, BorderLayout.CENTER);
-            buttonContainerPanel.add(tablePanel, BorderLayout.CENTER);
 
+            buttonContainerPanel.add(tablePanel, BorderLayout.CENTER);
             contentPane.add(buttonContainerPanel, BorderLayout.CENTER);
 
-            // 4. Bottom Panel for Exit Button (at the very bottom - SOUTH)
+            // Exit button at the bottom
             JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             exitPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
