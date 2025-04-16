@@ -35,9 +35,14 @@ public class Data {
     }
 
 
-    public static int get_sale_number() {
+    public static int get_sale_number() throws SQLException {
+        String sql = "SELECT count(*) FROM sales";
+        PreparedStatement ps = connection.prepareStatement(sql);
 
-        return 0;
+        ResultSet rs = ps.executeQuery();
+
+
+        return rs.getInt(1);
     }
 
    public static void addProduct(Product product) throws SQLException {

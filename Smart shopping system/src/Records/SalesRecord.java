@@ -1,8 +1,12 @@
 package Records;
 // Import the Product class from the same package
+import Database.Data;
 import manager.InventoryManager;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 // This class represents a sales record.
 public class SalesRecord {
@@ -13,10 +17,10 @@ public class SalesRecord {
 
     // Constructor to initialize sales record
 
-    public SalesRecord(String date, ArrayList<ProductSale> products) {
+    public SalesRecord(String date, ArrayList<ProductSale> products) throws SQLException {
         this.date = date;
         this.products = products;
-        this.sale_ID = InventoryManager.sales_next_id();
+        this.sale_ID = Data.get_sale_number();
     }
 
     private void record() {
