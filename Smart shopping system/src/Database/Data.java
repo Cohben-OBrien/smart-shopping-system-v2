@@ -34,6 +34,12 @@ public class Data {
         return products;
     }
 
+
+    public static int get_sale_number() {
+
+        return 0;
+    }
+
    public static void addProduct(Product product) throws SQLException {
         String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query);
