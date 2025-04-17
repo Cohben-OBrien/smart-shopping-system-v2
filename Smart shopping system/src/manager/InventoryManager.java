@@ -9,6 +9,7 @@ import com.sun.tools.javac.Main;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 // This class manages all products and sales in the system.
 public class InventoryManager {
@@ -26,7 +27,7 @@ public class InventoryManager {
     public void addProduct(Product product) throws SQLException{
         products.add(product); // Add product to the list of products
         Data.addProduct(product);
-
+        Product.tableModel.addRow(new Object[]{product.getId(), product.getName() , product.getPrice(), product.getQuantity()});
     }
 
 

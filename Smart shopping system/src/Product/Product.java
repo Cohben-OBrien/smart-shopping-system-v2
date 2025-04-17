@@ -1,7 +1,13 @@
 package Product;
 
+import javax.swing.table.DefaultTableModel;
+
 // This class represents each product in the inventory.
 public class Product {
+
+
+    public static DefaultTableModel tableModel = new DefaultTableModel();
+
     private int id;
     private String name;   // The name of the product
     private float price;   // The price of the product

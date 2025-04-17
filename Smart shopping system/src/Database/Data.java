@@ -7,6 +7,7 @@ import manager.InventoryManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Data {
     public static Connection connection;
@@ -59,6 +60,8 @@ public class Data {
         String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_totel real)";
         PreparedStatement ps2 = connection.prepareStatement(query2);
         ps2.executeUpdate();
+
+
     }
 
     public static boolean check_stock(int id, int requied) throws SQLException {

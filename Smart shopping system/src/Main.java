@@ -18,6 +18,11 @@ import java.util.Locale;
 
 public class Main extends JFrame {
 
+
+    public static void Add_product_to_table(Product product) {
+        Product.tableModel.addRow(new Object[]{product.getId(),product.getName(),product.getPrice(),product.getQuantity()});
+    }
+
     public static void main(String[] args) throws SQLException {
         InventoryManager manager = new InventoryManager();
         manager.loadInventory();
@@ -97,12 +102,11 @@ public class Main extends JFrame {
             // Modified column names with the new "Stock Status" column
             String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
 
-            DefaultTableModel tableModel = new DefaultTableModel();
-            tableModel.setColumnCount(columnNames.length);
-            tableModel.setColumnIdentifiers(columnNames);
+            Product.tableModel.setColumnCount(columnNames.length);
+            Product.tableModel.setColumnIdentifiers(columnNames);
 
             // JTable with price formatting and stock colour rules in the new column
-            JTable itemTable = new JTable(tableModel) {
+            JTable itemTable = new JTable(Product.tableModel) {
                 @Override
                 public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
                     Component c = super.prepareRenderer(renderer, row, column);
@@ -174,14 +178,14 @@ public class Main extends JFrame {
             };
 
             for(Product product : manager.getProducts()) {
-                tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
+                Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
             }
 
             itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
             JScrollPane scrollPane = new JScrollPane(itemTable);
 
             // Search feature
-            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
+            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
             itemTable.setRowSorter(sorter);
 
             searchTextField.addKeyListener(new KeyAdapter() {
