@@ -23,6 +23,10 @@ public class InventoryManager {
         sales = new ArrayList<SalesRecord>(); // Initialize the sales list
     }
 
+    public List<Product> GetProducts() {
+        return products;
+    }
+
     // Add a product to the inventory
     public void addProduct(Product product) throws SQLException{
         products.add(product); // Add product to the list of products

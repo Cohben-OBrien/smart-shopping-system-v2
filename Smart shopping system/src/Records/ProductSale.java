@@ -8,6 +8,12 @@ public class ProductSale {
     private double total;
     private int saleId;
 
+    public ProductSale(Product product, int quantity, double total) {
+        this.product = product;
+        this.quantity = quantity;
+        this.total = total;
+    }
+
     public ProductSale(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;

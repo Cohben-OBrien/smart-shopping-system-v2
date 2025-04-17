@@ -57,7 +57,7 @@ public class Data {
         ps.executeUpdate();
 
         String name = product.getName().replace(" ", "_") + product.getId();
-        String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_totel real)";
+        String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_total real)";
         PreparedStatement ps2 = connection.prepareStatement(query2);
         ps2.executeUpdate();
 
@@ -130,6 +130,7 @@ public class Data {
         }
 
 
+
         System.out.println("total" + total);
 
 
@@ -141,6 +142,26 @@ public class Data {
         ps.setString(3, sale.get_date());
         ps.executeUpdate();
 
+    }
+
+    public static ArrayList<ProductSale> getProductSales(int sale_id) throws SQLException {
+        ArrayList<ProductSale> products = new ArrayList<>();
+
+        for(Product product : InventoryManager.getProducts()) {
+            String query = "SELECT * FROM " + product.getName() + product.getId() + " WHERE sale_id = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, sale_id);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if(rs.getInt("sale_ID") == sale_id) {
+                    System.out.println(product.getName() + "_" + product.getId());
+                    products.add(new ProductSale(InventoryManager.findProduct(product.getName()), rs.getInt("sale_quantity"), rs.getInt("sale_total")));
+                }
+
+            }
+        }
+        return products;
     }
 
    //add filter

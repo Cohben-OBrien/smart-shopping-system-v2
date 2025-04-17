@@ -1,12 +1,16 @@
 package GUI;
 
 import Database.Data;
+import Records.ProductSale;
 import Records.SalesRecord;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class Sales_Report {
 
@@ -43,10 +47,63 @@ public class Sales_Report {
         }
 
 
+        salesTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = salesTable.getSelectedRow();
+                int id = Integer.parseInt(salesTable.getValueAt(row, 0).toString());
+
+                System.out.println(id);
+
+                try{
+                    show_products(id);
+                } catch (SQLException ex){
+                    System.out.println(ex.getMessage());
+                }
+
+
+            }
+        });
+
 
        frame.setVisible(true);
 
 
+    }
+
+    public static void show_products(int sale_id) throws SQLException {
+
+        JFrame frame = new JFrame("Sales Report");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(465, 450);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+
+        JTable ProductTable = new JTable();
+        ProductTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        DefaultTableModel Productmodel = new DefaultTableModel();
+        ProductTable.setModel(Productmodel);
+
+        String[] headings = {"Product ID", "Product Name", "Product Price", "Quantity Sold", "Total cost"};
+        Productmodel.setColumnCount(headings.length);
+        Productmodel.setColumnIdentifiers(headings);
+
+        for(int i = 0; i < headings.length; i++) {
+            ProductTable.getColumnModel().getColumn(i).setPreferredWidth(90);
+        }
+
+
+
+
+        JScrollPane table = new JScrollPane(ProductTable);
+        table.setBounds(0, 0, 450, 450);
+        frame.getContentPane().add(table, BorderLayout.CENTER);
+
+        frame.setVisible(true);
+
+        for(ProductSale productSale: Data.getProductSales(sale_id)) {
+            Productmodel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), productSale.getQuantity(), (productSale.getQuantity() * productSale.getProduct().getPrice())});
+        }
     }
 
 }
