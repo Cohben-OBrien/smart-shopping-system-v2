@@ -1,13 +1,15 @@
-package smartshop;
+package Product;
 
 // This class represents each product in the inventory.
 public class Product {
+    private int id;
     private String name;   // The name of the product
     private float price;   // The price of the product
     private int quantity;  // The quantity of the product in stock
 
     // Constructor to initialize product details
-    public Product(String name, float price, int quantity) {
+    public Product(int id, String name, float price, int quantity) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -26,6 +28,7 @@ public class Product {
         return quantity;
     }
 
+    public int getId() {return id; }
     // Decrease the quantity when the product is sold
     public void sell(int quantitySold) {
         this.quantity -= quantitySold;
