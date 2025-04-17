@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Added search function." />
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-2 GUI updates">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Mainv3.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Mainv3.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,12 +35,12 @@
     &quot;assignee&quot;: &quot;josecastroyupi2025&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Cohben-OBrien/smart-shopping-system-v2.git",
-    "accountId": "99a84528-4e13-4e45-bbb8-48274c1d94bf"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Cohben-OBrien/smart-shopping-system-v2.git&quot;,
+    &quot;accountId&quot;: &quot;99a84528-4e13-4e45-bbb8-48274c1d94bf&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -75,7 +78,7 @@
       <recent name="C:\Users\cohbe\code\smart-shopping-system-v2\Smart shopping system\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Unnamed">
+  <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/openjdk-23.0.2" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -127,6 +130,7 @@
       <workItem from="1744709798760" duration="17000" />
       <workItem from="1744709838420" duration="42000" />
       <workItem from="1744715418797" duration="896000" />
+      <workItem from="1744901570274" duration="351000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -168,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744739637990</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="P2CSSS-2 GUI updates">
+      <option name="closed" value="true" />
+      <created>1744901623475</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744901623476</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +202,7 @@
     <MESSAGE value="fixxing broken shit" />
     <MESSAGE value="Updated fields and cosmetic design" />
     <MESSAGE value="Added search function." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added search function." />
+    <MESSAGE value="P2CSSS-2 GUI updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-2 GUI updates" />
   </component>
 </project>

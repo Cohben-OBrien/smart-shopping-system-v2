@@ -30,8 +30,8 @@ public class Mainv3 {
             setTitle("Log In");
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Close only the dialog
             setModal(true); // Make it modal, preventing interaction with the background
-            setLayout(new GridLayout(3, 2, 5, 5)); // Simple layout
-            setPreferredSize(new Dimension(300, 150));
+            setLayout(new GridLayout(3, 2, 15,15));// Simple layout
+            setPreferredSize(new Dimension(400,200));
             setLocationRelativeTo(null); // Center on screen
 
             JLabel usernameLabel = new JLabel("Username:");
