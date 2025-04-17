@@ -74,7 +74,13 @@ public class Main extends JFrame {
 
             JButton salesReportButton = new JButton("Sales Report");
             salesReportButton.setFont(new Font("Arial", Font.PLAIN, 16));
-            salesReportButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Sales Report functionality."));
+            salesReportButton.addActionListener(e -> {
+                Sales_Report report = new Sales_Report();
+                try {
+                    report.Sales_Report();
+
+                } catch (SQLException a) {}
+            });
             buttonPanel.add(salesReportButton);
 
             JButton lowStockButton = new JButton("Stock Report");
@@ -104,6 +110,7 @@ public class Main extends JFrame {
 
             Product.tableModel.setColumnCount(columnNames.length);
             Product.tableModel.setColumnIdentifiers(columnNames);
+
 
             // JTable with price formatting and stock colour rules in the new column
             JTable itemTable = new JTable(Product.tableModel) {
@@ -177,6 +184,7 @@ public class Main extends JFrame {
                 }
             };
 
+            //load data to the table
             for(Product product : manager.getProducts()) {
                 Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
             }

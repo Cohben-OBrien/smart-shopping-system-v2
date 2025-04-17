@@ -101,6 +101,18 @@ public class Data {
         System.out.println("Stock removed, new quantity = " + (current_stock - Quantity));
     }
 
+    public static ArrayList<SalesRecord> getSalesRecords() throws SQLException {
+        String sql = "SELECT * FROM sales";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        ArrayList<SalesRecord> records = new ArrayList<>();
+        while (rs.next()) {
+            records.add(new SalesRecord(rs.getInt("sale_ID"), rs.getInt("sale_total"), rs.getString("sale_date")));
+        }
+        return records;
+    }
+
+
     public static void Add_Sale(ArrayList<ProductSale> Products, SalesRecord sale) throws SQLException {
         double total = 0;
 
