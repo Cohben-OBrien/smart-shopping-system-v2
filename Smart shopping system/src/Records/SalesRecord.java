@@ -17,11 +17,19 @@ public class SalesRecord {
 
     // Constructor to initialize sales record
 
+    public SalesRecord(int sale_ID, double total, String date) {
+        this.date = date;
+        this.total = total;
+        this.sale_ID = sale_ID;
+
+    }
+
     public SalesRecord(String date, ArrayList<ProductSale> products) throws SQLException {
         this.date = date;
         this.products = products;
         this.sale_ID = Data.get_sale_number();
     }
+
 
     private void record() {
 
@@ -31,6 +39,9 @@ public class SalesRecord {
         return this.sale_ID;
     }
 
+    public double get_total() {
+        return this.total;
+    }
 
     public String get_date() {
         return this.date;

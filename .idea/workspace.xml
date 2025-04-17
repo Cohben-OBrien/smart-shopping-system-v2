@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-24 product table load products from the database">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-24 sales record table added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Product/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Product/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Records/ProductSale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Records/ProductSale.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +63,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "P2CSSS-26-Sales-Records-GUI",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
     "node.js.detected.package.eslint": "true",
@@ -210,7 +210,23 @@
       <option name="project" value="LOCAL" />
       <updated>1744880687816</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="P2CSSS-24 product added to the table when a new product is added">
+      <option name="closed" value="true" />
+      <created>1744881336017</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744881336017</updated>
+    </task>
+    <task id="LOCAL-00011" summary="P2CSSS-24 sales record table added">
+      <option name="closed" value="true" />
+      <created>1744893213825</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744893213825</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,6 +241,8 @@
     <MESSAGE value="P2CSSS-24 Added the new GUI to main" />
     <MESSAGE value="P2CSSS-24 connect add item and add sale record buttons to correct GUI'S" />
     <MESSAGE value="P2CSSS-24 product table load products from the database" />
-    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-24 product table load products from the database" />
+    <MESSAGE value="P2CSSS-24 product added to the table when a new product is added" />
+    <MESSAGE value="P2CSSS-24 sales record table added" />
+    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-24 sales record table added" />
   </component>
 </project>
