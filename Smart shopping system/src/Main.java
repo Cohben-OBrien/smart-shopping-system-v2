@@ -1,5 +1,7 @@
 package GUI;
 
+import manager.InventoryManager;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.RowFilter;
@@ -8,12 +10,14 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 public class Main extends JFrame {
 
     public static void main(String[] args) {
+        InventoryManager manager = new InventoryManager();
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Smart Shopping System v1");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,12 +44,23 @@ public class Main extends JFrame {
             // Action buttons
             JButton productsButton = new JButton("Add Products");
             productsButton.setFont(new Font("Arial", Font.PLAIN, 16));
-            productsButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Add Products functionality."));
+            productsButton.addActionListener(e -> {
+                New_Item item = new New_Item();
+
+                try {
+                    item.newItem(manager);
+                } catch (SQLException a) {}
+
+            });
             buttonPanel.add(productsButton);
 
             JButton recordSaleButton = new JButton("Record Sale");
             recordSaleButton.setFont(new Font("Arial", Font.PLAIN, 16));
-            recordSaleButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Record Sale functionality."));
+
+            recordSaleButton.addActionListener(e -> {
+                Add_Sale.Add_Sale(manager);
+            });
+
             buttonPanel.add(recordSaleButton);
 
             JButton salesReportButton = new JButton("Sales Report");
