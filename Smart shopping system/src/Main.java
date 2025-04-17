@@ -1,5 +1,7 @@
 package GUI;
 
+import Database.Data;
+import Product.Product;
 import manager.InventoryManager;
 
 import javax.swing.*;
@@ -16,8 +18,10 @@ import java.util.Locale;
 
 public class Main extends JFrame {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         InventoryManager manager = new InventoryManager();
+        manager.loadInventory();
+
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Smart Shopping System v1");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,20 +96,10 @@ public class Main extends JFrame {
 
             // Modified column names with the new "Stock Status" column
             String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
-            Object[][] data = {
-                    {"101", "Boxers", 10.00, 10, ""},
-                    {"102", "Socks", 2.00, 0, ""},
-                    {"103", "T-Shirt", 15.00, 30, ""},
-                    {"104", "Blue Jeans", 35.00, 8, ""},
-                    {"105", "Cotton Socks", 3.50, 75, ""}
-            };
 
-            DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false; // Make cells non-editable for this example
-                }
-            };
+            DefaultTableModel tableModel = new DefaultTableModel();
+            tableModel.setColumnCount(columnNames.length);
+            tableModel.setColumnIdentifiers(columnNames);
 
             // JTable with price formatting and stock colour rules in the new column
             JTable itemTable = new JTable(tableModel) {
@@ -178,6 +172,10 @@ public class Main extends JFrame {
                     return c;
                 }
             };
+
+            for(Product product : manager.getProducts()) {
+                tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
+            }
 
             itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
             JScrollPane scrollPane = new JScrollPane(itemTable);
