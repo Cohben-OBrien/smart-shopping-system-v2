@@ -1,112 +1,206 @@
-package smartshop;
-
-import GUI.Add_Sale;
-import GUI.New_Item;
-import Product.Product;
-import manager.InventoryManager;
+package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.RowFilter;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.sql.SQLException;
-import java.util.List;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.NumberFormat;
+import java.util.Locale;
 
-// This is the main class where everything runs (both logic and GUI).
-public class Main {
+public class Main extends JFrame {
 
-    // Main method that starts the application
-    public static void main(String[] args) throws SQLException {
-        // Create the InventoryManager instance (handles business logic)
-        InventoryManager manager = new InventoryManager();
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Smart Shopping System v1");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(850, 700); // Adjusted width to accommodate the new column
+            frame.setLocationRelativeTo(null);
 
-        // Add some sample products to the inventory (for testing purposes)
+            Container contentPane = frame.getContentPane();
+            contentPane.setLayout(new BorderLayout());
 
-        // Set up the main application window (JFrame)
-        JFrame frame = new JFrame("Smart Shop System");  // Title of the window
-        frame.setSize(600, 400);  // Set window size
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Close the window on exit
-        frame.setLayout(new BorderLayout());  // Layout for components in the window
+            // Title label at the top
+            JLabel titleLabel = new JLabel("Smart Shopping System v1");
+            titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titleLabel.setForeground(Color.BLUE);
+            contentPane.add(titleLabel, BorderLayout.NORTH);
 
-        // Create a panel to hold buttons for interacting with the system
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());  // Layout for buttons (horizontal)
+            // Panel for buttons and search
+            JPanel buttonSearchPanel = new JPanel(new BorderLayout(5, 5));
+            buttonSearchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
-        // Create buttons for different actions
-        JButton addProductButton = new JButton("Add Product");  // Button to add a product
-        JButton recordSaleButton = new JButton("Record Sale");  // Button to record a sale
-        JButton showSalesButton = new JButton("Show Sales Report");  // Button to view sales report
-        JButton lowStockButton = new JButton("Show Low Stock Report");  // Button to view low stock report
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+            buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 
-        // Add buttons to the panel
-        buttonPanel.add(addProductButton);
-        buttonPanel.add(recordSaleButton);
-        buttonPanel.add(showSalesButton);
-        buttonPanel.add(lowStockButton);
+            // Action buttons
+            JButton productsButton = new JButton("Add Products");
+            productsButton.setFont(new Font("Arial", Font.PLAIN, 16));
+            productsButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Add Products functionality."));
+            buttonPanel.add(productsButton);
 
-        // Add the button panel to the top part of the window
-        frame.add(buttonPanel, BorderLayout.NORTH);
+            JButton recordSaleButton = new JButton("Record Sale");
+            recordSaleButton.setFont(new Font("Arial", Font.PLAIN, 16));
+            recordSaleButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Record Sale functionality."));
+            buttonPanel.add(recordSaleButton);
 
-        // Create a text area where the reports will be displayed
-        JTextArea reportArea = new JTextArea();
-        reportArea.setEditable(false);  // Make it read-only (can't edit the report)
-        JScrollPane scrollPane = new JScrollPane(reportArea);  // Add scroll functionality
-        frame.add(scrollPane, BorderLayout.CENTER);  // Add the scrollable area to the center of the window
+            JButton salesReportButton = new JButton("Sales Report");
+            salesReportButton.setFont(new Font("Arial", Font.PLAIN, 16));
+            salesReportButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Sales Report functionality."));
+            buttonPanel.add(salesReportButton);
 
-        // Action for the "Add Product" button
-        addProductButton.addActionListener(e -> {
-            New_Item item = new New_Item();
-            try {
+            JButton lowStockButton = new JButton("Stock Report");
+            lowStockButton.setFont(new Font("Arial", Font.PLAIN, 16));
+            lowStockButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Low Stock Report functionality."));
+            buttonPanel.add(lowStockButton);
 
-                item.newItem(manager);
-            } catch (SQLException A ) {}
+            buttonSearchPanel.add(buttonPanel, BorderLayout.NORTH);
+
+            // Search bar
+            JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+            JLabel searchLabel = new JLabel("Product Search:");
+            searchLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+            searchPanel.add(searchLabel);
+
+            JTextField searchTextField = new JTextField(30);
+            searchTextField.setFont(new Font("Arial", Font.PLAIN, 20));
+            searchPanel.add(searchTextField);
+
+            buttonSearchPanel.add(searchPanel, BorderLayout.SOUTH);
+
+            JPanel buttonContainerPanel = new JPanel(new BorderLayout());
+            buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH);
+
+            // Modified column names with the new "Stock Status" column
+            String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
+            Object[][] data = {
+                    {"101", "Boxers", 10.00, 10, ""},
+                    {"102", "Socks", 2.00, 0, ""},
+                    {"103", "T-Shirt", 15.00, 30, ""},
+                    {"104", "Blue Jeans", 35.00, 8, ""},
+                    {"105", "Cotton Socks", 3.50, 75, ""}
+            };
+
+            DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false; // Make cells non-editable for this example
+                }
+            };
+
+            // JTable with price formatting and stock colour rules in the new column
+            JTable itemTable = new JTable(tableModel) {
+                @Override
+                public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
+                    Component c = super.prepareRenderer(renderer, row, column);
+                    int stockColumn = 3;
+                    int statusColumn = 4;
+                    int priceColumn = 2;
+
+                    // Always use white background unless we explicitly change it
+                    c.setBackground(Color.WHITE);
+                    c.setForeground(Color.BLACK); // Default foreground
+
+                    // Format the Price column with £ symbol
+                    if (column == priceColumn) {
+                        Object value = getValueAt(row, column);
+                        if (value instanceof Number) {
+                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.UK);
+                            setValueAt(currencyFormat.format(value), row, column);
+                        }
+                    }
+
+                    // Set background colour and text for the Stock Status column
+                    if (column == statusColumn) {
+                        Object stockValue = getValueAt(row, stockColumn);
+                        try {
+                            int quantity = Integer.parseInt(stockValue.toString());
+                            String statusText;
+                            Color backgroundColor;
+
+                            if (quantity == 0) {
+                                backgroundColor = new Color(255, 99, 71); // Red
+                                statusText = "Out of Stock";
+                            } else if (quantity < 10) {
+                                backgroundColor = new Color(255, 255, 150); // Light yellow
+                                statusText = "Low Stock";
+                            } else if (quantity < 30) {
+                                backgroundColor = new Color(255, 200, 0); // Orange
+                                statusText = "Medium Stock";
+                            } else {
+                                backgroundColor = new Color(144, 238, 144); // Light green
+                                statusText = "High Stock";
+                            }
+                            c.setBackground(backgroundColor);
+                            setValueAt(statusText, row, column);
+
+                            // Get the default renderer for the column and set alignment
+                            TableCellRenderer headerRenderer = getColumnModel().getColumn(column).getHeaderRenderer();
+                            if (headerRenderer == null) {
+                                headerRenderer = getTableHeader().getDefaultRenderer();
+                            }
+                            if (c instanceof JLabel) {
+                                ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
+                            }
+                        } catch (NumberFormatException e) {
+                            setValueAt("Error", row, column);
+                            c.setBackground(Color.LIGHT_GRAY);
+                        }
+                    }
+                    // Ensure stock level column still shows text on white background
+                    else if (column == stockColumn) {
+                        c.setForeground(Color.BLACK);
+                        c.setBackground(Color.WHITE);
+                    } else {
+                        c.setForeground(Color.BLACK);
+                        c.setBackground(Color.WHITE);
+                    }
+
+                    return c;
+                }
+            };
+
+            itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            JScrollPane scrollPane = new JScrollPane(itemTable);
+
+            // Search feature
+            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
+            itemTable.setRowSorter(sorter);
+
+            searchTextField.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    String searchText = searchTextField.getText();
+                    if (searchText.trim().isEmpty()) {
+                        sorter.setRowFilter(null); // Show all rows
+                    } else {
+                        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText)); // Case-insensitive search
+                    }
+                }
+            });
+
+            JPanel tablePanel = new JPanel(new BorderLayout());
+            tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            tablePanel.add(scrollPane, BorderLayout.CENTER);
+
+            buttonContainerPanel.add(tablePanel, BorderLayout.CENTER);
+            contentPane.add(buttonContainerPanel, BorderLayout.CENTER);
+
+            // Exit button at the bottom
+            JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            exitPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            JButton exitButton = new JButton("Exit");
+            exitButton.setFont(new Font("Arial", Font.PLAIN, 16));
+            exitButton.addActionListener(e -> System.exit(0));
+            exitPanel.add(exitButton);
+
+            contentPane.add(exitPanel, BorderLayout.SOUTH);
+
+            frame.setVisible(true);
         });
-
-
-        // Action for the "Record Sale" button
-        recordSaleButton.addActionListener(e -> {
-            Add_Sale.Add_Sale(manager);
-
-        });
-
-        // Action for the "Show Sales Report" button
-        showSalesButton.addActionListener(e -> {
-        });
-
-        // Action for the "Show Low Stock Report" button
-        lowStockButton.addActionListener(e -> {
-            // Create a report for products with low stock (less than 5 units)
-            String report = "---- LOW STOCK REPORT ----\n";
-            List<Product> lowStockProducts = manager.getLowStockProducts();  // Get low stock products
-            for (Product product : lowStockProducts) {
-                report += product.getName() + " → only " + product.getQuantity() + " left.\n";
-            }
-            // Display the low stock report in the text area
-            reportArea.setText(report);
-        });
-
-        manager.loadInventory();
-        // Make the frame visible to the user (show the window)
-        frame.setVisible(true);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
