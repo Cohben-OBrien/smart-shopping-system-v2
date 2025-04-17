@@ -10,6 +10,8 @@ import javax.swing.RowFilter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -19,11 +21,74 @@ import java.util.Locale;
 public class Main extends JFrame {
 
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new LoginDialog(); // Create and show the login dialog
+        });
+    }
+
+    static class LoginDialog extends JDialog {
+        private JTextField usernameField;
+        private JPasswordField passwordField;
+        private JButton loginButton;
+
+        public LoginDialog() {
+            setTitle("Log In");
+            setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Close only the dialog
+            setModal(true); // Make it modal, preventing interaction with the background
+            setLayout(new GridLayout(3, 2, 15,15));// Simple layout
+            setPreferredSize(new Dimension(400,200));
+            setLocationRelativeTo(null); // Center on screen
+
+            JLabel usernameLabel = new JLabel("Username:");
+            usernameField = new JTextField(15);
+            JLabel passwordLabel = new JLabel("Password:");
+            passwordField = new JPasswordField(15);
+            loginButton = new JButton("Log In");
+
+            add(usernameLabel);
+            add(usernameField);
+            add(passwordLabel);
+            add(passwordField);
+            add(new JLabel()); // Empty label for spacing
+            add(loginButton);
+
+            loginButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String username = usernameField.getText();
+                    char[] password = passwordField.getPassword();
+                    String passwordStr = new String(password);
+
+                    // **Replace with your actual authentication logic**
+                    if (authenticateUser(username, passwordStr)) {
+                        dispose(); // Close the login dialog
+                        try {
+                            createAndShowGUI(); // Launch the main GUI
+                        } catch (SQLException ex) {
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
+                        passwordField.setText(""); // Clear password field on failure
+                    }
+                }
+            });
+
+            pack();
+            setVisible(true);
+        }
+
+        // **Simple hardcoded authentication for demonstration**
+        private boolean authenticateUser(String username, String password) {
+            return username.equals("1234") && password.equals("1234");
+        }
+    }
     public static void Add_product_to_table(Product product) {
         Product.tableModel.addRow(new Object[]{product.getId(),product.getName(),product.getPrice(),product.getQuantity()});
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void createAndShowGUI() throws SQLException {
         InventoryManager manager = new InventoryManager();
         manager.loadInventory();
 
