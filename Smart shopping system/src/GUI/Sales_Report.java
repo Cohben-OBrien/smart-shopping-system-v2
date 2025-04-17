@@ -102,7 +102,9 @@ public class Sales_Report {
         frame.setVisible(true);
 
         for(ProductSale productSale: Data.getProductSales(sale_id)) {
-            Productmodel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), productSale.getQuantity(), (productSale.getQuantity() * productSale.getProduct().getPrice())});
+            double total_cost = productSale.getQuantity() * productSale.getProduct().getPrice();
+            System.out.println(total_cost);
+            Productmodel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), productSale.getProduct().getPrice(), productSale.getQuantity(), total_cost});
         }
     }
 
