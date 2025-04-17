@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-2 This is a GUI with an improvement, just to check if it is ok. I added Pound sign and yellow and red alarms to advertise the owner shop to replace stock.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Document Word with introduction, Conclusions, Implementation Details and Individual contribution. Free to improve it and add anything during the project process" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -162,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744800890675</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Document Word with introduction, Conclusions, Implementation Details and Individual contribution. Free to improve it and add anything during the project process">
+      <option name="closed" value="true" />
+      <created>1744895884045</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744895884045</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,6 +179,7 @@
     <MESSAGE value="fixxing broken shit" />
     <MESSAGE value="Updated fields and cosmetic design" />
     <MESSAGE value="P2CSSS-2 This is a GUI with an improvement, just to check if it is ok. I added Pound sign and yellow and red alarms to advertise the owner shop to replace stock." />
-    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-2 This is a GUI with an improvement, just to check if it is ok. I added Pound sign and yellow and red alarms to advertise the owner shop to replace stock." />
+    <MESSAGE value="Document Word with introduction, Conclusions, Implementation Details and Individual contribution. Free to improve it and add anything during the project process" />
+    <option name="LAST_COMMIT_MESSAGE" value="Document Word with introduction, Conclusions, Implementation Details and Individual contribution. Free to improve it and add anything during the project process" />
   </component>
 </project>
