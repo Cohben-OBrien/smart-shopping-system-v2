@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Document Word with introduction, Conclusions, Implementation Details and Individual contribution. Free to improve it and add anything during the project process" />
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Added search function.">
+      <change afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Mainv3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/newMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/newMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/parrot.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Smart shopping system/GUI/parrot.jpg" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,12 +38,12 @@
     &quot;assignee&quot;: &quot;josecastroyupi2025&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Cohben-OBrien/smart-shopping-system-v2.git",
-    "accountId": "beccc93c-2ae2-4fed-89a5-f48f4f6d3c1a"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Cohben-OBrien/smart-shopping-system-v2.git&quot;,
+    &quot;accountId&quot;: &quot;a990a71b-5d58-4fc7-9578-e2783e60dc7e&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -47,35 +53,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Data.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Application.newMain.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;P2CSSS-2-GUI&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Data.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Mainv3.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "Application.newMain.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "P2CSSS-2-GUI",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\IdeaProjects\smartshopsystem" />
       <recent name="C:\Users\cohbe\code\smart-shopping-system-v2\Smart shopping system\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Unnamed">
+  <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/openjdk-23.0.2" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -103,6 +109,14 @@
         <item itemvalue="Application.test" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -152,23 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744728476270</updated>
     </task>
-    <task id="LOCAL-00005" summary="P2CSSS-2 This is a GUI with an improvement, just to check if it is ok. I added Pound sign and yellow and red alarms to advertise the owner shop to replace stock.">
+    <task id="LOCAL-00005" summary="Added search function.">
       <option name="closed" value="true" />
-      <created>1744800890675</created>
+      <created>1744739637990</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1744800890675</updated>
+      <updated>1744739637990</updated>
     </task>
-    <task id="LOCAL-00006" summary="Document Word with introduction, Conclusions, Implementation Details and Individual contribution. Free to improve it and add anything during the project process">
-      <option name="closed" value="true" />
-      <created>1744895884045</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1744895884045</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,8 +184,7 @@
     <MESSAGE value="move code files to src files" />
     <MESSAGE value="fixxing broken shit" />
     <MESSAGE value="Updated fields and cosmetic design" />
-    <MESSAGE value="P2CSSS-2 This is a GUI with an improvement, just to check if it is ok. I added Pound sign and yellow and red alarms to advertise the owner shop to replace stock." />
-    <MESSAGE value="Document Word with introduction, Conclusions, Implementation Details and Individual contribution. Free to improve it and add anything during the project process" />
-    <option name="LAST_COMMIT_MESSAGE" value="Document Word with introduction, Conclusions, Implementation Details and Individual contribution. Free to improve it and add anything during the project process" />
+    <MESSAGE value="Added search function." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added search function." />
   </component>
 </project>
