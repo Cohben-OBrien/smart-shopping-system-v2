@@ -6,6 +6,7 @@ import Records.SalesRecord;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -34,12 +35,16 @@ public class Sales_Report {
        salesTable.setFillsViewportHeight(true);
 
 
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(salesmodel);
+        salesTable.setRowSorter(sorter);
+
        JScrollPane table = new JScrollPane(salesTable);
         table.setBounds(0, 0, 450, 450);
         frame.getContentPane().add(table, BorderLayout.CENTER);
         salesTable.getColumnModel().getColumn(0).setPreferredWidth(150);
         salesTable.getColumnModel().getColumn(1).setPreferredWidth(150);
         salesTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+
 
 
         for(SalesRecord record: Data.getSalesRecords()) {
