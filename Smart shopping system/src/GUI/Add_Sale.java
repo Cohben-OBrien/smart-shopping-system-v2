@@ -19,6 +19,7 @@ public class Add_Sale {
     public static DefaultTableModel ProductModel = new DefaultTableModel();
 
     private static void add_table_product(Product product, int quantity) {
+        ProductModel.addRow(new Object[]{product.getId(), product.getName(), quantity, product.getPrice(), (product.getPrice() * quantity)});
 
     }
 
@@ -36,9 +37,6 @@ public class Add_Sale {
             ProductSelect.addItem(InventoryManager.getProducts().get(i).getName());
         }
 
-        // add table here
-
-        //
         JTextField ProductQuantity = new JTextField(15);
 
         JButton Add = new JButton("Add product");
@@ -67,6 +65,7 @@ public class Add_Sale {
             try {
                 if (Database.Data.check_stock(product.getId(), Integer.valueOf(ProductQuantity.getText()))) {
                     products.add(new ProductSale(product, Integer.parseInt(ProductQuantity.getText())));
+                    add_table_product(product, Integer.parseInt(ProductQuantity.getText()));
                     frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(frame, "Product does not have enough stock");
@@ -93,7 +92,7 @@ public class Add_Sale {
         JTable productTable = new JTable();
         productTable.setModel(ProductModel);
 
-        String[] columnNames = {"Product", "Quantity", "Price", "Total"};
+        String[] columnNames = {"Product ID", "Product", "Quantity", "Price", "Total"};
 
         ProductModel.setColumnCount(columnNames.length);
         ProductModel.setColumnIdentifiers(columnNames);
