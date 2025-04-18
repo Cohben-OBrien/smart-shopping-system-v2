@@ -6,15 +6,31 @@ import Records.ProductSale;
 import Records.SalesRecord;
 import com.sun.tools.javac.Main;
 
+import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 // This class manages all products and sales in the system.
-public class InventoryManager {
+public class InventoryManager extends Main {
     private static List<Product> products; // List to store all the products in inventory
     private static List<SalesRecord> sales; // List to store all sales made
+
+    public static JTable itemTable;
+
+    public static void render_data() throws SQLException {
+        Product.tableModel.setRowCount(0);
+        loadInventory();
+        for(Product product : getProducts()) {
+            System.out.println(product.getName() + product.getQuantity());
+            Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
+        }
+
+        itemTable.repaint();
+
+
+    }
 
 
     // Constructor: initializes the lists
@@ -43,6 +59,7 @@ public class InventoryManager {
 
         Data.Add_Sale(productSales, sales.getLast());
 
+        render_data();
     }
 
 
@@ -77,7 +94,7 @@ public class InventoryManager {
         return lowStock;
     }
 
-    public void loadInventory() throws SQLException {
+    public static void loadInventory() throws SQLException {
         products = Data.getProducts();
     }
 

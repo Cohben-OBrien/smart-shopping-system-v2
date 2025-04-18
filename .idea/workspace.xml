@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-24 sales record table added">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="updating the database file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Records/ProductSale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Records/ProductSale.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,13 +55,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Data.executor": "Run",
+    "Application.InventoryManager.executor": "Debug",
     "Application.Main.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "Application.newMain.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "P2CSSS-26-Sales-Records-GUI",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
     "node.js.detected.package.eslint": "true",
@@ -137,6 +136,11 @@
       <workItem from="1744798355158" duration="655000" />
       <workItem from="1744799027120" duration="4159000" />
       <workItem from="1744878254005" duration="15000" />
+      <workItem from="1744907751800" duration="2000" />
+      <workItem from="1744912349081" duration="1825000" />
+      <workItem from="1744917722122" duration="2053000" />
+      <workItem from="1744923331966" duration="114000" />
+      <workItem from="1744966116230" duration="1354000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -210,23 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744880687816</updated>
     </task>
-    <task id="LOCAL-00010" summary="P2CSSS-24 product added to the table when a new product is added">
+    <task id="LOCAL-00010" summary="updating the database file">
       <option name="closed" value="true" />
-      <created>1744881336017</created>
+      <created>1744919039491</created>
       <option name="number" value="00010" />
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
-      <updated>1744881336017</updated>
+      <updated>1744919039491</updated>
     </task>
-    <task id="LOCAL-00011" summary="P2CSSS-24 sales record table added">
-      <option name="closed" value="true" />
-      <created>1744893213825</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1744893213825</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,8 +237,7 @@
     <MESSAGE value="P2CSSS-24 Added the new GUI to main" />
     <MESSAGE value="P2CSSS-24 connect add item and add sale record buttons to correct GUI'S" />
     <MESSAGE value="P2CSSS-24 product table load products from the database" />
-    <MESSAGE value="P2CSSS-24 product added to the table when a new product is added" />
-    <MESSAGE value="P2CSSS-24 sales record table added" />
-    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-24 sales record table added" />
+    <MESSAGE value="updating the database file" />
+    <option name="LAST_COMMIT_MESSAGE" value="updating the database file" />
   </component>
 </project>

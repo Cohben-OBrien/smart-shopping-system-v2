@@ -10,6 +10,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.color.ProfileDataException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -19,6 +20,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class Main extends JFrame {
+
+    static InventoryManager manager = new InventoryManager();
 
 
     public static void main(String[] args) {
@@ -88,9 +91,80 @@ public class Main extends JFrame {
         Product.tableModel.addRow(new Object[]{product.getId(),product.getName(),product.getPrice(),product.getQuantity()});
     }
 
+
     public static void createAndShowGUI() throws SQLException {
-        InventoryManager manager = new InventoryManager();
         manager.loadInventory();
+
+        manager.itemTable = new JTable(Product.tableModel) {
+            @Override
+            public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                int stockColumn = 3;
+                int statusColumn = 4;
+                int priceColumn = 2;
+
+                // Always use white background unless we explicitly change it
+                c.setBackground(Color.WHITE);
+                c.setForeground(Color.BLACK); // Default foreground
+
+                // Format the Price column with £ symbol
+                if (column == priceColumn) {
+                    Object value = getValueAt(row, column);
+                    if (value instanceof Number) {
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.UK);
+                        setValueAt(currencyFormat.format(value), row, column);
+                    }
+                }
+
+                // Set background colour and text for the Stock Status column
+                if (column == statusColumn) {
+                    Object stockValue = getValueAt(row, stockColumn);
+                    try {
+                        int quantity = Integer.parseInt(stockValue.toString());
+                        String statusText;
+                        Color backgroundColor;
+
+                        if (quantity == 0) {
+                            backgroundColor = new Color(255, 99, 71); // Red
+                            statusText = "Out of Stock";
+                        } else if (quantity < 10) {
+                            backgroundColor = new Color(255, 255, 150); // Light yellow
+                            statusText = "Low Stock";
+                        } else if (quantity < 30) {
+                            backgroundColor = new Color(255, 200, 0); // Orange
+                            statusText = "Medium Stock";
+                        } else {
+                            backgroundColor = new Color(144, 238, 144); // Light green
+                            statusText = "High Stock";
+                        }
+                        c.setBackground(backgroundColor);
+                        setValueAt(statusText, row, column);
+
+                        // Get the default renderer for the column and set alignment
+                        TableCellRenderer headerRenderer = getColumnModel().getColumn(column).getHeaderRenderer();
+                        if (headerRenderer == null) {
+                            headerRenderer = getTableHeader().getDefaultRenderer();
+                        }
+                        if (c instanceof JLabel) {
+                            ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
+                        }
+                    } catch (NumberFormatException e) {
+                        setValueAt("Error", row, column);
+                        c.setBackground(Color.LIGHT_GRAY);
+                    }
+                }
+                // Ensure stock level column still shows text on white background
+                else if (column == stockColumn) {
+                    c.setForeground(Color.BLACK);
+                    c.setBackground(Color.WHITE);
+                } else {
+                    c.setForeground(Color.BLACK);
+                    c.setBackground(Color.WHITE);
+                }
+
+                return c;
+            }
+        };
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Smart Shopping System v1");
@@ -133,6 +207,7 @@ public class Main extends JFrame {
 
             recordSaleButton.addActionListener(e -> {
                 Add_Sale.Add_Sale(manager);
+
             });
 
             buttonPanel.add(recordSaleButton);
@@ -178,88 +253,19 @@ public class Main extends JFrame {
 
 
             // JTable with price formatting and stock colour rules in the new column
-            JTable itemTable = new JTable(Product.tableModel) {
-                @Override
-                public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
-                    Component c = super.prepareRenderer(renderer, row, column);
-                    int stockColumn = 3;
-                    int statusColumn = 4;
-                    int priceColumn = 2;
-
-                    // Always use white background unless we explicitly change it
-                    c.setBackground(Color.WHITE);
-                    c.setForeground(Color.BLACK); // Default foreground
-
-                    // Format the Price column with £ symbol
-                    if (column == priceColumn) {
-                        Object value = getValueAt(row, column);
-                        if (value instanceof Number) {
-                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.UK);
-                            setValueAt(currencyFormat.format(value), row, column);
-                        }
-                    }
-
-                    // Set background colour and text for the Stock Status column
-                    if (column == statusColumn) {
-                        Object stockValue = getValueAt(row, stockColumn);
-                        try {
-                            int quantity = Integer.parseInt(stockValue.toString());
-                            String statusText;
-                            Color backgroundColor;
-
-                            if (quantity == 0) {
-                                backgroundColor = new Color(255, 99, 71); // Red
-                                statusText = "Out of Stock";
-                            } else if (quantity < 10) {
-                                backgroundColor = new Color(255, 255, 150); // Light yellow
-                                statusText = "Low Stock";
-                            } else if (quantity < 30) {
-                                backgroundColor = new Color(255, 200, 0); // Orange
-                                statusText = "Medium Stock";
-                            } else {
-                                backgroundColor = new Color(144, 238, 144); // Light green
-                                statusText = "High Stock";
-                            }
-                            c.setBackground(backgroundColor);
-                            setValueAt(statusText, row, column);
-
-                            // Get the default renderer for the column and set alignment
-                            TableCellRenderer headerRenderer = getColumnModel().getColumn(column).getHeaderRenderer();
-                            if (headerRenderer == null) {
-                                headerRenderer = getTableHeader().getDefaultRenderer();
-                            }
-                            if (c instanceof JLabel) {
-                                ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
-                            }
-                        } catch (NumberFormatException e) {
-                            setValueAt("Error", row, column);
-                            c.setBackground(Color.LIGHT_GRAY);
-                        }
-                    }
-                    // Ensure stock level column still shows text on white background
-                    else if (column == stockColumn) {
-                        c.setForeground(Color.BLACK);
-                        c.setBackground(Color.WHITE);
-                    } else {
-                        c.setForeground(Color.BLACK);
-                        c.setBackground(Color.WHITE);
-                    }
-
-                    return c;
-                }
-            };
 
             //load data to the table
-            for(Product product : manager.getProducts()) {
-                Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
-            }
+            try {
+                manager.render_data();
+            } catch (SQLException a) {}
 
-            itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
-            JScrollPane scrollPane = new JScrollPane(itemTable);
+
+            manager.itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            JScrollPane scrollPane = new JScrollPane(manager.itemTable);
 
             // Search feature
             TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
-            itemTable.setRowSorter(sorter);
+            manager.itemTable.setRowSorter(sorter);
 
             searchTextField.addKeyListener(new KeyAdapter() {
                 @Override
