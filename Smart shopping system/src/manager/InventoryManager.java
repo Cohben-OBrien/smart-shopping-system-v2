@@ -9,6 +9,7 @@ import com.sun.tools.javac.Main;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -96,6 +97,7 @@ public class InventoryManager extends Main {
 
     public static void loadInventory() throws SQLException {
         products = Data.getProducts();
+        products.sort(Comparator.comparingInt(Product::getId));
     }
 
     public static int product_next_id() {
