@@ -5,7 +5,9 @@ import Records.ProductSale;
 import manager.InventoryManager;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.xml.crypto.Data;
+import java.awt.*;
 import java.awt.color.ProfileDataException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +16,13 @@ public class Add_Sale {
 
     static ArrayList<ProductSale> products = new ArrayList<>();
 
-    public static void add_product(InventoryManager manager) {
+    public static DefaultTableModel ProductModel = new DefaultTableModel();
+
+    private static void add_table_product(Product product, int quantity) {
+
+    }
+
+    private static void add_product(InventoryManager manager) {
         JFrame frame = new JFrame("Add Product");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(null);
@@ -79,16 +87,31 @@ public class Add_Sale {
     public static void Add_Sale(InventoryManager manager) {
         products.clear();
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 
+        JTable productTable = new JTable();
+        productTable.setModel(ProductModel);
+
+        String[] columnNames = {"Product", "Quantity", "Price", "Total"};
+
+        ProductModel.setColumnCount(columnNames.length);
+        ProductModel.setColumnIdentifiers(columnNames);
 
 
+        JScrollPane ProductTable = new JScrollPane(productTable);
 
         frame.setTitle("Add Sale");
         frame.setLayout(null);
+        frame.setResizable(false);
         frame.setSize(800, 800);
 
-
+        ProductTable.setBounds(0, 0, 800, 700);
+        frame.add(ProductTable, BorderLayout.CENTER);
+        productTable.getColumnModel().getColumn(0).setResizable(true);
+        productTable.getColumnModel().getColumn(1).setResizable(true);
+        productTable.getColumnModel().getColumn(2).setResizable(true);
+        productTable.getColumnModel().getColumn(3).setResizable(true);
         JLabel Date = new JLabel("Date of Sale: ");
         JTextField SaleDate = new JTextField(15);
 
