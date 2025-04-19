@@ -39,6 +39,16 @@ public class Product {
     public void sell(int quantitySold) {
         this.quantity -= quantitySold;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPrice(float price) {
+        this.price = price;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
 
 

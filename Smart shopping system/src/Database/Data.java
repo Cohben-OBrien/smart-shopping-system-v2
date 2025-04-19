@@ -164,6 +164,17 @@ public class Data {
         return products;
     }
 
+    public static void update_Product(Product product) throws SQLException {
+        String sql = "UPDATE items SET name = ?, price = ?, stock = ? WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, product.getName());
+        ps.setFloat(2, product.getPrice());
+        ps.setInt(3, product.getQuantity());
+        ps.setInt(4, product.getId());
+        ps.executeUpdate();
+
+    }
+
     public static void remove_Product(int ID) throws SQLException {
         String sql = "DELETE FROM sales WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
