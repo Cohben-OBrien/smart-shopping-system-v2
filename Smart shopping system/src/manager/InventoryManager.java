@@ -117,11 +117,14 @@ public class InventoryManager extends Main {
     }
 
     public static void Update_Product(Product product, String Name, float Price, int Quantity) throws SQLException {
+            String Previous_name = product.getName();
+
             products.get(products.indexOf(product)).setName(Name);
             products.get(products.indexOf(product)).setPrice(Price);
             products.get(products.indexOf(product)).setQuantity(Quantity);
 
-            Data.update_Product(products.get(products.indexOf(product)));
+
+            Data.update_Product(products.get(products.indexOf(product)), Previous_name);
             render_data();
     }
 

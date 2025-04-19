@@ -7,6 +7,7 @@ import manager.InventoryManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Data {
@@ -164,7 +165,8 @@ public class Data {
         return products;
     }
 
-    public static void update_Product(Product product) throws SQLException {
+    public static void update_Product(Product product, String Previous_name) throws SQLException {
+
         String sql = "UPDATE items SET name = ?, price = ?, stock = ? WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, product.getName());
@@ -173,6 +175,18 @@ public class Data {
         ps.setInt(4, product.getId());
         ps.executeUpdate();
 
+
+        System.out.println(Previous_name);
+
+        if(!product.getName().equals(Previous_name)) {
+
+            String old_name = Previous_name.replace(" ", "_")+product.getId();
+            String new_name = product.getName().replace(" ", "_")+product.getId();
+
+            String query = "ALTER TABLE "+ old_name + " RENAME TO " + new_name + ";";
+            PreparedStatement ps2 = connection.prepareStatement(query);
+            ps2.executeUpdate();
+        }
     }
 
     public static void remove_Product(int ID) throws SQLException {
