@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 // This class manages all products and sales in the system.
 public class InventoryManager extends Main {
@@ -114,6 +113,23 @@ public class InventoryManager extends Main {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    public static void Update_Product(Product product, String Name, float Price, int Quantity) throws SQLException {
+            String Previous_name = product.getName();
+
+            products.get(products.indexOf(product)).setName(Name);
+            products.get(products.indexOf(product)).setPrice(Price);
+            products.get(products.indexOf(product)).setQuantity(Quantity);
+
+
+            Data.update_Product(products.get(products.indexOf(product)), Previous_name);
+            render_data();
+    }
+
+    public static void removeProduct(Product product) throws SQLException {
+        Data.remove_Product(product.getId());
+        products.remove(product);
     }
 }
 

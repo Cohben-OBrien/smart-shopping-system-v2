@@ -7,7 +7,6 @@ import manager.InventoryManager;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Data {
     public static Connection connection;
@@ -19,8 +18,22 @@ public class Data {
 
     }
 
-    public static ArrayList<Product> getProducts() throws SQLException {
+    public static ArrayList<User.User> Load_users() throws SQLException {
         connect();
+        System.out.println(connection);
+        String sql = "SELECT * FROM users";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.executeQuery();
+        ResultSet rs = ps.executeQuery();
+        System.out.println(rs);
+        ArrayList<User.User> users = new ArrayList<>();
+        while (rs.next()) {
+            users.add(new User.User(rs.getInt("ID"), rs.getString("Username"), rs.getString("Password"), rs.getString("Type")));
+        }
+        return users;
+    }
+
+    public static ArrayList<Product> getProducts() throws SQLException {
 
         ArrayList<Product> products = new ArrayList<>();
 
@@ -29,6 +42,7 @@ public class Data {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
+
             products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock")));
         }
 
@@ -113,6 +127,7 @@ public class Data {
     }
 
 
+
     public static void Add_Sale(ArrayList<ProductSale> Products, SalesRecord sale) throws SQLException {
         double total = 0;
 
@@ -162,6 +177,37 @@ public class Data {
             }
         }
         return products;
+    }
+
+    public static void update_Product(Product product, String Previous_name) throws SQLException {
+
+        String sql = "UPDATE items SET name = ?, price = ?, stock = ? WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, product.getName());
+        ps.setFloat(2, product.getPrice());
+        ps.setInt(3, product.getQuantity());
+        ps.setInt(4, product.getId());
+        ps.executeUpdate();
+
+
+        System.out.println(Previous_name);
+
+        if(!product.getName().equals(Previous_name)) {
+
+            String old_name = Previous_name.replace(" ", "_")+product.getId();
+            String new_name = product.getName().replace(" ", "_")+product.getId();
+
+            String query = "ALTER TABLE "+ old_name + " RENAME TO " + new_name + ";";
+            PreparedStatement ps2 = connection.prepareStatement(query);
+            ps2.executeUpdate();
+        }
+    }
+
+    public static void remove_Product(int ID) throws SQLException {
+        String sql = "DELETE FROM sales WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, ID);
+        ps.executeUpdate();
     }
 
    //add filter

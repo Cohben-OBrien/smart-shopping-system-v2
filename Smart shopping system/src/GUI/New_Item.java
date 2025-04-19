@@ -4,7 +4,6 @@ import Product.Product;
 import manager.InventoryManager;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class New_Item {
