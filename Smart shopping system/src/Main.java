@@ -310,16 +310,11 @@ public class Main extends JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {
                     int selectedRow = manager.itemTable.getSelectedRow();
-                    int productId = (int) manager.itemTable.getValueAt(selectedRow, 0);
+                    String productName = manager.itemTable.getValueAt(selectedRow, 1).toString();
+                    Product product = manager.findProduct(productName);
 
                     try {
-                        Product product = manager.getProductById(productId);
-                        if (product != null) {
-                            Edit_Item editor = new Edit_Item();
-                            editor.editItem(manager, product);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Product not found.");
-                        }
+                        Edit_Item.editItem(manager, product);
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Error loading product");
                         e.printStackTrace();

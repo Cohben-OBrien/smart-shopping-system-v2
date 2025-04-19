@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 
 public class Edit_Item {
-    public void editItem(InventoryManager manager, Product product) throws SQLException {
+    public static void editItem(InventoryManager manager, Product product) throws SQLException {
         JFrame frame = new JFrame("Edit Item");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(null);
@@ -47,26 +47,19 @@ public class Edit_Item {
 
         updateButton.addActionListener(e -> {
             try {
-                String newName = nameField.getText().trim();
-                float newPrice = Float.parseFloat(priceField.getText());
-                int newQuantity = Integer.parseInt(quantityField.getText());
+                if((nameField.getText().equals("")) || (priceField.getText().equals("")) || (quantityField.getText().equals(""))){
+                    JOptionPane.showMessageDialog(frame, "Please enter all the fields");
+                } else {
 
-                if (newName.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Name cannot be empty");
-                    return;
-               }
-                product.setName(newName);
-                product.setPrice(newPrice);
-                product.setQuantity(newQuantity);
+                    String newName = nameField.getText().trim();
+                    float newPrice = Float.parseFloat(priceField.getText());
+                    int newQuantity = Integer.parseInt(quantityField.getText());
 
-                manager.updateProduct(product);
-                JOptionPane.showMessageDialog(null, "Item updated");
-                frame.dispose();
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Price cannot be empty");
-            } catch (SQLException ex){
-                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
-            }
+                    manager.Update_Product(product, newName, newPrice, newQuantity);
+                    frame.dispose();
+                }} catch (Exception a) {
+                }
+
         });
     }
 }
