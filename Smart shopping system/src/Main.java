@@ -11,10 +11,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -167,7 +164,12 @@ public class Main extends JFrame {
                 return c;
             }
         };
+        //Prevents the table from being allowed to be entered directly into the table only allowing the row to be selected.
+        manager.itemTable.setDefaultEditor(Object.class, null);
 
+        manager.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        manager.itemTable.setRowSelectionAllowed(true);
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Smart Shopping System v1");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -301,6 +303,30 @@ public class Main extends JFrame {
             contentPane.add(exitPanel, BorderLayout.SOUTH);
 
             frame.setVisible(true);
+        });
+        //allows the user to click on the row of the table they want to edit
+        //allows the user to click on the row of the table they want to edit
+        manager.itemTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {
+                    int selectedRow = manager.itemTable.getSelectedRow();
+                    int productId = (int) manager.itemTable.getValueAt(selectedRow, 0);
+
+                    try {
+                        Product product = manager.getProductById(productId);
+                        if (product != null) {
+                            Edit_Item editor = new Edit_Item();
+                            editor.editItem(manager, product);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Product not found.");
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Error loading product");
+                        e.printStackTrace();
+                    }
+                }
+
+            }
         });
     }
 }

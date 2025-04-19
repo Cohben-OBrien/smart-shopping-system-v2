@@ -21,6 +21,9 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
     // Getters for the product details
     public String getName() {
         return name;
@@ -45,9 +48,6 @@ public class Product {
     }
     public void setPrice(float price) {
         this.price = price;
-    }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 }
 
