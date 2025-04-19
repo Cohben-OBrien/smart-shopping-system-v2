@@ -164,6 +164,13 @@ public class Data {
         return products;
     }
 
+    public static void remove_Product(int ID) throws SQLException {
+        String sql = "DELETE FROM sales WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, ID);
+        ps.executeUpdate();
+    }
+
    //add filter
 
 }
