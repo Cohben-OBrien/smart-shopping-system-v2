@@ -115,6 +115,20 @@ public class InventoryManager extends Main {
             return 0;
         }
     }
+
+    public static void Update_Product(Product product, String Name, float Price, int Quantity) throws SQLException {
+            products.get(products.indexOf(product)).setName(Name);
+            products.get(products.indexOf(product)).setPrice(Price);
+            products.get(products.indexOf(product)).setQuantity(Quantity);
+
+            Data.update_Product(products.get(products.indexOf(product)));
+            render_data();
+    }
+
+    public static void removeProduct(Product product) throws SQLException {
+        Data.remove_Product(product.getId());
+        products.remove(product);
+    }
 }
 
 
