@@ -21,12 +21,6 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setPrice(float price){
-        this.price = price;
-    }
     public void setQuantity(int quantity){
         this.quantity = quantity;
     }
@@ -54,9 +48,6 @@ public class Product {
     }
     public void setPrice(float price) {
         this.price = price;
-    }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 }
 
