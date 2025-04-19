@@ -71,7 +71,7 @@ public class Data {
         ps.executeUpdate();
 
         String name = product.getName().replace(" ", "_") + product.getId();
-        String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_total real)";
+        String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_total real, FOREIGN KEY (sale_id) REFERENCES sales(id))";
         PreparedStatement ps2 = connection.prepareStatement(query2);
         ps2.executeUpdate();
 
