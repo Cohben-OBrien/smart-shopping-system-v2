@@ -77,7 +77,6 @@ public class Data {
 
 
     }
-
     public static boolean check_stock(int id, int requied) throws SQLException {
         String sql = "SELECT stock FROM items WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);

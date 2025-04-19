@@ -21,6 +21,15 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setPrice(float price){
+        this.price = price;
+    }
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
     // Getters for the product details
     public String getName() {
         return name;
