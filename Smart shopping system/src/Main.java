@@ -2,6 +2,7 @@ package GUI;
 
 import Database.Data;
 import Product.Product;
+import User.User_authenticator;
 import manager.InventoryManager;
 
 import javax.swing.*;
@@ -10,7 +11,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.color.ProfileDataException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -22,7 +22,6 @@ import java.util.Locale;
 public class Main extends JFrame {
 
     static InventoryManager manager = new InventoryManager();
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -64,17 +63,24 @@ public class Main extends JFrame {
                     String passwordStr = new String(password);
 
                     // **Replace with your actual authentication logic**
-                    if (authenticateUser(username, passwordStr)) {
-                        dispose(); // Close the login dialog
-                        try {
-                            createAndShowGUI(); // Launch the main GUI
-                        } catch (SQLException ex) {
+                    try {
+                        if (User_authenticator.User_Authemticator(username, passwordStr)) {
+                            dispose(); // Close the login dialog
+                            try {
+                                createAndShowGUI(); // Launch the main GUI
+                            } catch (SQLException ex) {
 
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
+                            passwordField.setText(""); // Clear password field on failure
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
-                        passwordField.setText(""); // Clear password field on failure
+                    } catch (SQLException ex) {
+
+                        System.err.println(ex.getMessage());
                     }
+
+
                 }
             });
 
@@ -82,10 +88,6 @@ public class Main extends JFrame {
             setVisible(true);
         }
 
-        // **Simple hardcoded authentication for demonstration**
-        private boolean authenticateUser(String username, String password) {
-            return username.equals("1234") && password.equals("1234");
-        }
     }
     public static void Add_product_to_table(Product product) {
         Product.tableModel.addRow(new Object[]{product.getId(),product.getName(),product.getPrice(),product.getQuantity()});

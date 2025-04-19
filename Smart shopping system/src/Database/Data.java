@@ -7,8 +7,6 @@ import manager.InventoryManager;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class Data {
     public static Connection connection;
@@ -20,8 +18,22 @@ public class Data {
 
     }
 
-    public static ArrayList<Product> getProducts() throws SQLException {
+    public static ArrayList<User.User> Load_users() throws SQLException {
         connect();
+        System.out.println(connection);
+        String sql = "SELECT * FROM users";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.executeQuery();
+        ResultSet rs = ps.executeQuery();
+        System.out.println(rs);
+        ArrayList<User.User> users = new ArrayList<>();
+        while (rs.next()) {
+            users.add(new User.User(rs.getInt("ID"), rs.getString("Username"), rs.getString("Password"), rs.getString("Type")));
+        }
+        return users;
+    }
+
+    public static ArrayList<Product> getProducts() throws SQLException {
 
         ArrayList<Product> products = new ArrayList<>();
 
@@ -30,6 +42,7 @@ public class Data {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
+
             products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock")));
         }
 
@@ -112,6 +125,7 @@ public class Data {
         }
         return records;
     }
+
 
 
     public static void Add_Sale(ArrayList<ProductSale> Products, SalesRecord sale) throws SQLException {

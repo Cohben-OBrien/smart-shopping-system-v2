@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="product table updates when a sale is maded">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-28 update product table name function">
+      <change afterPath="$PROJECT_DIR$/Smart shopping system/src/User/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Smart shopping system/src/User/User_authenticator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Records/SalesRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Records/SalesRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="P2CSSS-28-add-sale-products-table-to-the-record-sale-GUI" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,7 +68,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "P2CSSS-19-database-functions",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
     "node.js.detected.package.eslint": "true",
@@ -229,7 +236,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744967827429</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="P2CSSS-28 update product table name function">
+      <option name="closed" value="true" />
+      <created>1745056238338</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745056238338</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,6 +261,18 @@
     <MESSAGE value="P2CSSS-24 product table load products from the database" />
     <MESSAGE value="updating the database file" />
     <MESSAGE value="product table updates when a sale is maded" />
-    <option name="LAST_COMMIT_MESSAGE" value="product table updates when a sale is maded" />
+    <MESSAGE value="P2CSSS-28 update product table name function" />
+    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-28 update product table name function" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Smart shopping system/src/Database/Data.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

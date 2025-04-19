@@ -6,11 +6,8 @@ import manager.InventoryManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.crypto.Data;
 import java.awt.*;
-import java.awt.color.ProfileDataException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Add_Sale {
 
