@@ -203,7 +203,7 @@ public class Data {
     }
 
     public static void remove_Product(int ID) throws SQLException {
-        String sql = "DELETE FROM sales WHERE id = ?";
+        String sql = "DELETE FROM items WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, ID);
         ps.executeUpdate();
