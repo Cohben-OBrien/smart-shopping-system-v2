@@ -7,7 +7,6 @@ import manager.InventoryManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.RowFilter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
@@ -19,6 +18,7 @@ import java.util.Locale;
 public class Main extends JFrame {
 
     static InventoryManager manager = new InventoryManager();
+    static JFrame frame; // Make the frame a static member to access it in the ActionListener
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -52,61 +52,51 @@ public class Main extends JFrame {
             add(new JLabel()); // Empty label for spacing
             add(loginButton);
 
-            loginButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String username = usernameField.getText();
-                    char[] password = passwordField.getPassword();
-                    String passwordStr = new String(password);
+            loginButton.addActionListener(e -> {
+                String username = usernameField.getText();
+                char[] password = passwordField.getPassword();
+                String passwordStr = new String(password);
 
-                    // **Replace with your actual authentication logic**
-                    try {
-                        if (User_authenticator.User_Authemticator(username, passwordStr)) {
-                            dispose(); // Close the login dialog
-                            try {
-                                createAndShowGUI(); // Launch the main GUI
-                            } catch (SQLException ex) {
-
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
-                            passwordField.setText(""); // Clear password field on failure
+                try {
+                    if (User_authenticator.User_Authemticator(username, passwordStr)) {
+                        dispose(); // Close the login dialog
+                        try {
+                            frame = createAndShowGUI(); // Launch the main GUI and store the frame
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
                         }
-                    } catch (SQLException ex) {
-
-                        System.err.println(ex.getMessage());
+                    } else {
+                        JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
+                        passwordField.setText(""); // Clear password field on failure
                     }
-
-
+                } catch (SQLException ex) {
+                    System.err.println(ex.getMessage());
                 }
             });
 
             pack();
             setVisible(true);
         }
-
     }
+
     public static void Add_product_to_table(Product product) {
         Product.tableModel.addRow(new Object[]{product.getId(),product.getName(),product.getPrice(),product.getQuantity()});
     }
 
-
-    public static void createAndShowGUI() throws SQLException {
+    public static JFrame createAndShowGUI() throws SQLException {
         manager.loadInventory();
 
         manager.itemTable = new JTable(Product.tableModel) {
             @Override
-            public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
                 int stockColumn = 3;
                 int statusColumn = 4;
                 int priceColumn = 2;
 
-                // Always use white background unless we explicitly change it
                 c.setBackground(Color.WHITE);
-                c.setForeground(Color.BLACK); // Default foreground
+                c.setForeground(Color.BLACK);
 
-                // Format the Price column with £ symbol
                 if (column == priceColumn) {
                     Object value = getValueAt(row, column);
                     if (value instanceof Number) {
@@ -115,7 +105,6 @@ public class Main extends JFrame {
                     }
                 }
 
-                // Set background colour and text for the Stock Status column
                 if (column == statusColumn) {
                     Object stockValue = getValueAt(row, stockColumn);
                     try {
@@ -139,7 +128,6 @@ public class Main extends JFrame {
                         c.setBackground(backgroundColor);
                         setValueAt(statusText, row, column);
 
-                        // Get the default renderer for the column and set alignment
                         TableCellRenderer headerRenderer = getColumnModel().getColumn(column).getHeaderRenderer();
                         if (headerRenderer == null) {
                             headerRenderer = getTableHeader().getDefaultRenderer();
@@ -151,167 +139,182 @@ public class Main extends JFrame {
                         setValueAt("Error", row, column);
                         c.setBackground(Color.LIGHT_GRAY);
                     }
-                }
-                // Ensure stock level column still shows text on white background
-                else if (column == stockColumn) {
+                } else if (column == stockColumn) {
                     c.setForeground(Color.BLACK);
                     c.setBackground(Color.WHITE);
                 } else {
                     c.setForeground(Color.BLACK);
                     c.setBackground(Color.WHITE);
                 }
-
                 return c;
             }
         };
-        //Prevents the table from being allowed to be entered directly into the table only allowing the row to be selected.
         manager.itemTable.setDefaultEditor(Object.class, null);
-
         manager.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
         manager.itemTable.setRowSelectionAllowed(true);
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Smart Shopping System v1");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(850, 700); // Adjusted width to accommodate the new column
-            frame.setLocationRelativeTo(null);
 
-            Container contentPane = frame.getContentPane();
-            contentPane.setLayout(new BorderLayout());
+        frame = new JFrame("Smart Shopping System v1");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(850, 700);
+        frame.setLocationRelativeTo(null);
 
-            // Title label at the top
-            JLabel titleLabel = new JLabel("Smart Shopping System v1");
-            titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
-            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            titleLabel.setForeground(Color.BLUE);
-            contentPane.add(titleLabel, BorderLayout.NORTH);
+        Container contentPane = frame.getContentPane();
+        contentPane.setLayout(new BorderLayout());
 
-            // Panel for buttons and search
-            JPanel buttonSearchPanel = new JPanel(new BorderLayout(5, 5));
-            buttonSearchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+        JLabel titleLabel = new JLabel("Smart Shopping System v1");
+        titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setForeground(Color.BLUE);
+        contentPane.add(titleLabel, BorderLayout.NORTH);
 
-            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-            buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+        JPanel buttonSearchPanel = new JPanel(new BorderLayout(5, 5));
+        buttonSearchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
-            // Action buttons
-            JButton productsButton = new JButton("Add Products");
-            productsButton.setFont(new Font("Arial", Font.PLAIN, 16));
-            productsButton.addActionListener(e -> {
-                New_Item item = new New_Item();
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 
-                try {
-                    item.newItem(manager);
-                } catch (SQLException a) {}
-
-            });
-            buttonPanel.add(productsButton);
-
-            JButton recordSaleButton = new JButton("Record Sale");
-            recordSaleButton.setFont(new Font("Arial", Font.PLAIN, 16));
-
-            recordSaleButton.addActionListener(e -> {
-                Add_Sale.Add_Sale(manager);
-
-            });
-
-            buttonPanel.add(recordSaleButton);
-
-            JButton salesReportButton = new JButton("Sales Report");
-            salesReportButton.setFont(new Font("Arial", Font.PLAIN, 16));
-            salesReportButton.addActionListener(e -> {
-                Sales_Report report = new Sales_Report();
-                try {
-                    report.Sales_Report();
-                } catch (SQLException a) {
-                    System.out.println(a);
-                }
-            });
-            buttonPanel.add(salesReportButton);
-
-            JButton lowStockButton = new JButton("Stock Report");
-            lowStockButton.setFont(new Font("Arial", Font.PLAIN, 16));
-            lowStockButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Low Stock Report functionality."));
-            buttonPanel.add(lowStockButton);
-
-            buttonSearchPanel.add(buttonPanel, BorderLayout.NORTH);
-
-            // Search bar
-            JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-            JLabel searchLabel = new JLabel("Product Search:");
-            searchLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-            searchPanel.add(searchLabel);
-
-            JTextField searchTextField = new JTextField(30);
-            searchTextField.setFont(new Font("Arial", Font.PLAIN, 20));
-            searchPanel.add(searchTextField);
-
-            buttonSearchPanel.add(searchPanel, BorderLayout.SOUTH);
-
-            JPanel buttonContainerPanel = new JPanel(new BorderLayout());
-            buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH);
-
-            // Modified column names with the new "Stock Status" column
-            String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
-
-            Product.tableModel.setColumnCount(columnNames.length);
-            Product.tableModel.setColumnIdentifiers(columnNames);
-
-
-            // JTable with price formatting and stock colour rules in the new column
-
-            //load data to the table
+        JButton productsButton = new JButton("Add Products");
+        productsButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        productsButton.addActionListener(e -> {
+            New_Item item = new New_Item();
             try {
-                manager.render_data();
+                item.newItem(manager);
             } catch (SQLException a) {}
+        });
+        buttonPanel.add(productsButton);
 
+        JButton recordSaleButton = new JButton("Record Sale");
+        recordSaleButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        recordSaleButton.addActionListener(e -> {
+            Add_Sale.Add_Sale(manager);
+        });
+        buttonPanel.add(recordSaleButton);
 
-            manager.itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
-            JScrollPane scrollPane = new JScrollPane(manager.itemTable);
+        JButton salesReportButton = new JButton("Sales Report");
+        salesReportButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        salesReportButton.addActionListener(e -> {
+            Sales_Report report = new Sales_Report();
+            try {
+                report.Sales_Report();
+            } catch (SQLException a) {
+                System.out.println(a);
+            }
+        });
+        buttonPanel.add(salesReportButton);
 
-            // Search feature
-            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
-            manager.itemTable.setRowSorter(sorter);
+        JButton lowStockButton = new JButton("Stock Report");
+        lowStockButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        lowStockButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Low Stock Report functionality."));
+        buttonPanel.add(lowStockButton);
 
-            searchTextField.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyReleased(KeyEvent e) {
-                    String searchText = searchTextField.getText();
-                    if (searchText.trim().isEmpty()) {
-                        sorter.setRowFilter(null); // Show all rows
+        // *** ADD DELETE BUTTON HERE ***
+        JButton deleteProductButton = new JButton("Delete Product");
+        deleteProductButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        deleteProductButton.setEnabled(false); // Initially disabled
+        deleteProductButton.addActionListener(e -> {
+            int selectedRow = manager.itemTable.getSelectedRow();
+            if (selectedRow != -1) {
+                int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow); // Get the actual row index in the model
+                String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1); // Assuming product name is in the second column
+
+                int confirmation = JOptionPane.showConfirmDialog(
+                        frame,
+                        "Are you sure you want to delete '" + productNameToDelete + "'?",
+                        "Confirm Deletion",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirmation == JOptionPane.YES_OPTION) {
+                    Product productToDelete = manager.findProduct(productNameToDelete);
+                    if (productToDelete != null) {
+                        try {
+                            manager.removeProduct(productToDelete); // Use the existing removeProduct method
+                            Product.tableModel.removeRow(modelRow); // Remove from the table model
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(frame, "Error deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                            ex.printStackTrace();
+                        }
                     } else {
-                        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText)); // Case-insensitive search
+                        JOptionPane.showMessageDialog(frame, "Product not found.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-            });
-
-            JPanel tablePanel = new JPanel(new BorderLayout());
-            tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            tablePanel.add(scrollPane, BorderLayout.CENTER);
-
-            buttonContainerPanel.add(tablePanel, BorderLayout.CENTER);
-            contentPane.add(buttonContainerPanel, BorderLayout.CENTER);
-
-            // Exit button at the bottom
-            JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            exitPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            JButton exitButton = new JButton("Exit");
-            exitButton.setFont(new Font("Arial", Font.PLAIN, 16));
-            exitButton.addActionListener(e -> System.exit(0));
-            exitPanel.add(exitButton);
-
-            contentPane.add(exitPanel, BorderLayout.SOUTH);
-
-            frame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
-        //allows the user to click on the row of the table they want to edit
-        //allows the user to click on the row of the table they want to edit
-        manager.itemTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        buttonPanel.add(deleteProductButton);
+        // *** END OF DELETE BUTTON ADDITION ***
+
+        buttonSearchPanel.add(buttonPanel, BorderLayout.NORTH);
+
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        JLabel searchLabel = new JLabel("Product Search:");
+        searchLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        searchPanel.add(searchLabel);
+
+        JTextField searchTextField = new JTextField(30);
+        searchTextField.setFont(new Font("Arial", Font.PLAIN, 20));
+        searchPanel.add(searchTextField);
+
+        buttonSearchPanel.add(searchPanel, BorderLayout.SOUTH);
+
+        JPanel buttonContainerPanel = new JPanel(new BorderLayout());
+        buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH);
+
+        String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
+        Product.tableModel.setColumnCount(columnNames.length);
+        Product.tableModel.setColumnIdentifiers(columnNames);
+
+        try {
+            manager.render_data();
+        } catch (SQLException a) {}
+
+        manager.itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        JScrollPane scrollPane = new JScrollPane(manager.itemTable);
+
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
+        manager.itemTable.setRowSorter(sorter);
+
+        searchTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String searchText = searchTextField.getText();
+                if (searchText.trim().isEmpty()) {
+                    sorter.setRowFilter(null); // Show all rows
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText)); // Case-insensitive search
+                }
+            }
+        });
+
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        tablePanel.add(scrollPane, BorderLayout.CENTER);
+
+        buttonContainerPanel.add(tablePanel, BorderLayout.CENTER);
+        contentPane.add(buttonContainerPanel, BorderLayout.CENTER);
+
+        JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        exitPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JButton exitButton = new JButton("Exit");
+        exitButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        exitButton.addActionListener(e -> System.exit(0));
+        exitPanel.add(exitButton);
+
+        contentPane.add(exitPanel, BorderLayout.SOUTH);
+
+        // Enable/disable delete button based on row selection
+        manager.itemTable.getSelectionModel().addListSelectionListener(event -> {
+            deleteProductButton.setEnabled(manager.itemTable.getSelectedRow() != -1);
+        });
+
+        // Double-click to edit functionality
+        manager.itemTable.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {
                     int selectedRow = manager.itemTable.getSelectedRow();
                     String productName = manager.itemTable.getValueAt(selectedRow, 1).toString();
                     Product product = manager.findProduct(productName);
-
                     try {
                         Edit_Item.editItem(manager, product);
                     } catch (Exception e) {
@@ -319,8 +322,10 @@ public class Main extends JFrame {
                         e.printStackTrace();
                     }
                 }
-
             }
         });
+
+        frame.setVisible(true);
+        return frame; // Return the created JFrame
     }
 }
