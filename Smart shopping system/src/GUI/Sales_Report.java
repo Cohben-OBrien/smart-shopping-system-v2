@@ -48,7 +48,7 @@ public class Sales_Report {
 
 
         for(SalesRecord record: Data.getSalesRecords()) {
-            salesmodel.addRow(new Object[]{record.get_id(), record.get_total(), record.get_date()});
+            salesmodel.addRow(new Object[]{record.get_id(), String.format("£%.2f", record.get_total()), record.get_date()});
         }
 
 
