@@ -32,7 +32,7 @@ public class Add_Sale {
 
         JComboBox ProductSelect = new JComboBox();
         for (int i = 0; i < InventoryManager.getProducts().size(); i++) {
-            ProductSelect.addItem(InventoryManager.getProducts().get(i).getName());
+            ProductSelect.addItem(InventoryManager.getProducts().get(i).getName().replace("_", " "));
         }
 
         JTextField ProductQuantity = new JTextField(15);
