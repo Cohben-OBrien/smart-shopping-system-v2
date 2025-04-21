@@ -83,6 +83,7 @@ public class Add_Sale {
 
     public static void Add_Sale(InventoryManager manager) {
         products.clear();
+        ProductModel.setRowCount(0);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -138,6 +139,7 @@ public class Add_Sale {
         Add_sale.addActionListener(e ->{
             try {
                 InventoryManager.recordSale(products, SaleDate.getText());
+                products.clear();
                 frame.dispose();
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
