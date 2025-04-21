@@ -258,8 +258,11 @@ public class Main extends JFrame {
 
         buttonSearchPanel.add(searchPanel, BorderLayout.SOUTH);
 
-        JPanel buttonContainerPanel = new JPanel(new BorderLayout());
-        buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH);
+        JPanel tableContainerPanel = new JPanel(new BorderLayout()); // Create a panel for the table and title
+        JLabel tableTitleLabel = new JLabel("Product Inventory"); // Your table title
+        tableTitleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        tableTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        tableContainerPanel.add(tableTitleLabel, BorderLayout.NORTH); // Add title to the top
 
         String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
@@ -271,6 +274,7 @@ public class Main extends JFrame {
 
         manager.itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(manager.itemTable);
+        tableContainerPanel.add(scrollPane, BorderLayout.CENTER); // Add the scroll pane to the center
 
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
         manager.itemTable.setRowSorter(sorter);
@@ -287,11 +291,10 @@ public class Main extends JFrame {
             }
         });
 
-        JPanel tablePanel = new JPanel(new BorderLayout());
-        tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        tablePanel.add(scrollPane, BorderLayout.CENTER);
+        JPanel buttonContainerPanel = new JPanel(new BorderLayout());
+        buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH);
+        buttonContainerPanel.add(tableContainerPanel, BorderLayout.CENTER); // Add the container panel
 
-        buttonContainerPanel.add(tablePanel, BorderLayout.CENTER);
         contentPane.add(buttonContainerPanel, BorderLayout.CENTER);
 
         JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -326,6 +329,6 @@ public class Main extends JFrame {
         });
 
         frame.setVisible(true);
-        return frame; // Return the created JFrame
+        return frame;
     }
 }
