@@ -222,7 +222,6 @@ public class Main extends JFrame {
                 Sales_Report report = new Sales_Report();
                 try {
                     report.Sales_Report();
-                    manager.Update_Product(manager.getProducts().getLast(), "beer", 5, 100);
                 } catch (SQLException a) {
                     System.out.println(a);
                 }
