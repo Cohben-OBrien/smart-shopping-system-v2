@@ -16,7 +16,8 @@ public class Add_Sale {
     public static DefaultTableModel ProductModel = new DefaultTableModel();
 
     private static void add_table_product(Product product, int quantity) {
-        ProductModel.addRow(new Object[]{product.getId(), product.getName(), quantity, product.getPrice(), (product.getPrice() * quantity)});
+        ProductModel.addRow(new Object[]{product.getId(), product.getName(), quantity, String.format("£%.2f", product.getPrice()), String.format("£%.2f", product.getPrice() * quantity)});
+
 
     }
 

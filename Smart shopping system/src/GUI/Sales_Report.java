@@ -109,7 +109,7 @@ public class Sales_Report {
         for(ProductSale productSale: Data.getProductSales(sale_id)) {
             double total_cost = productSale.getQuantity() * productSale.getProduct().getPrice();
             System.out.println(total_cost);
-            Productmodel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), productSale.getProduct().getPrice(), productSale.getQuantity(), total_cost});
+            Productmodel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), String.format("£%.2f", productSale.getProduct().getPrice()), productSale.getQuantity(), String.format("£%.2f")});
         }
     }
 
