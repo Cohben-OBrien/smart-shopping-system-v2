@@ -18,11 +18,17 @@ import java.util.Locale;
 public class Main extends JFrame {
 
     static InventoryManager manager = new InventoryManager();
-    static JFrame frame; // Make the frame a static member to access it in the ActionListener
+    static JFrame frame;
+    static JButton deleteProductButton;
+    static JButton undoDeleteButton;
+    static Product lastDeletedProduct = null;
+    static int lastDeletedRow = -1;
+    static Timer undoTimer;
+    static JPanel notificationPanel;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new LoginDialog(); // Create and show the login dialog
+            new LoginDialog();
         });
     }
 
@@ -33,17 +39,35 @@ public class Main extends JFrame {
 
         public LoginDialog() {
             setTitle("Log In");
-            setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Close only the dialog
-            setModal(true); // Make it modal, preventing interaction with the background
-            setLayout(new GridLayout(3, 2, 15,15));// Simple layout
-            setPreferredSize(new Dimension(400,200));
-            setLocationRelativeTo(null); // Center on screen
+            setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            setModal(true);
+            setLayout(new GridLayout(3, 2, 15, 15));
+            setPreferredSize(new Dimension(400, 200));
+            setLocationRelativeTo(null);
+
+            int fieldPadding = 5; // Padding around the text fields and button
+            int dialogMargin = 20; // Padding around the entire dialog
+
+            // Create an EmptyBorder for the content pane
+            ((JPanel) getContentPane()).setBorder(BorderFactory.createEmptyBorder(
+                    dialogMargin,
+                    dialogMargin,
+                    dialogMargin,
+                    dialogMargin
+            ));
 
             JLabel usernameLabel = new JLabel("Username:");
+            usernameLabel.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
             usernameField = new JTextField(15);
+            usernameField.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
+
             JLabel passwordLabel = new JLabel("Password:");
+            passwordLabel.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
             passwordField = new JPasswordField(15);
+            passwordField.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
+
             loginButton = new JButton("Log In");
+            loginButton.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
 
             add(usernameLabel);
             add(usernameField);
@@ -59,15 +83,15 @@ public class Main extends JFrame {
 
                 try {
                     if (User_authenticator.User_Authemticator(username, passwordStr)) {
-                        dispose(); // Close the login dialog
+                        dispose();
                         try {
-                            frame = createAndShowGUI(); // Launch the main GUI and store the frame
+                            frame = createAndShowGUI();
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
                     } else {
                         JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
-                        passwordField.setText(""); // Clear password field on failure
+                        passwordField.setText("");
                     }
                 } catch (SQLException ex) {
                     System.err.println(ex.getMessage());
@@ -80,7 +104,7 @@ public class Main extends JFrame {
     }
 
     public static void Add_product_to_table(Product product) {
-        Product.tableModel.addRow(new Object[]{product.getId(),product.getName(),product.getPrice(),product.getQuantity()});
+        Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
     }
 
     public static JFrame createAndShowGUI() throws SQLException {
@@ -113,16 +137,16 @@ public class Main extends JFrame {
                         Color backgroundColor;
 
                         if (quantity == 0) {
-                            backgroundColor = new Color(255, 99, 71); // Red
+                            backgroundColor = new Color(255, 99, 71);
                             statusText = "Out of Stock";
                         } else if (quantity < 10) {
-                            backgroundColor = new Color(255, 255, 150); // Light yellow
+                            backgroundColor = new Color(255, 255, 150);
                             statusText = "Low Stock";
                         } else if (quantity < 30) {
-                            backgroundColor = new Color(255, 200, 0); // Orange
+                            backgroundColor = new Color(255, 200, 0);
                             statusText = "Medium Stock";
                         } else {
-                            backgroundColor = new Color(144, 238, 144); // Light green
+                            backgroundColor = new Color(144, 238, 144);
                             statusText = "High Stock";
                         }
                         c.setBackground(backgroundColor);
@@ -207,15 +231,46 @@ public class Main extends JFrame {
         lowStockButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Low Stock Report functionality."));
         buttonPanel.add(lowStockButton);
 
-        // *** ADD DELETE BUTTON HERE ***
-        JButton deleteProductButton = new JButton("Delete Product");
+        notificationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        notificationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10));
+        notificationPanel.setVisible(false);
+        contentPane.add(notificationPanel, BorderLayout.SOUTH);
+
+        undoDeleteButton = new JButton("Undo Delete");
+        undoDeleteButton.setEnabled(false);
+        undoDeleteButton.addActionListener(e -> {
+            if (lastDeletedProduct != null && lastDeletedRow != -1) {
+                Product.tableModel.insertRow(lastDeletedRow, new Object[]{
+                        lastDeletedProduct.getId(),
+                        lastDeletedProduct.getName(),
+                        lastDeletedProduct.getPrice(),
+                        lastDeletedProduct.getQuantity()
+                });
+                try {
+                    manager.addProduct(lastDeletedProduct);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(frame, "Error undoing delete in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+                lastDeletedProduct = null;
+                lastDeletedRow = -1;
+                undoDeleteButton.setEnabled(false);
+                notificationPanel.setVisible(false);
+                if (undoTimer != null && undoTimer.isRunning()) {
+                    undoTimer.stop();
+                }
+            }
+        });
+        notificationPanel.add(undoDeleteButton);
+
+        deleteProductButton = new JButton("Delete Product");
         deleteProductButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        deleteProductButton.setEnabled(false); // Initially disabled
+        deleteProductButton.setEnabled(false);
         deleteProductButton.addActionListener(e -> {
             int selectedRow = manager.itemTable.getSelectedRow();
             if (selectedRow != -1) {
-                int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow); // Get the actual row index in the model
-                String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1); // Assuming product name is in the second column
+                int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow);
+                String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1);
 
                 int confirmation = JOptionPane.showConfirmDialog(
                         frame,
@@ -225,15 +280,31 @@ public class Main extends JFrame {
                 );
 
                 if (confirmation == JOptionPane.YES_OPTION) {
-                    Product productToDelete = manager.findProduct(productNameToDelete);
-                    if (productToDelete != null) {
-                        try {
-                            manager.removeProduct(productToDelete); // Use the existing removeProduct method
-                            Product.tableModel.removeRow(modelRow); // Remove from the table model
-                        } catch (SQLException ex) {
-                            JOptionPane.showMessageDialog(frame, "Error deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
-                            ex.printStackTrace();
-                        }
+                    lastDeletedProduct = manager.findProduct(productNameToDelete);
+                    if (lastDeletedProduct != null) {
+                        lastDeletedRow = modelRow;
+                        Product.tableModel.removeRow(modelRow);
+                        undoDeleteButton.setEnabled(true);
+                        notificationPanel.setVisible(true);
+
+                        undoTimer = new Timer(5000, new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent evt) {
+                                try {
+                                    manager.removeProduct(lastDeletedProduct);
+                                } catch (SQLException ex) {
+                                    JOptionPane.showMessageDialog(frame, "Error permanently deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                                    ex.printStackTrace();
+                                }
+                                lastDeletedProduct = null;
+                                lastDeletedRow = -1;
+                                undoDeleteButton.setEnabled(false);
+                                notificationPanel.setVisible(false);
+                                undoTimer.stop();
+                            }
+                        });
+                        undoTimer.setRepeats(false);
+                        undoTimer.start();
                     } else {
                         JOptionPane.showMessageDialog(frame, "Product not found.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -243,7 +314,6 @@ public class Main extends JFrame {
             }
         });
         buttonPanel.add(deleteProductButton);
-        // *** END OF DELETE BUTTON ADDITION ***
 
         buttonSearchPanel.add(buttonPanel, BorderLayout.NORTH);
 
@@ -258,11 +328,11 @@ public class Main extends JFrame {
 
         buttonSearchPanel.add(searchPanel, BorderLayout.SOUTH);
 
-        JPanel tableContainerPanel = new JPanel(new BorderLayout()); // Create a panel for the table and title
-        JLabel tableTitleLabel = new JLabel("Product Inventory"); // Your table title
+        JPanel tableContainerPanel = new JPanel(new BorderLayout());
+        JLabel tableTitleLabel = new JLabel("Product Inventory");
         tableTitleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         tableTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        tableContainerPanel.add(tableTitleLabel, BorderLayout.NORTH); // Add title to the top
+        tableContainerPanel.add(tableTitleLabel, BorderLayout.NORTH);
 
         String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
@@ -274,7 +344,7 @@ public class Main extends JFrame {
 
         manager.itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(manager.itemTable);
-        tableContainerPanel.add(scrollPane, BorderLayout.CENTER); // Add the scroll pane to the center
+        tableContainerPanel.add(scrollPane, BorderLayout.CENTER);
 
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
         manager.itemTable.setRowSorter(sorter);
@@ -284,16 +354,16 @@ public class Main extends JFrame {
             public void keyReleased(KeyEvent e) {
                 String searchText = searchTextField.getText();
                 if (searchText.trim().isEmpty()) {
-                    sorter.setRowFilter(null); // Show all rows
+                    sorter.setRowFilter(null);
                 } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText)); // Case-insensitive search
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
                 }
             }
         });
 
         JPanel buttonContainerPanel = new JPanel(new BorderLayout());
         buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH);
-        buttonContainerPanel.add(tableContainerPanel, BorderLayout.CENTER); // Add the container panel
+        buttonContainerPanel.add(tableContainerPanel, BorderLayout.CENTER);
 
         contentPane.add(buttonContainerPanel, BorderLayout.CENTER);
 
@@ -306,12 +376,10 @@ public class Main extends JFrame {
 
         contentPane.add(exitPanel, BorderLayout.SOUTH);
 
-        // Enable/disable delete button based on row selection
         manager.itemTable.getSelectionModel().addListSelectionListener(event -> {
             deleteProductButton.setEnabled(manager.itemTable.getSelectedRow() != -1);
         });
 
-        // Double-click to edit functionality
         manager.itemTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {

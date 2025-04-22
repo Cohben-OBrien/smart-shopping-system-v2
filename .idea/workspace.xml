@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="remove some duplicates">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="updated cosmetic features - title in table">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
@@ -150,7 +150,7 @@
       <workItem from="1745268253715" duration="709000" />
       <workItem from="1745268979073" duration="70000" />
       <workItem from="1745269074216" duration="173000" />
-      <workItem from="1745269258673" duration="1331000" />
+      <workItem from="1745269258673" duration="4595000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -256,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745069550600</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="updated cosmetic features - title in table">
+      <option name="closed" value="true" />
+      <created>1745270715141</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1745270715141</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +283,8 @@
     <MESSAGE value="product table updates when a sale is maded" />
     <MESSAGE value="P2CSSS-28 update product table name function" />
     <MESSAGE value="remove some duplicates" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove some duplicates" />
+    <MESSAGE value="updated cosmetic features - title in table" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated cosmetic features - title in table" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
