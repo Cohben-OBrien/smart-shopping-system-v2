@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="updating the database file">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-2 GUI updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +37,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Cohben-OBrien/smart-shopping-system-v2.git&quot;,
-    &quot;accountId&quot;: &quot;a990a71b-5d58-4fc7-9578-e2783e60dc7e&quot;
+    &quot;accountId&quot;: &quot;99a84528-4e13-4e45-bbb8-48274c1d94bf&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -52,30 +49,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Data.executor": "Run",
-    "Application.InventoryManager.executor": "Debug",
-    "Application.Main.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Application.newMain.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Data.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Mainv3.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Application.newMain.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;P2CSSS-2-GUI&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\cohbe\code\smart-shopping-system-v2\Smart shopping system\src" />
@@ -113,8 +109,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -133,14 +129,7 @@
       <workItem from="1744709798760" duration="17000" />
       <workItem from="1744709838420" duration="42000" />
       <workItem from="1744715418797" duration="896000" />
-      <workItem from="1744798355158" duration="655000" />
-      <workItem from="1744799027120" duration="4159000" />
-      <workItem from="1744878254005" duration="15000" />
-      <workItem from="1744907751800" duration="2000" />
-      <workItem from="1744912349081" duration="1825000" />
-      <workItem from="1744917722122" duration="2053000" />
-      <workItem from="1744923331966" duration="114000" />
-      <workItem from="1744966116230" duration="1354000" />
+      <workItem from="1744901570274" duration="351000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -174,70 +163,45 @@
       <option name="project" value="LOCAL" />
       <updated>1744728476270</updated>
     </task>
-    <task id="LOCAL-00005" summary="PSCSSS-24 Add table location commentss">
+    <task id="LOCAL-00005" summary="Added search function.">
       <option name="closed" value="true" />
-      <created>1744797416710</created>
+      <created>1744739637990</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1744797416710</updated>
+      <updated>1744739637990</updated>
     </task>
-    <task id="LOCAL-00006" summary="P2CSSS-24 save">
+    <task id="LOCAL-00006" summary="P2CSSS-2 GUI updates">
       <option name="closed" value="true" />
-      <created>1744798231881</created>
+      <created>1744901623475</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1744798231881</updated>
+      <updated>1744901623476</updated>
     </task>
-    <task id="LOCAL-00007" summary="P2CSSS-24 Added the new GUI to main">
-      <option name="closed" value="true" />
-      <created>1744879199479</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1744879199479</updated>
-    </task>
-    <task id="LOCAL-00008" summary="P2CSSS-24 connect add item and add sale record buttons to correct GUI'S">
-      <option name="closed" value="true" />
-      <created>1744879703782</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1744879703782</updated>
-    </task>
-    <task id="LOCAL-00009" summary="P2CSSS-24 product table load products from the database">
-      <option name="closed" value="true" />
-      <created>1744880687816</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1744880687816</updated>
-    </task>
-    <task id="LOCAL-00010" summary="updating the database file">
-      <option name="closed" value="true" />
-      <created>1744919039491</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1744919039491</updated>
-    </task>
-    <option name="localTasksCounter" value="11" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="move code files to src files" />
     <MESSAGE value="fixxing broken shit" />
     <MESSAGE value="Updated fields and cosmetic design" />
-    <MESSAGE value="PSCSSS-24 Add table location commentss" />
-    <MESSAGE value="P2CSSS-24 save" />
-    <MESSAGE value="P2CSSS-24 Added the new GUI to main" />
-    <MESSAGE value="P2CSSS-24 connect add item and add sale record buttons to correct GUI'S" />
-    <MESSAGE value="P2CSSS-24 product table load products from the database" />
-    <MESSAGE value="updating the database file" />
-    <option name="LAST_COMMIT_MESSAGE" value="updating the database file" />
+    <MESSAGE value="Added search function." />
+    <MESSAGE value="P2CSSS-2 GUI updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-2 GUI updates" />
   </component>
 </project>

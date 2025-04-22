@@ -21,6 +21,9 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
     // Getters for the product details
     public String getName() {
         return name;
@@ -38,6 +41,13 @@ public class Product {
     // Decrease the quantity when the product is sold
     public void sell(int quantitySold) {
         this.quantity -= quantitySold;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPrice(float price) {
+        this.price = price;
     }
 }
 
