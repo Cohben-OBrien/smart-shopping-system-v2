@@ -2,6 +2,7 @@ package GUI;
 
 import Database.Data;
 import Product.Product;
+import User.User;
 import User.User_authenticator;
 import manager.InventoryManager;
 
@@ -213,34 +214,39 @@ public class Main extends JFrame {
         deleteProductButton.setEnabled(false); // Initially disabled
         deleteProductButton.addActionListener(e -> {
             int selectedRow = manager.itemTable.getSelectedRow();
-            if (selectedRow != -1) {
-                int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow); // Get the actual row index in the model
-                String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1); // Assuming product name is in the second column
+            if(User_authenticator.getCurrent_user().getAccessLevel() == User.access_levels.ADMIN) {
+                if (selectedRow != -1) {
+                    int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow); // Get the actual row index in the model
+                    String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1); // Assuming product name is in the second column
 
-                int confirmation = JOptionPane.showConfirmDialog(
-                        frame,
-                        "Are you sure you want to delete '" + productNameToDelete + "'?",
-                        "Confirm Deletion",
-                        JOptionPane.YES_NO_OPTION
-                );
+                    int confirmation = JOptionPane.showConfirmDialog(
+                            frame,
+                            "Are you sure you want to delete '" + productNameToDelete + "'?",
+                            "Confirm Deletion",
+                            JOptionPane.YES_NO_OPTION
+                    );
 
-                if (confirmation == JOptionPane.YES_OPTION) {
-                    Product productToDelete = manager.findProduct(productNameToDelete);
-                    if (productToDelete != null) {
-                        try {
-                            manager.removeProduct(productToDelete); // Use the existing removeProduct method
-                            Product.tableModel.removeRow(modelRow); // Remove from the table model
-                        } catch (SQLException ex) {
-                            JOptionPane.showMessageDialog(frame, "Error deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
-                            ex.printStackTrace();
+                    if (confirmation == JOptionPane.YES_OPTION) {
+                        Product productToDelete = manager.findProduct(productNameToDelete);
+                        if (productToDelete != null) {
+                            try {
+                                manager.removeProduct(productToDelete); // Use the existing removeProduct method
+                                Product.tableModel.removeRow(modelRow); // Remove from the table model
+                            } catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(frame, "Error deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                                ex.printStackTrace();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "Product not found.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "Product not found.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }else {
+               JOptionPane.showMessageDialog(frame, "you need to be a admin to delete a product");
             }
+
         });
         buttonPanel.add(deleteProductButton);
         // *** END OF DELETE BUTTON ADDITION ***
