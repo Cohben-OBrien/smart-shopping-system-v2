@@ -318,15 +318,22 @@ public class Main extends JFrame {
         manager.itemTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {
-                    int selectedRow = manager.itemTable.getSelectedRow();
-                    String productName = manager.itemTable.getValueAt(selectedRow, 1).toString();
-                    Product product = manager.findProduct(productName);
-                    try {
-                        Edit_Item.editItem(manager, product);
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Error loading product");
-                        e.printStackTrace();
+
+                    if(User_authenticator.getCurrent_user().getAccessLevel() == User.access_levels.ADMIN) {
+                        int selectedRow = manager.itemTable.getSelectedRow();
+                        String productName = manager.itemTable.getValueAt(selectedRow, 1).toString();
+                        Product product = manager.findProduct(productName);
+                        try {
+                            Edit_Item.editItem(manager, product);
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Error loading product");
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "You need to be a admin to edit/8 a product");
                     }
+
                 }
             }
         });
