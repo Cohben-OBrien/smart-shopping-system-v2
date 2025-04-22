@@ -2,6 +2,7 @@ package GUI;
 
 import Database.Data;
 import Product.Product;
+import User.User;
 import User.User_authenticator;
 import manager.InventoryManager;
 
@@ -217,35 +218,42 @@ public class Main extends JFrame {
         deleteProductButton.setFont(new Font("Arial", Font.PLAIN, 16));
         deleteProductButton.setEnabled(false); // Initially disabled
         deleteProductButton.addActionListener(e -> {
+          
             int selectedRow = manager.itemTable.getSelectedRow();
-            if (selectedRow != -1) {
-                int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow); // Get the actual row index in the model
-                String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1); // Assuming product name is in the second column
+            if(User_authenticator.getCurrent_user().getAccessLevel() == User.access_levels.ADMIN) {
+                if (selectedRow != -1) {
+                    int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow); // Get the actual row index in the model
+                    String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1); // Assuming product name is in the second column
 
-                int confirmation = JOptionPane.showConfirmDialog(
-                        frame,
-                        "Are you sure you want to delete '" + productNameToDelete + "'?",
-                        "Confirm Deletion",
-                        JOptionPane.YES_NO_OPTION // Show Yes/No options
-                );
+                    int confirmation = JOptionPane.showConfirmDialog(
+                            frame,
+                            "Are you sure you want to delete '" + productNameToDelete + "'?",
+                            "Confirm Deletion",
+                            JOptionPane.YES_NO_OPTION  // Show Yes/No options
+                    );
 
-                if (confirmation == JOptionPane.YES_OPTION) {
-                    Product productToDelete = manager.findProduct(productNameToDelete);
-                    if (productToDelete != null) {
-                        try {
-                            manager.removeProduct(productToDelete); // Use the existing removeProduct method in the manager
-                            Product.tableModel.removeRow(modelRow); // Remove the row from the table model
-                        } catch (SQLException ex) {
-                            JOptionPane.showMessageDialog(frame, "Error deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
-                            ex.printStackTrace(); // Print stack trace for debugging
+                    if (confirmation == JOptionPane.YES_OPTION) {
+                        Product productToDelete = manager.findProduct(productNameToDelete);
+                        if (productToDelete != null) {
+                            try {
+                                manager.removeProduct(productToDelete); // Use the existing removeProduct method
+                                Product.tableModel.removeRow(modelRow); // Remove from the table model
+                            } catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(frame, "Error deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                                ex.printStackTrace(); // Print stack trace for debugging
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "Product not found.", "Error", JOptionPane.ERROR_MESSAGE);
+
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "Product not found.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }else {
+               JOptionPane.showMessageDialog(frame, "you need to be a admin to delete a product");
             }
+
         });
         buttonPanel.add(deleteProductButton);
         // *** END OF DELETE BUTTON ADDITION ***
@@ -320,15 +328,24 @@ public class Main extends JFrame {
         manager.itemTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {
-                    int selectedRow = manager.itemTable.getSelectedRow();
-                    String productName = manager.itemTable.getValueAt(selectedRow, 1).toString(); // Get the product name from the selected row
-                    Product product = manager.findProduct(productName); // Find the product object using the name
-                    try {
-                        Edit_Item.editItem(manager, product); // Open the "Edit Item" dialog
-                    } catch (Exception e) {
+
+                    if(User_authenticator.getCurrent_user().getAccessLevel() == User.access_levels.ADMIN) {
+                         int selectedRow = manager.itemTable.getSelectedRow();
+                         String productName = manager.itemTable.getValueAt(selectedRow, 1).toString(); // Get the product name from the selected row
+                          Product product = manager.findProduct(productName); // Find the product object using the name
+                        try {
+                            Edit_Item.editItem(manager, product); // Open the "Edit Item" dialog
+      
+                        } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Error loading product"); // Show error message if loading fails
                         e.printStackTrace(); // Print stack trace for debugging
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "You need to be a admin to edit/8 a product");
+
                     }
+
                 }
             }
         });

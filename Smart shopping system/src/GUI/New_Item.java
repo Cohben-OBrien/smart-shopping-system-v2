@@ -65,17 +65,21 @@ public class New_Item {
 
                     name = Item_name_textField.getText();
 
-                    // Check if the name field is not empty
-                    if (!name.isEmpty()) {
-                        try {
+                    
+                        if(item_price <= 0) {
+                            JOptionPane.showMessageDialog(null, "Invalid price");
+                        } else {
+                            try {
                             // Create and add the new product
-                            manager.addProduct(new Product(InventoryManager.product_next_id(), name, item_price, quantity));
-                        } catch (SQLException a) {
-                            // SQL errors are silently ignored here
+                     
+                              manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity));
+                            } catch (SQLException a ) {}
+
                         }
 
-                        // Close the window after adding the item
-                        frame.dispose();
+                      // Close the window after adding the item
+
+                      frame.dispose();
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Please enter a name for the item");
