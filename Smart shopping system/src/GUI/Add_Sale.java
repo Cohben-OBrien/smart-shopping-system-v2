@@ -3,6 +3,7 @@ package GUI;
 import Product.Product;
 import Records.ProductSale;
 import manager.InventoryManager;
+import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -120,7 +121,7 @@ public class Add_Sale {
         productTable.getColumnModel().getColumn(2).setResizable(true);
         productTable.getColumnModel().getColumn(3).setResizable(true);
         JLabel Date = new JLabel("Date of Sale: ");
-        JTextField SaleDate = new JTextField(15);
+        JXDatePicker SaleDate = new JXDatePicker();
 
         JButton add_product = new JButton("add product");
         JButton Add_sale = new JButton("Add sale");
@@ -157,7 +158,7 @@ public class Add_Sale {
 
         Add_sale.addActionListener(e ->{
             try {
-                InventoryManager.recordSale(products, SaleDate.getText());
+                //InventoryManager.recordSale(products, SaleDate.getText());
                 frame.dispose();
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
