@@ -331,7 +331,7 @@ public class Main extends JFrame {
                         }
 
                     } else {
-                        JOptionPane.showMessageDialog(frame, "You need to be a admin to edit/8 a product");
+                        JOptionPane.showMessageDialog(frame, "You need to be a admin to edit a product");
                     }
 
                 }
