@@ -15,6 +15,15 @@ public class Add_Sale {
 
     public static DefaultTableModel ProductModel = new DefaultTableModel();
 
+    private static void remove_Product(Product product, int row) {
+        ProductModel.removeRow(row);
+        for (int i = 0; i < products.size(); i++) {
+            if(products.get(i).getProduct().getId() == product.getId()) {
+                products.remove(i);
+            }
+        }
+    }
+
     private static void add_table_product(Product product, int quantity) {
         ProductModel.addRow(new Object[]{product.getId(), product.getName(), quantity, String.format("£%.2f", product.getPrice()), String.format("£%.2f", product.getPrice() * quantity)});
 
@@ -115,13 +124,16 @@ public class Add_Sale {
 
         JButton add_product = new JButton("add product");
         JButton Add_sale = new JButton("Add sale");
+        JButton remove_product = new JButton("remove product");
 
-        add_product.setBounds(10, 720, 100, 20);
-        Add_sale.setBounds(100, 720, 100, 20);
+        add_product.setBounds(0, 720, 110, 20);
+        remove_product.setBounds(110, 720, 150, 20);
+        Add_sale.setBounds(260, 720, 100, 20);
         Date.setBounds(10, 700, 250, 20);
         SaleDate.setBounds(100, 700, 350, 20);
 
         frame.add(add_product);
+        frame.add(remove_product);
         frame.add(Date);
         frame.add(SaleDate);
 
@@ -129,6 +141,13 @@ public class Add_Sale {
             System.out.println(products.size());
             add_product(manager);
             System.out.println(products.size());
+        });
+
+        remove_product.addActionListener(e -> {
+            int selectedRow = productTable.getSelectedRow();
+            String product_name = productTable.getValueAt(selectedRow, 1).toString();
+            remove_Product(manager.findProduct(product_name), selectedRow);
+
         });
 
         frame.add(Add_sale);
