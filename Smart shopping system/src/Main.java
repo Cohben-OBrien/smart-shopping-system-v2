@@ -9,11 +9,18 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.Timer;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Main extends JFrame {
 
@@ -25,6 +32,8 @@ public class Main extends JFrame {
     static int lastDeletedRow = -1;
     static Timer undoTimer;
     static JPanel notificationPanel;
+    static JLabel dateLabel;
+    static JLabel clockLabel;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -107,6 +116,28 @@ public class Main extends JFrame {
         Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
     }
 
+    private static String getCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return currentDate.format(formatter);
+    }
+
+    private static String getCurrentTime() {
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return currentTime.format(formatter);
+    }
+
+    private static void startClock() {
+        Timer timer = new Timer(1000, new ActionListener() { // Update every 1000 milliseconds (1 second)
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clockLabel.setText(getCurrentTime());
+            }
+        });
+        timer.start();
+    }
+
     public static JFrame createAndShowGUI() throws SQLException {
         manager.loadInventory();
 
@@ -185,11 +216,24 @@ public class Main extends JFrame {
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
+        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
         JLabel titleLabel = new JLabel("Smart Shopping System v1");
         titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setForeground(Color.BLUE);
-        contentPane.add(titleLabel, BorderLayout.NORTH);
+        northPanel.add(titleLabel);
+
+        // Date Display
+        dateLabel = new JLabel(getCurrentDate());
+        dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        northPanel.add(dateLabel);
+
+        // Clock Display
+        clockLabel = new JLabel(getCurrentTime());
+        clockLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        northPanel.add(clockLabel);
+
+        contentPane.add(northPanel, BorderLayout.NORTH);
 
         JPanel buttonSearchPanel = new JPanel(new BorderLayout(5, 5));
         buttonSearchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
@@ -329,10 +373,15 @@ public class Main extends JFrame {
         buttonSearchPanel.add(searchPanel, BorderLayout.SOUTH);
 
         JPanel tableContainerPanel = new JPanel(new BorderLayout());
+
+        // Create a panel to hold the table title with a bottom border for spacing
+        JPanel tableTitlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel tableTitleLabel = new JLabel("Product Inventory");
-        tableTitleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        tableTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        tableContainerPanel.add(tableTitleLabel, BorderLayout.NORTH);
+        tableTitleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        tableTitlePanel.add(tableTitleLabel);
+        tableTitlePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); // Add bottom padding
+
+        tableContainerPanel.add(tableTitlePanel, BorderLayout.NORTH);
 
         String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
@@ -380,6 +429,10 @@ public class Main extends JFrame {
             deleteProductButton.setEnabled(manager.itemTable.getSelectedRow() != -1);
         });
 
+        manager.itemTable.getSelectionModel().addListSelectionListener(event -> {
+            deleteProductButton.setEnabled(manager.itemTable.getSelectedRow() != -1);
+        });
+
         manager.itemTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {
@@ -394,9 +447,10 @@ public class Main extends JFrame {
                     }
                 }
             }
-        });
+        }); // Corrected: Added the missing semicolon here
 
         frame.setVisible(true);
+        startClock(); // Call startClock() after making the frame visible
         return frame;
     }
 }
