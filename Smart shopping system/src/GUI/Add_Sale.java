@@ -158,6 +158,7 @@ public class Add_Sale {
 
         Add_sale.addActionListener(e ->{
             try {
+                System.out.println(SaleDate.getDate().toString());
                 //InventoryManager.recordSale(products, SaleDate.getText());
                 frame.dispose();
             } catch (Exception ex) {
