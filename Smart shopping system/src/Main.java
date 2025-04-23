@@ -37,8 +37,8 @@ public class Main extends JFrame {
     static Timer undoTimer;
     static JPanel notificationPanel;
     static JLabel dateLabel;
-    static JLabel clockLabel;
     static JTextField searchTextField; // Declare searchTextField at the class level
+    static JPanel leftButtonPanel = new JPanel(); // Declare leftButtonPanel here
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -142,7 +142,7 @@ public class Main extends JFrame {
         Timer timer = new Timer(1000, new ActionListener() { // Update every 1000 milliseconds (1 second)
             @Override
             public void actionPerformed(ActionEvent e) {
-                clockLabel.setText(getCurrentTime());
+
                 dateLabel.setText(getCurrentDate() + "  " + getCurrentTime()); // Display date and time
             }
         });
@@ -233,18 +233,38 @@ public class Main extends JFrame {
         titleLabel.setForeground(Color.BLUE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the text within the label
 
-        JPanel leftButtonPanel = new JPanel();
         leftButtonPanel.setLayout(new BoxLayout(leftButtonPanel, BoxLayout.Y_AXIS));
-        leftButtonPanel.setBorder(BorderFactory.createEmptyBorder(110, 10, 10, 10)); // Increased top padding
+        leftButtonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JButton salesReportButton = new JButton("Sales Report");
-        JButton lowStockButton = new JButton("Stock Report");
-        JButton productsButton = new JButton("Add Products");
+        // Load the image
+        java.net.URL imageUrl = Main.class.getResource("/resources/shopping_cart_icon.png");
+        System.out.println("Image URL: " + imageUrl);
+        ImageIcon originalIcon = new ImageIcon(imageUrl);
+
+        // Get the Image from the ImageIcon
+        Image originalImage = originalIcon.getImage();
+
+        // Define the desired width and height for the scaled image
+        int scaledWidth = 40;
+        int scaledHeight = 40;
+        Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel imageLabel = new JLabel(scaledIcon);
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftButtonPanel.add(imageLabel);
+        leftButtonPanel.add(Box.createVerticalStrut(5));
+
+        // Add a rigid area here to create space before the buttons
+        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Adjusted space to 30 pixels
+
+        JButton productsButton = new JButton("Add Product");
+        deleteProductButton = new JButton("Delete");
         JButton recordSaleButton = new JButton("Record Sale");
-        deleteProductButton = new JButton("Delete Product");
-        JButton exitButton = new JButton("Exit");
+        JButton salesReportButton = new JButton("Sales");
+        JButton lowStockButton = new JButton("Stock");
+        JButton exitButton = new JButton("Log-out");
 
-        JButton[] buttons = {salesReportButton, lowStockButton, productsButton, recordSaleButton, deleteProductButton, exitButton};
+        JButton[] buttons = {productsButton, deleteProductButton, recordSaleButton, salesReportButton, lowStockButton, exitButton};
         int maxWidth = 0;
         for (JButton button : buttons) {
             button.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -255,12 +275,11 @@ public class Main extends JFrame {
             JButton button = buttons[i];
             button.setMaximumSize(new Dimension(maxWidth, button.getPreferredSize().height));
             leftButtonPanel.add(button);
-            if (i < buttons.length - 1) { // Add glue between buttons, but not after the last one
+            if (i < buttons.length - 1) {
                 leftButtonPanel.add(Box.createVerticalGlue());
             }
         }
-        leftButtonPanel.add(Box.createVerticalGlue()); // Add glue at the end as well to push the first button down
-
+        leftButtonPanel.add(Box.createVerticalGlue());
 
         salesReportButton.addActionListener(e -> {
             Sales_Report report = new Sales_Report();
@@ -341,7 +360,7 @@ public class Main extends JFrame {
 
         // Create the table control panel first
         JPanel tableControlPanel = new JPanel(new BorderLayout()); // Use BorderLayout for tableControlPanel
-        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); // Increased horizontal padding
+        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 20)); // Increased horizontal padding
 
         JLabel tableTitleLabel = new JLabel("Product Inventory");
         tableTitleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -360,6 +379,7 @@ public class Main extends JFrame {
         // Create a new panel to hold the main title and table controls
         JPanel titleAndControlPanel = new JPanel(new BorderLayout());
         titleAndControlPanel.add(titleLabel, BorderLayout.NORTH);
+        tableControlPanel.add(searchPanel, BorderLayout.SOUTH); // Move searchPanel to SOUTH to span width
         titleAndControlPanel.add(tableControlPanel, BorderLayout.SOUTH);
 
         // Add the title and control panel to the NORTH of the centerPanel
@@ -381,7 +401,7 @@ public class Main extends JFrame {
         ));
         centerPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel dateTimePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Use FlowLayout.RIGHT
+        JPanel dateTimePanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Use FlowLayout.RIGHT
         dateLabel = new JLabel(getCurrentDate() + "  " + getCurrentTime()); // Display date and time initially
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         dateTimePanel.add(dateLabel);
@@ -409,7 +429,7 @@ public class Main extends JFrame {
         contentPane.add(centerPanel, BorderLayout.CENTER);
 
         JPanel notificationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        notificationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10));
+        notificationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 20));
         notificationPanel.setVisible(false);
         contentPane.add(notificationPanel, BorderLayout.SOUTH);
 
@@ -418,7 +438,8 @@ public class Main extends JFrame {
         undoDeleteButton.addActionListener(e -> {
             if (lastDeletedProduct != null && lastDeletedRow != -1) {
                 Product.tableModel.insertRow(lastDeletedRow, new Object[]{
-                        lastDeletedlastDeletedProduct.getName(),
+                        lastDeletedProduct.getId(),       // Add ID if required
+                        lastDeletedProduct.getName(),
                         lastDeletedProduct.getPrice(),
                         lastDeletedProduct.getQuantity()
                 });
