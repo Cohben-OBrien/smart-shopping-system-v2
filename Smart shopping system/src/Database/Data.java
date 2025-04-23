@@ -3,6 +3,7 @@ package Database;
 import Records.ProductSale;
 import Product.Product;
 import Product.Product_Category;
+import Product.Categories;
 import Records.SalesRecord;
 import jdk.jfr.Category;
 import manager.InventoryManager;
@@ -47,7 +48,7 @@ public class Data {
 
         while (rs.next()) {
 
-            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), new Product_Category(rs.getString("Category"))));
+            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category"))));
         }
 
         return products;

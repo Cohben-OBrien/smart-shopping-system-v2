@@ -14,7 +14,7 @@ public class Categories {
     public static ArrayList<Product_Category> GetCategories() {return categories;}
 
 
-    public static Product_Category findCatorys(String category) {
+    public static Product_Category findCategory(String category) {
         for(Product_Category cat: categories) {
             if(cat.getCategoryName().equals(category)) {return cat;}
         }
