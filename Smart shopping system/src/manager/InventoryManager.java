@@ -125,7 +125,7 @@ public class InventoryManager extends Main {
         }
     }
 
-    public static void Update_Product(Product product, String Name, float Price, int Quantity) throws SQLException, IOException {
+    public static void Update_Product(Product product, String Name, float Price, int Quantity, Product_Category category) throws SQLException, IOException {
             String Previous_name = product.getName();
 
             products.get(products.indexOf(product)).setName(Name);
