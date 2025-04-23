@@ -228,8 +228,8 @@ public class Main extends JFrame {
         contentPane.setLayout(new BorderLayout());
 
         // Create the title label
-        JLabel titleLabel = new JLabel("Smart Shopping System v1");
-        titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
+        JLabel titleLabel = new JLabel("InteliShop - Smart Shopping Management");
+        titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 28));
         titleLabel.setForeground(Color.BLUE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the text within the label
 
@@ -245,8 +245,8 @@ public class Main extends JFrame {
         Image originalImage = originalIcon.getImage();
 
         // Define the desired width and height for the scaled image
-        int scaledWidth = 40;
-        int scaledHeight = 40;
+        int scaledWidth = 75;
+        int scaledHeight = 75;
         Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledIcon);
@@ -255,7 +255,7 @@ public class Main extends JFrame {
         leftButtonPanel.add(Box.createVerticalStrut(5));
 
         // Add a rigid area here to create space before the buttons
-        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Adjusted space to 30 pixels
+        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 40))); // Increased space to 50 pixels
 
         JButton productsButton = new JButton("Add Product");
         deleteProductButton = new JButton("Delete");
@@ -280,6 +280,11 @@ public class Main extends JFrame {
             }
         }
         leftButtonPanel.add(Box.createVerticalGlue());
+
+        JLabel versionLabel = new JLabel("Version 1.0.0");
+        versionLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        versionLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
+        leftButtonPanel.add(versionLabel);
 
         salesReportButton.addActionListener(e -> {
             Sales_Report report = new Sales_Report();
@@ -360,11 +365,7 @@ public class Main extends JFrame {
 
         // Create the table control panel first
         JPanel tableControlPanel = new JPanel(new BorderLayout()); // Use BorderLayout for tableControlPanel
-        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 20)); // Increased horizontal padding
-
-        JLabel tableTitleLabel = new JLabel("Product Inventory");
-        tableTitleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        tableControlPanel.add(tableTitleLabel, BorderLayout.NORTH); // Add the title here
+        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 1, 20)); // Increased horizontal padding
 
         JPanel searchPanel = new JPanel(new BorderLayout(5, 0)); // Use BorderLayout for searchPanel
         JLabel searchLabel = new JLabel("Search:");
@@ -374,13 +375,19 @@ public class Main extends JFrame {
         searchTextField.setFont(new Font("Arial", Font.PLAIN, 16));
         searchPanel.add(searchTextField, BorderLayout.CENTER); // TextField in the CENTER
 
-        tableControlPanel.add(searchPanel, BorderLayout.SOUTH); // Move searchPanel to SOUTH to span width
+        tableControlPanel.add(searchPanel, BorderLayout.NORTH); // Add searchPanel to the NORTH
+
+        tableControlPanel.add(Box.createVerticalStrut(10), BorderLayout.CENTER);
+
+        JLabel tableTitleLabel = new JLabel("<html><u>Product Inventory</u></html>");
+        tableTitleLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        tableTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        tableControlPanel.add(tableTitleLabel, BorderLayout.SOUTH);
 
         // Create a new panel to hold the main title and table controls
         JPanel titleAndControlPanel = new JPanel(new BorderLayout());
         titleAndControlPanel.add(titleLabel, BorderLayout.NORTH);
-        tableControlPanel.add(searchPanel, BorderLayout.SOUTH); // Move searchPanel to SOUTH to span width
-        titleAndControlPanel.add(tableControlPanel, BorderLayout.SOUTH);
+        titleAndControlPanel.add(tableControlPanel, BorderLayout.SOUTH); // Add the tableControlPanel to the SOUTH
 
         // Add the title and control panel to the NORTH of the centerPanel
         centerPanel.add(titleAndControlPanel, BorderLayout.NORTH);
