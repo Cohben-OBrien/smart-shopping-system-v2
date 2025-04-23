@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -21,6 +23,8 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 
 public class Main extends JFrame {
 
@@ -34,6 +38,7 @@ public class Main extends JFrame {
     static JPanel notificationPanel;
     static JLabel dateLabel;
     static JLabel clockLabel;
+    static JTextField searchTextField; // Declare searchTextField at the class level
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -133,6 +138,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clockLabel.setText(getCurrentTime());
+                dateLabel.setText(getCurrentDate()); // Update the date label as well
             }
         });
         timer.start();
@@ -216,50 +222,47 @@ public class Main extends JFrame {
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel northPanel = new JPanel();
+        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+        northPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel titleLabel = new JLabel("Smart Shopping System v1");
         titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
         titleLabel.setForeground(Color.BLUE);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         northPanel.add(titleLabel);
-
-        // Date Display
-        dateLabel = new JLabel(getCurrentDate());
-        dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        northPanel.add(dateLabel);
-
-        // Clock Display
-        clockLabel = new JLabel(getCurrentTime());
-        clockLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        northPanel.add(clockLabel);
 
         contentPane.add(northPanel, BorderLayout.NORTH);
 
-        JPanel buttonSearchPanel = new JPanel(new BorderLayout(5, 5));
-        buttonSearchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
-
-        JButton productsButton = new JButton("Add Products");
-        productsButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        productsButton.addActionListener(e -> {
-            New_Item item = new New_Item();
-            try {
-                item.newItem(manager);
-            } catch (SQLException a) {}
-        });
-        buttonPanel.add(productsButton);
-
-        JButton recordSaleButton = new JButton("Record Sale");
-        recordSaleButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        recordSaleButton.addActionListener(e -> {
-            Add_Sale.Add_Sale(manager);
-        });
-        buttonPanel.add(recordSaleButton);
+        JPanel leftButtonPanel = new JPanel();
+        leftButtonPanel.setLayout(new BoxLayout(leftButtonPanel, BoxLayout.Y_AXIS));
+        leftButtonPanel.setBorder(BorderFactory.createEmptyBorder(110, 10, 10, 10)); // Increased top padding
 
         JButton salesReportButton = new JButton("Sales Report");
-        salesReportButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        JButton lowStockButton = new JButton("Stock Report");
+        JButton productsButton = new JButton("Add Products");
+        JButton recordSaleButton = new JButton("Record Sale");
+        deleteProductButton = new JButton("Delete Product");
+        JButton exitButton = new JButton("Exit");
+
+        JButton[] buttons = {salesReportButton, lowStockButton, productsButton, recordSaleButton, deleteProductButton, exitButton};
+        int maxWidth = 0;
+        for (JButton button : buttons) {
+            button.setFont(new Font("Arial", Font.PLAIN, 16));
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            maxWidth = Math.max(maxWidth, button.getPreferredSize().width);
+        }
+        for (int i = 0; i < buttons.length; i++) {
+            JButton button = buttons[i];
+            button.setMaximumSize(new Dimension(maxWidth, button.getPreferredSize().height));
+            leftButtonPanel.add(button);
+            if (i < buttons.length - 1) { // Add glue between buttons, but not after the last one
+                leftButtonPanel.add(Box.createVerticalGlue());
+            }
+        }
+        leftButtonPanel.add(Box.createVerticalGlue()); // Add glue at the end as well to push the first button down
+
+
         salesReportButton.addActionListener(e -> {
             Sales_Report report = new Sales_Report();
             try {
@@ -268,47 +271,20 @@ public class Main extends JFrame {
                 System.out.println(a);
             }
         });
-        buttonPanel.add(salesReportButton);
 
-        JButton lowStockButton = new JButton("Stock Report");
-        lowStockButton.setFont(new Font("Arial", Font.PLAIN, 16));
         lowStockButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Low Stock Report functionality."));
-        buttonPanel.add(lowStockButton);
 
-        notificationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        notificationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10));
-        notificationPanel.setVisible(false);
-        contentPane.add(notificationPanel, BorderLayout.SOUTH);
-
-        undoDeleteButton = new JButton("Undo Delete");
-        undoDeleteButton.setEnabled(false);
-        undoDeleteButton.addActionListener(e -> {
-            if (lastDeletedProduct != null && lastDeletedRow != -1) {
-                Product.tableModel.insertRow(lastDeletedRow, new Object[]{
-                        lastDeletedProduct.getId(),
-                        lastDeletedProduct.getName(),
-                        lastDeletedProduct.getPrice(),
-                        lastDeletedProduct.getQuantity()
-                });
-                try {
-                    manager.addProduct(lastDeletedProduct);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(frame, "Error undoing delete in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
-                    ex.printStackTrace();
-                }
-                lastDeletedProduct = null;
-                lastDeletedRow = -1;
-                undoDeleteButton.setEnabled(false);
-                notificationPanel.setVisible(false);
-                if (undoTimer != null && undoTimer.isRunning()) {
-                    undoTimer.stop();
-                }
-            }
+        productsButton.addActionListener(e -> {
+            New_Item item = new New_Item();
+            try {
+                item.newItem(manager);
+            } catch (SQLException a) {}
         });
-        notificationPanel.add(undoDeleteButton);
 
-        deleteProductButton = new JButton("Delete Product");
-        deleteProductButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        recordSaleButton.addActionListener(e -> {
+            Add_Sale.Add_Sale(manager);
+        });
+
         deleteProductButton.setEnabled(false);
         deleteProductButton.addActionListener(e -> {
             int selectedRow = manager.itemTable.getSelectedRow();
@@ -357,31 +333,31 @@ public class Main extends JFrame {
                 JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        buttonPanel.add(deleteProductButton);
 
-        buttonSearchPanel.add(buttonPanel, BorderLayout.NORTH);
+        exitButton.addActionListener(e -> System.exit(0));
 
-        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-        JLabel searchLabel = new JLabel("Product Search:");
-        searchLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        searchPanel.add(searchLabel);
+        contentPane.add(leftButtonPanel, BorderLayout.WEST);
 
-        JTextField searchTextField = new JTextField(30);
-        searchTextField.setFont(new Font("Arial", Font.PLAIN, 20));
-        searchPanel.add(searchTextField);
+        JPanel centerPanel = new JPanel(new BorderLayout());
 
-        buttonSearchPanel.add(searchPanel, BorderLayout.SOUTH);
+        JPanel tableControlPanel = new JPanel(new BorderLayout()); // Use BorderLayout for tableControlPanel
+        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
 
-        JPanel tableContainerPanel = new JPanel(new BorderLayout());
-
-        // Create a panel to hold the table title with a bottom border for spacing
-        JPanel tableTitlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel tableTitleLabel = new JLabel("Product Inventory");
         tableTitleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        tableTitlePanel.add(tableTitleLabel);
-        tableTitlePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); // Add bottom padding
+        tableControlPanel.add(tableTitleLabel, BorderLayout.NORTH); // Title at the top
 
-        tableContainerPanel.add(tableTitlePanel, BorderLayout.NORTH);
+        JPanel searchPanel = new JPanel(new BorderLayout(5, 0)); // Use BorderLayout for searchPanel
+        JLabel searchLabel = new JLabel("Search:");
+        searchLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        searchPanel.add(searchLabel, BorderLayout.LINE_START);
+        searchTextField = new JTextField(); // Let the TextField expand
+        searchTextField.setFont(new Font("Arial", Font.PLAIN, 16));
+        searchPanel.add(searchTextField, BorderLayout.CENTER); // TextField in the CENTER
+
+        tableControlPanel.add(searchPanel, BorderLayout.SOUTH); // Move searchPanel to SOUTH to span width
+
+        centerPanel.add(tableControlPanel, BorderLayout.NORTH);
 
         String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
@@ -393,41 +369,70 @@ public class Main extends JFrame {
 
         manager.itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(manager.itemTable);
-        tableContainerPanel.add(scrollPane, BorderLayout.CENTER);
+        scrollPane.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(5, 10, 10, 20),
+                BorderFactory.createLineBorder(Color.LIGHT_GRAY)
+        ));
+        centerPanel.add(scrollPane, BorderLayout.CENTER);
+
+        JPanel dateTimePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        dateLabel = new JLabel(getCurrentDate());
+        dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        dateTimePanel.add(dateLabel);
+        clockLabel = new JLabel(getCurrentTime());
+        clockLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        dateTimePanel.add(clockLabel);
+        dateTimePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        centerPanel.add(dateTimePanel, BorderLayout.SOUTH); // Added to centerPanel SOUTH
 
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
         manager.itemTable.setRowSorter(sorter);
 
-        searchTextField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                String searchText = searchTextField.getText();
-                if (searchText.trim().isEmpty()) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
-                }
+        JTextField finalSearchTextField = searchTextField;
+        finalSearchTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                filterTable(finalSearchTextField.getText());
+            }
+            public void insertUpdate(DocumentEvent e) {
+                filterTable(finalSearchTextField.getText());
+            }
+            public void removeUpdate(DocumentEvent e) {
+                filterTable(finalSearchTextField.getText());
             }
         });
 
-        JPanel buttonContainerPanel = new JPanel(new BorderLayout());
-        buttonContainerPanel.add(buttonSearchPanel, BorderLayout.NORTH);
-        buttonContainerPanel.add(tableContainerPanel, BorderLayout.CENTER);
+        contentPane.add(centerPanel, BorderLayout.CENTER);
 
-        contentPane.add(buttonContainerPanel, BorderLayout.CENTER);
+        JPanel notificationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        notificationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10));
+        notificationPanel.setVisible(false);
+        contentPane.add(notificationPanel, BorderLayout.SOUTH);
 
-        JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        exitPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        JButton exitButton = new JButton("Exit");
-        exitButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        exitButton.addActionListener(e -> System.exit(0));
-        exitPanel.add(exitButton);
-
-        contentPane.add(exitPanel, BorderLayout.SOUTH);
-
-        manager.itemTable.getSelectionModel().addListSelectionListener(event -> {
-            deleteProductButton.setEnabled(manager.itemTable.getSelectedRow() != -1);
+        undoDeleteButton = new JButton("Undo Delete");
+        undoDeleteButton.setEnabled(false);
+        undoDeleteButton.addActionListener(e -> {
+            if (lastDeletedProduct != null && lastDeletedRow != -1) {
+                Product.tableModel.insertRow(lastDeletedRow, new Object[]{
+                        lastDeletedProduct.getId(),
+                        lastDeletedProduct.getName(),
+                        lastDeletedProduct.getPrice(),
+                        lastDeletedProduct.getQuantity()
+                });
+                try {
+                    manager.addProduct(lastDeletedProduct);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(frame, "Error undoing delete in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+                lastDeletedProduct = null;
+                lastDeletedRow = -1;undoDeleteButton.setEnabled(false);
+                notificationPanel.setVisible(false);
+                if (undoTimer != null && undoTimer.isRunning()) {
+                    undoTimer.stop();
+                }
+            }
         });
+        notificationPanel.add(undoDeleteButton);
 
         manager.itemTable.getSelectionModel().addListSelectionListener(event -> {
             deleteProductButton.setEnabled(manager.itemTable.getSelectedRow() != -1);
@@ -452,5 +457,14 @@ public class Main extends JFrame {
         frame.setVisible(true);
         startClock(); // Call startClock() after making the frame visible
         return frame;
+    }
+
+    private static void filterTable(String searchText) {
+        TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) manager.itemTable.getRowSorter();
+        if (searchText.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText)); // "(?i)" for case-insensitive search
+        }
     }
 }
