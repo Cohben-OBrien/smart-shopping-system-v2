@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Layout change">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="New layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
     </list>
@@ -220,7 +220,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745416100930</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="New layout">
+      <option name="closed" value="true" />
+      <created>1745417400362</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1745417400362</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,7 +253,8 @@
     <MESSAGE value="P2CSSS-2 GUI updates" />
     <MESSAGE value="admin only to update products" />
     <MESSAGE value="Layout change" />
-    <option name="LAST_COMMIT_MESSAGE" value="Layout change" />
+    <MESSAGE value="New layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="New layout" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

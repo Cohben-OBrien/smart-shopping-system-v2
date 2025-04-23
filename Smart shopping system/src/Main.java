@@ -102,6 +102,8 @@ public class Main extends JFrame {
                             frame = createAndShowGUI();
                         } catch (SQLException ex) {
                             ex.printStackTrace();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     } else {
                         JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
@@ -141,7 +143,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clockLabel.setText(getCurrentTime());
-                dateLabel.setText(getCurrentDate()); // Update the date label as well
+                dateLabel.setText(getCurrentDate() + "  " + getCurrentTime()); // Display date and time
             }
         });
         timer.start();
@@ -225,13 +227,11 @@ public class Main extends JFrame {
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-        JPanel titlePanel = new JPanel(new BorderLayout()); // Panel for the title
+        // Create the title label
         JLabel titleLabel = new JLabel("Smart Shopping System v1");
         titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
         titleLabel.setForeground(Color.BLUE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the text within the label
-        titlePanel.add(titleLabel, BorderLayout.CENTER); // Add label to the center of the title panel
-        contentPane.add(titlePanel, BorderLayout.NORTH); // Add title panel to the NORTH
 
         JPanel leftButtonPanel = new JPanel();
         leftButtonPanel.setLayout(new BoxLayout(leftButtonPanel, BoxLayout.Y_AXIS));
@@ -339,12 +339,13 @@ public class Main extends JFrame {
 
         JPanel centerPanel = new JPanel(new BorderLayout());
 
+        // Create the table control panel first
         JPanel tableControlPanel = new JPanel(new BorderLayout()); // Use BorderLayout for tableControlPanel
         tableControlPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); // Increased horizontal padding
 
         JLabel tableTitleLabel = new JLabel("Product Inventory");
         tableTitleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        tableControlPanel.add(tableTitleLabel, BorderLayout.NORTH); // Title at the top
+        tableControlPanel.add(tableTitleLabel, BorderLayout.NORTH); // Add the title here
 
         JPanel searchPanel = new JPanel(new BorderLayout(5, 0)); // Use BorderLayout for searchPanel
         JLabel searchLabel = new JLabel("Search:");
@@ -356,7 +357,13 @@ public class Main extends JFrame {
 
         tableControlPanel.add(searchPanel, BorderLayout.SOUTH); // Move searchPanel to SOUTH to span width
 
-        centerPanel.add(tableControlPanel, BorderLayout.NORTH);
+        // Create a new panel to hold the main title and table controls
+        JPanel titleAndControlPanel = new JPanel(new BorderLayout());
+        titleAndControlPanel.add(titleLabel, BorderLayout.NORTH);
+        titleAndControlPanel.add(tableControlPanel, BorderLayout.SOUTH);
+
+        // Add the title and control panel to the NORTH of the centerPanel
+        centerPanel.add(titleAndControlPanel, BorderLayout.NORTH);
 
         String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
@@ -374,13 +381,12 @@ public class Main extends JFrame {
         ));
         centerPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel dateTimePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        dateLabel = new JLabel(getCurrentDate());
+        JPanel dateTimePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Use FlowLayout.RIGHT
+        dateLabel = new JLabel(getCurrentDate() + "  " + getCurrentTime()); // Display date and time initially
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         dateTimePanel.add(dateLabel);
-        clockLabel = new JLabel(getCurrentTime());
-        clockLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        dateTimePanel.add(clockLabel);
+        // clockLabel is no longer added separately to dateTimePanel
+
         dateTimePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         centerPanel.add(dateTimePanel, BorderLayout.SOUTH); // Added to centerPanel SOUTH
 
@@ -412,8 +418,7 @@ public class Main extends JFrame {
         undoDeleteButton.addActionListener(e -> {
             if (lastDeletedProduct != null && lastDeletedRow != -1) {
                 Product.tableModel.insertRow(lastDeletedRow, new Object[]{
-                        lastDeletedProduct.getId(),
-                        lastDeletedProduct.getName(),
+                        lastDeletedlastDeletedProduct.getName(),
                         lastDeletedProduct.getPrice(),
                         lastDeletedProduct.getQuantity()
                 });
