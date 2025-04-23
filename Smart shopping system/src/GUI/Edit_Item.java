@@ -1,6 +1,7 @@
 package GUI;
 
 import Product.Product;
+import Product.Product_Category;
 import manager.InventoryManager;
 
 import javax.swing.*;
@@ -23,17 +24,23 @@ public class Edit_Item {
         JLabel quantityLabel = new JLabel("Edit Item Quantity: ");
         JTextField quantityField = new JTextField(String.valueOf(product.getQuantity()));
 
-        nameLabel.setBounds(2, 20, 200, 20);
-        nameField.setBounds(100, 20, 340, 20);
+        JLabel Item_Category_label = new JLabel("Edit Item Category");
+        Item_Category_label.setBounds(2, 90, 200, 20);
 
-        priceLabel.setBounds(2, 50, 200, 20);
-        priceField.setBounds(100, 50, 340, 20);
+        nameLabel.setBounds(2, 20, 190, 20);
+        nameField.setBounds(120, 20, 340, 20);
 
-        quantityLabel.setBounds(2, 70, 200, 20);
-        quantityField.setBounds(100, 70, 340, 20);
+        priceLabel.setBounds(2, 50, 190, 20);
+        priceField.setBounds(120, 50, 340, 20);
+
+        quantityLabel.setBounds(2, 70, 190, 20);
+        quantityField.setBounds(120, 70, 340, 20);
+
+        JComboBox Category = new JComboBox();
+        Category.setBounds(120, 90, 340, 20);
 
         JButton updateButton = new JButton("Update Item");
-        updateButton.setBounds(200, 100, 120, 25);
+        updateButton.setBounds(100, 120, 100, 22);
 
         frame.add(nameLabel);
         frame.add(nameField);
@@ -42,7 +49,12 @@ public class Edit_Item {
         frame.add(quantityLabel);
         frame.add(quantityField);
         frame.add(updateButton);
+        frame.add(Item_Category_label);
+        frame.add(Category);
 
+        for(Product_Category category: Database.Data.LoadCategories()) {
+            Category.addItem(category.getCategoryName());
+        }
         frame.setVisible(true);
 
         updateButton.addActionListener(e -> {
@@ -55,7 +67,7 @@ public class Edit_Item {
                     float newPrice = Float.parseFloat(priceField.getText());
                     int newQuantity = Integer.parseInt(quantityField.getText());
 
-                    manager.Update_Product(product, newName, newPrice, newQuantity);
+                    manager.Update_Product(product, newName, newPrice, newQuantity, new Product_Category(Category.getSelectedItem().toString()));
                     frame.dispose();
                 }} catch (Exception a) {
                 }
