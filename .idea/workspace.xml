@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Layout updated with image">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Full makeover">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
@@ -150,7 +150,7 @@
       <workItem from="1744715418797" duration="896000" />
       <workItem from="1744901570274" duration="351000" />
       <workItem from="1745345515465" duration="619000" />
-      <workItem from="1745419609767" duration="10633000" />
+      <workItem from="1745419609767" duration="11761000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -240,7 +240,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745426760047</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Full makeover">
+      <option name="closed" value="true" />
+      <created>1745430632086</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745430632086</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,7 +275,8 @@
     <MESSAGE value="Layout change" />
     <MESSAGE value="New layout" />
     <MESSAGE value="Layout updated with image" />
-    <option name="LAST_COMMIT_MESSAGE" value="Layout updated with image" />
+    <MESSAGE value="Full makeover" />
+    <option name="LAST_COMMIT_MESSAGE" value="Full makeover" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

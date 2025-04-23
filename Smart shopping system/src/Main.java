@@ -182,14 +182,14 @@ public class Main extends JFrame {
                             backgroundColor = new Color(255, 99, 71);
                             statusText = "Out of Stock";
                         } else if (quantity < 10) {
-                            backgroundColor = new Color(255, 255, 150);
-                            statusText = "Low Stock";
-                        } else if (quantity < 30) {
                             backgroundColor = new Color(255, 200, 0);
-                            statusText = "Medium Stock";
+                            statusText = "Low";
+                        } else if (quantity < 30) {
+                            backgroundColor = new Color(255, 255, 150);
+                            statusText = "Medium";
                         } else {
                             backgroundColor = new Color(144, 238, 144);
-                            statusText = "High Stock";
+                            statusText = "High";
                         }
                         c.setBackground(backgroundColor);
                         setValueAt(statusText, row, column);
