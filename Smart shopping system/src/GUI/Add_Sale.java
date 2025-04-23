@@ -172,7 +172,7 @@ public class Add_Sale {
                 try {
                     manager.recordSale(products, dateFormat.format(SaleDate.getDate()));
                     frame.dispose();
-                } catch (SQLException A) {}
+                } catch (Exception A) {}
             }
         });
 

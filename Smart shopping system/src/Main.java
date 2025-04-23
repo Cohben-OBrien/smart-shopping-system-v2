@@ -12,6 +12,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -63,7 +64,7 @@ public class Main extends JFrame {
                         dispose(); // Close the login dialog
                         try {
                             frame = createAndShowGUI(); // Launch the main GUI and store the frame
-                        } catch (SQLException ex) {
+                        } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     } else {
@@ -84,7 +85,7 @@ public class Main extends JFrame {
         Product.tableModel.addRow(new Object[]{product.getId(),product.getName(),product.getPrice(),product.getQuantity()});
     }
 
-    public static JFrame createAndShowGUI() throws SQLException {
+    public static JFrame createAndShowGUI() throws SQLException, IOException {
         manager.loadInventory();
 
         manager.itemTable = new JTable(Product.tableModel) {

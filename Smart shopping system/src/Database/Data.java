@@ -2,11 +2,16 @@ package Database;
 
 import Records.ProductSale;
 import Product.Product;
+import Product.Product_Category;
+import Product.Categories;
 import Records.SalesRecord;
+import jdk.jfr.Category;
 import manager.InventoryManager;
 
+import java.awt.color.ProfileDataException;
 import java.sql.*;
 import java.util.ArrayList;
+
 
 public class Data {
     public static Connection connection;
@@ -43,7 +48,7 @@ public class Data {
 
         while (rs.next()) {
 
-            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock")));
+            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category"))));
         }
 
         return products;
@@ -157,6 +162,19 @@ public class Data {
         ps.executeUpdate();
 
     }
+
+    public static ArrayList<Product_Category> LoadCategories() throws SQLException {
+        String sql = "SELECT * FROM categories";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        ArrayList<Product_Category> categorys = new ArrayList<>();
+        while (rs.next()) {
+            categorys.add(new Product_Category(rs.getString("Categories")));
+        }
+        return categorys;
+    }
+
 
     public static ArrayList<ProductSale> getProductSales(int sale_id) throws SQLException {
         ArrayList<ProductSale> products = new ArrayList<>();
