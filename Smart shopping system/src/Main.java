@@ -222,17 +222,13 @@ public class Main extends JFrame {
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-        JPanel northPanel = new JPanel();
-        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
-        northPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        JPanel titlePanel = new JPanel(new BorderLayout()); // Panel for the title
         JLabel titleLabel = new JLabel("Smart Shopping System v1");
         titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
         titleLabel.setForeground(Color.BLUE);
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        northPanel.add(titleLabel);
-
-        contentPane.add(northPanel, BorderLayout.NORTH);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the text within the label
+        titlePanel.add(titleLabel, BorderLayout.CENTER); // Add label to the center of the title panel
+        contentPane.add(titlePanel, BorderLayout.NORTH); // Add title panel to the NORTH
 
         JPanel leftButtonPanel = new JPanel();
         leftButtonPanel.setLayout(new BoxLayout(leftButtonPanel, BoxLayout.Y_AXIS));
@@ -341,7 +337,7 @@ public class Main extends JFrame {
         JPanel centerPanel = new JPanel(new BorderLayout());
 
         JPanel tableControlPanel = new JPanel(new BorderLayout()); // Use BorderLayout for tableControlPanel
-        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
+        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); // Increased horizontal padding
 
         JLabel tableTitleLabel = new JLabel("Product Inventory");
         tableTitleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -425,7 +421,8 @@ public class Main extends JFrame {
                     ex.printStackTrace();
                 }
                 lastDeletedProduct = null;
-                lastDeletedRow = -1;undoDeleteButton.setEnabled(false);
+                lastDeletedRow = -1;
+                undoDeleteButton.setEnabled(false);
                 notificationPanel.setVisible(false);
                 if (undoTimer != null && undoTimer.isRunning()) {
                     undoTimer.stop();
