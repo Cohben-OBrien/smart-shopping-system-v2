@@ -3,11 +3,18 @@ package GUI;
 import Product.Product;
 import Records.ProductSale;
 import manager.InventoryManager;
+import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Add_Sale {
 
@@ -15,8 +22,18 @@ public class Add_Sale {
 
     public static DefaultTableModel ProductModel = new DefaultTableModel();
 
+    private static void remove_Product(Product product, int row) {
+        ProductModel.removeRow(row);
+        for (int i = 0; i < products.size(); i++) {
+            if(products.get(i).getProduct().getId() == product.getId()) {
+                products.remove(i);
+            }
+        }
+    }
+
     private static void add_table_product(Product product, int quantity) {
-        ProductModel.addRow(new Object[]{product.getId(), product.getName(), quantity, product.getPrice(), (product.getPrice() * quantity)});
+        ProductModel.addRow(new Object[]{product.getId(), product.getName(), quantity, String.format("£%.2f", product.getPrice()), String.format("£%.2f", product.getPrice() * quantity)});
+
 
     }
 
@@ -31,7 +48,7 @@ public class Add_Sale {
 
         JComboBox ProductSelect = new JComboBox();
         for (int i = 0; i < InventoryManager.getProducts().size(); i++) {
-            ProductSelect.addItem(InventoryManager.getProducts().get(i).getName());
+            ProductSelect.addItem(InventoryManager.getProducts().get(i).getName().replace("_", " "));
         }
 
         JTextField ProductQuantity = new JTextField(15);
@@ -82,6 +99,8 @@ public class Add_Sale {
 
     public static void Add_Sale(InventoryManager manager) {
         products.clear();
+        ProductModel.setRowCount(0);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -109,17 +128,21 @@ public class Add_Sale {
         productTable.getColumnModel().getColumn(2).setResizable(true);
         productTable.getColumnModel().getColumn(3).setResizable(true);
         JLabel Date = new JLabel("Date of Sale: ");
-        JTextField SaleDate = new JTextField(15);
+        JXDatePicker SaleDate = new JXDatePicker(new Date());
+        SaleDate.setFormats("dd/MM/yyyy");
 
         JButton add_product = new JButton("add product");
         JButton Add_sale = new JButton("Add sale");
+        JButton remove_product = new JButton("remove product");
 
-        add_product.setBounds(10, 720, 100, 20);
-        Add_sale.setBounds(100, 720, 100, 20);
+        add_product.setBounds(0, 720, 110, 20);
+        remove_product.setBounds(110, 720, 150, 20);
+        Add_sale.setBounds(260, 720, 100, 20);
         Date.setBounds(10, 700, 250, 20);
         SaleDate.setBounds(100, 700, 350, 20);
 
         frame.add(add_product);
+        frame.add(remove_product);
         frame.add(Date);
         frame.add(SaleDate);
 
@@ -129,17 +152,27 @@ public class Add_Sale {
             System.out.println(products.size());
         });
 
+        remove_product.addActionListener(e -> {
+            int selectedRow = productTable.getSelectedRow();
+            String product_name = productTable.getValueAt(selectedRow, 1).toString();
+            remove_Product(manager.findProduct(product_name), selectedRow);
+
+        });
+
         frame.add(Add_sale);
         frame.add(Add_sale);
 
         frame.setVisible(true);
 
         Add_sale.addActionListener(e ->{
-            try {
-                InventoryManager.recordSale(products, SaleDate.getText());
-                frame.dispose();
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+            LocalDate date;
+            if(products.size() == 0) {
+                JOptionPane.showMessageDialog(frame, "Please add products to the sale");
+            } else {
+                try {
+                    manager.recordSale(products, dateFormat.format(SaleDate.getDate()));
+                    frame.dispose();
+                } catch (Exception A) {}
             }
         });
 

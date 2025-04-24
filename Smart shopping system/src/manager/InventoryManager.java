@@ -2,11 +2,16 @@ package manager;
 
 import Database.Data;
 import Product.Product;
+import Product.Product_Category;
+import Product.Categories;
 import Records.ProductSale;
 import Records.SalesRecord;
 import com.sun.tools.javac.Main;
+import jdk.jfr.Category;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,9 +22,10 @@ public class InventoryManager extends Main {
     private static List<Product> products; // List to store all the products in inventory
     private static List<SalesRecord> sales; // List to store all sales made
 
+
     public static JTable itemTable;
 
-    public static void render_data() throws SQLException {
+    public static void render_data() throws SQLException, IOException {
         Product.tableModel.setRowCount(0);
         loadInventory();
         for(Product product : getProducts()) {
@@ -33,6 +39,7 @@ public class InventoryManager extends Main {
     }
 
 
+
     // Constructor: initializes the lists
     public InventoryManager() {
         products = new ArrayList<>(); // Initialize the products list
@@ -44,16 +51,20 @@ public class InventoryManager extends Main {
     }
 
     // Add a product to the inventory
-    public void addProduct(Product product) throws SQLException{
-        products.add(product); // Add product to the list of products
-        Data.addProduct(product);
+    public void addProduct(Product product) {
+        try {
+            products.add(product); // Add product to the list of products
+            Data.addProduct(product);
+        } catch (SQLException a) {
+            System.out.println(a.getMessage());
+        }
         Product.tableModel.addRow(new Object[]{product.getId(), product.getName() , product.getPrice(), product.getQuantity()});
     }
 
 
 
     // Record a sale (decrease stock and add to sales record)
-    public static void recordSale(ArrayList<ProductSale> productSales, String date) throws SQLException{
+    public static void recordSale(ArrayList<ProductSale> productSales, String date) throws SQLException, IOException{
         sales.add(new SalesRecord(date, productSales));
         System.out.println("ID: " + sales.getLast().get_id());
 
@@ -94,10 +105,13 @@ public class InventoryManager extends Main {
         return lowStock;
     }
 
-    public static void loadInventory() throws SQLException {
-        products = Data.getProducts();
+    public static void loadInventory() throws SQLException, IOException {
+        Categories.LoadCategories();
+
+        products = Database.Data.getProducts();
         products.sort(Comparator.comparingInt(Product::getId));
     }
+
 
     public static int product_next_id() {
         try {
@@ -115,16 +129,21 @@ public class InventoryManager extends Main {
         }
     }
 
-    public static void Update_Product(Product product, String Name, float Price, int Quantity) throws SQLException {
+    public static void Update_Product(Product product, String Name, float Price, int Quantity, String category) throws IOException {
             String Previous_name = product.getName();
 
             products.get(products.indexOf(product)).setName(Name);
             products.get(products.indexOf(product)).setPrice(Price);
             products.get(products.indexOf(product)).setQuantity(Quantity);
+            products.get(products.indexOf(product)).setCategory(category);
 
+            try {
+                Data.update_Product(products.get(products.indexOf(product)), Previous_name);
+                render_data();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
 
-            Data.update_Product(products.get(products.indexOf(product)), Previous_name);
-            render_data();
     }
 
     public static void removeProduct(Product product) throws SQLException {

@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="smart-shopping-system-programming-2-cw-2-" />
     <orderEntry type="library" name="sqlite-jdbc-3.49.1.0" level="project" />
+    <orderEntry type="library" name="swingx-all-1.6.4" level="project" />
   </component>
 </module>

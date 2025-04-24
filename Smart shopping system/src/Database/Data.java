@@ -2,11 +2,17 @@ package Database;
 
 import Records.ProductSale;
 import Product.Product;
+import Product.Product_Category;
+import Product.Categories;
 import Records.SalesRecord;
+import jdk.jfr.Category;
 import manager.InventoryManager;
 
+import java.awt.color.ProfileDataException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.TreeMap;
+
 
 public class Data {
     public static Connection connection;
@@ -43,7 +49,7 @@ public class Data {
 
         while (rs.next()) {
 
-            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock")));
+            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category"))));
         }
 
         return products;
@@ -61,23 +67,23 @@ public class Data {
     }
 
    public static void addProduct(Product product) throws SQLException {
-        String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO items (id, name, price, stock, Category) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, product.getId());
         ps.setString(2, product.getName().replace(" ", "_"));
         ps.setFloat(3, product.getPrice());
         ps.setInt(4, product.getQuantity());
+        ps.setString(5, product.getCategory().getCategoryName());
 
         ps.executeUpdate();
 
         String name = product.getName().replace(" ", "_") + product.getId();
-        String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_total real)";
+        String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_total real, FOREIGN KEY (sale_id) REFERENCES sales(id))";
         PreparedStatement ps2 = connection.prepareStatement(query2);
         ps2.executeUpdate();
 
 
     }
-
     public static boolean check_stock(int id, int requied) throws SQLException {
         String sql = "SELECT stock FROM items WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
@@ -159,11 +165,24 @@ public class Data {
 
     }
 
+    public static ArrayList<Product_Category> LoadCategories() throws SQLException {
+        String sql = "SELECT * FROM categories";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        ArrayList<Product_Category> categorys = new ArrayList<>();
+        while (rs.next()) {
+            categorys.add(new Product_Category(rs.getString("Categories")));
+        }
+        return categorys;
+    }
+
+
     public static ArrayList<ProductSale> getProductSales(int sale_id) throws SQLException {
         ArrayList<ProductSale> products = new ArrayList<>();
 
         for(Product product : InventoryManager.getProducts()) {
-            String query = "SELECT * FROM " + product.getName() + product.getId() + " WHERE sale_id = ?";
+            String query = "SELECT * FROM " + product.getName().replace(" ", "_") + product.getId() + " WHERE sale_id = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale_id);
 
@@ -179,16 +198,21 @@ public class Data {
         return products;
     }
 
-    public static void update_Product(Product product, String Previous_name) throws SQLException {
+    public static void update_Product(Product product, String Previous_name) {
 
-        String sql = "UPDATE items SET name = ?, price = ?, stock = ? WHERE id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, product.getName());
-        ps.setFloat(2, product.getPrice());
-        ps.setInt(3, product.getQuantity());
-        ps.setInt(4, product.getId());
-        ps.executeUpdate();
-
+        try {
+            String sql = "UPDATE items SET name = ?, price = ?, stock = ?, Category = ? WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, product.getName());
+            ps.setFloat(2, product.getPrice());
+            ps.setInt(3, product.getQuantity());
+            ps.setString(4, product.getCategory().getCategoryName());
+            ps.setInt(5, product.getId());
+            ps.executeUpdate();
+            System.out.println("Product updated");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println(Previous_name);
 
@@ -198,13 +222,17 @@ public class Data {
             String new_name = product.getName().replace(" ", "_")+product.getId();
 
             String query = "ALTER TABLE "+ old_name + " RENAME TO " + new_name + ";";
-            PreparedStatement ps2 = connection.prepareStatement(query);
-            ps2.executeUpdate();
-        }
+            try {
+                PreparedStatement ps2 = connection.prepareStatement(query);
+                ps2.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            }
     }
 
     public static void remove_Product(int ID) throws SQLException {
-        String sql = "DELETE FROM sales WHERE id = ?";
+        String sql = "DELETE FROM items WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, ID);
         ps.executeUpdate();

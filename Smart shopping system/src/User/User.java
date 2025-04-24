@@ -4,7 +4,7 @@ public class User {
     private int id;
     private String Username;
     private String password;
-    private static enum access_levels {
+    public static enum access_levels {
         ADMIN,
         SHOP_CLARK
     }
@@ -31,6 +31,15 @@ public class User {
         return this.Username.equals(username) && this.password.equals(password);
     }
 
+    public access_levels[] getAccess_levels() {
+        return access_levels.values();
+    }
+    
+    public access_levels getAccessLevel() {
+        return access_level;
+    }
+    
+    
 
 
 }

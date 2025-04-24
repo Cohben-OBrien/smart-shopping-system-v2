@@ -1,6 +1,8 @@
 package Product;
 
 import javax.swing.table.DefaultTableModel;
+import Product.Product_Category;
+
 
 // This class represents each product in the inventory.
 public class Product {
@@ -12,32 +14,19 @@ public class Product {
     private String name;   // The name of the product
     private float price;   // The price of the product
     private int quantity;  // The quantity of the product in stock
+    private Product_Category category;
 
     // Constructor to initialize product details
-    public Product(int id, String name, float price, int quantity) {
+    public Product(int id, String name, float price, int quantity, Product_Category category) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.category = category;
     }
 
-    // Getters for the product details
-    public String getName() {
-        return name;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public int getId() {return id; }
-    // Decrease the quantity when the product is sold
-    public void sell(int quantitySold) {
-        this.quantity -= quantitySold;
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
     }
 
     public void setName(String name) {
@@ -46,9 +35,33 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+
+    public void setCategory(String category) {
+        this.category = Categories.findCategory(category);
     }
+
+    // Getters for the product details
+    public String getName() {
+        return name;
+    }
+
+    public Product_Category getCatory() {return category;}
+
+    public float getPrice() {
+        return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+    public Product_Category getCategory() {return category;}
+
+    public int getId() {return id; }
+    // Decrease the quantity when the product is sold
+    public void sell(int quantitySold) {
+        this.quantity -= quantitySold;
+    }
+
 }
 
 
