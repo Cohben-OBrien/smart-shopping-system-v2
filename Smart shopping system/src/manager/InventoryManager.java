@@ -51,13 +51,9 @@ public class InventoryManager extends Main {
     }
 
     // Add a product to the inventory
-    public void addProduct(Product product) {
-        try {
-            products.add(product); // Add product to the list of products
-            Data.addProduct(product);
-        } catch (SQLException a) {
-            System.out.println(a.getMessage());
-        }
+    public void addProduct(Product product) throws SQLException{
+        products.add(product); // Add product to the list of products
+        Data.addProduct(product);
         Product.tableModel.addRow(new Object[]{product.getId(), product.getName() , product.getPrice(), product.getQuantity()});
     }
 
@@ -129,21 +125,16 @@ public class InventoryManager extends Main {
         }
     }
 
-    public static void Update_Product(Product product, String Name, float Price, int Quantity, String category) throws IOException {
+    public static void Update_Product(Product product, String Name, float Price, int Quantity, Product_Category category) throws SQLException, IOException {
             String Previous_name = product.getName();
 
             products.get(products.indexOf(product)).setName(Name);
             products.get(products.indexOf(product)).setPrice(Price);
             products.get(products.indexOf(product)).setQuantity(Quantity);
-            products.get(products.indexOf(product)).setCategory(category);
 
-            try {
-                Data.update_Product(products.get(products.indexOf(product)), Previous_name);
-                render_data();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
 
+            Data.update_Product(products.get(products.indexOf(product)), Previous_name);
+            render_data();
     }
 
     public static void removeProduct(Product product) throws SQLException {
