@@ -19,7 +19,7 @@ import java.util.Locale;
 public class Add_Sale {
 
     static ArrayList<ProductSale> products = new ArrayList<>();
-
+    private static JLabel totalLabel;
     public static DefaultTableModel ProductModel = new DefaultTableModel();
 
     private static void remove_Product(Product product, int row) {
@@ -35,6 +35,14 @@ public class Add_Sale {
         ProductModel.addRow(new Object[]{product.getId(), product.getName(), quantity, String.format("£%.2f", product.getPrice()), String.format("£%.2f", product.getPrice() * quantity)});
 
 
+    }
+
+    private static void updateTotalLabel() {
+        double total = 0;
+        for (ProductSale sale : products) {
+            total += sale.getQuantity() * sale.getProduct().getPrice();
+        }
+        totalLabel.setText("Total: " + String.format("%.2f", total));
     }
 
     private static void add_product(InventoryManager manager) {
@@ -80,6 +88,7 @@ public class Add_Sale {
                 if (Database.Data.check_stock(product.getId(), Integer.valueOf(ProductQuantity.getText()))) {
                     products.add(new ProductSale(product, Integer.parseInt(ProductQuantity.getText())));
                     add_table_product(product, Integer.parseInt(ProductQuantity.getText()));
+                    updateTotalLabel();
                     frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(frame, "Product does not have enough stock");
@@ -161,6 +170,10 @@ public class Add_Sale {
 
         frame.add(Add_sale);
         frame.add(Add_sale);
+
+        totalLabel = new JLabel("Total: £0.00");
+        totalLabel.setBounds(650, 700, 200, 30);
+        frame.add(totalLabel);
 
         frame.setVisible(true);
 
