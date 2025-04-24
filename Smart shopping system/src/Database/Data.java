@@ -231,11 +231,16 @@ public class Data {
             }
     }
 
-    public static void remove_Product(int ID) throws SQLException {
+    public static void remove_Product(Product product) throws SQLException {
         String sql = "DELETE FROM items WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, ID);
+        ps.setInt(1, product.getId());
         ps.executeUpdate();
+
+        sql = "DROP TABLE " + product.getName().replace(" ", "_")+product.getId();
+        PreparedStatement ps2 = connection.prepareStatement(sql);
+        ps2.executeUpdate();
+
     }
 
    //add filter
