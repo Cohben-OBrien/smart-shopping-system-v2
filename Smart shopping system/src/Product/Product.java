@@ -28,24 +28,10 @@ public class Product {
     public void setQuantity(int quantity){
         this.quantity = quantity;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public void setCategory(String category) {
-        this.category = Categories.findCategory(category);
-    }
-
     // Getters for the product details
     public String getName() {
         return name;
     }
-
-    public Product_Category getCatory() {return category;}
 
     public float getPrice() {
         return price;
@@ -62,6 +48,12 @@ public class Product {
         this.quantity -= quantitySold;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPrice(float price) {
+        this.price = price;
+    }
 }
 
 

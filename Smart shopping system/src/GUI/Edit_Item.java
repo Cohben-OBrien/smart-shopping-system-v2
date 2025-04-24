@@ -55,7 +55,6 @@ public class Edit_Item {
         for(Product_Category category: Database.Data.LoadCategories()) {
             Category.addItem(category.getCategoryName());
         }
-        Category.setSelectedItem(product.getCategory().getCategoryName());
         frame.setVisible(true);
 
         updateButton.addActionListener(e -> {
@@ -67,11 +66,10 @@ public class Edit_Item {
                     String newName = nameField.getText().trim();
                     float newPrice = Float.parseFloat(priceField.getText());
                     int newQuantity = Integer.parseInt(quantityField.getText());
-                    String categoryName = Category.getSelectedItem().toString();
-                    manager.Update_Product(product, newName, newPrice, newQuantity, categoryName);
+
+                    manager.Update_Product(product, newName, newPrice, newQuantity, new Product_Category(Category.getSelectedItem().toString()));
                     frame.dispose();
                 }} catch (Exception a) {
-                    System.out.println(a);
                 }
 
         });
