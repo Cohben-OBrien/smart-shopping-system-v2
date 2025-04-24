@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="product table updates when a sale is maded">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Updated stock colour categories">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="dynamic-total-label" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -39,7 +39,17 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Cohben-OBrien/smart-shopping-system-v2.git&quot;,
-    &quot;accountId&quot;: &quot;a990a71b-5d58-4fc7-9578-e2783e60dc7e&quot;
+    &quot;accountId&quot;: &quot;99a84528-4e13-4e45-bbb8-48274c1d94bf&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Cohben-OBrien&quot;,
+    &quot;repository&quot;: &quot;smart-shopping-system-v2&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -54,16 +64,17 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Data.executor": "Run",
-    "Application.InventoryManager.executor": "Debug",
+    "Application.InventoryManager.executor": "Run",
     "Application.Main.executor": "Run",
+    "Application.Mainv3.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "Application.newMain.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
+    "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/swingx-all-1.6.4.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -77,6 +88,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pavit\Desktop\SmartShop\Smart shopping system\src\resources" />
       <recent name="C:\Users\cohbe\code\smart-shopping-system-v2\Smart shopping system\src" />
     </key>
   </component>
@@ -103,8 +115,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.test" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.test" />
         <item itemvalue="Application.test" />
       </list>
     </recent_temporary>
@@ -132,14 +150,9 @@
       <workItem from="1744709798760" duration="17000" />
       <workItem from="1744709838420" duration="42000" />
       <workItem from="1744715418797" duration="896000" />
-      <workItem from="1744798355158" duration="655000" />
-      <workItem from="1744799027120" duration="4159000" />
-      <workItem from="1744878254005" duration="15000" />
-      <workItem from="1744907751800" duration="2000" />
-      <workItem from="1744912349081" duration="1825000" />
-      <workItem from="1744917722122" duration="2053000" />
-      <workItem from="1744923331966" duration="114000" />
-      <workItem from="1744966116230" duration="3655000" />
+      <workItem from="1744901570274" duration="351000" />
+      <workItem from="1745345515465" duration="619000" />
+      <workItem from="1745419609767" duration="13403000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -173,79 +186,133 @@
       <option name="project" value="LOCAL" />
       <updated>1744728476270</updated>
     </task>
-    <task id="LOCAL-00005" summary="PSCSSS-24 Add table location commentss">
+    <task id="LOCAL-00005" summary="Added search function.">
       <option name="closed" value="true" />
-      <created>1744797416710</created>
+      <created>1744739637990</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1744797416710</updated>
+      <updated>1744739637990</updated>
     </task>
-    <task id="LOCAL-00006" summary="P2CSSS-24 save">
+    <task id="LOCAL-00006" summary="P2CSSS-2 GUI updates">
       <option name="closed" value="true" />
-      <created>1744798231881</created>
+      <created>1744901623475</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1744798231881</updated>
+      <updated>1744901623476</updated>
     </task>
-    <task id="LOCAL-00007" summary="P2CSSS-24 Added the new GUI to main">
+    <task id="LOCAL-00007" summary="admin only to update products">
       <option name="closed" value="true" />
-      <created>1744879199479</created>
+      <created>1745343892325</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1744879199479</updated>
+      <updated>1745343892325</updated>
     </task>
-    <task id="LOCAL-00008" summary="P2CSSS-24 connect add item and add sale record buttons to correct GUI'S">
+    <task id="LOCAL-00008" summary="admin only to update products">
       <option name="closed" value="true" />
-      <created>1744879703782</created>
+      <created>1745344666572</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1744879703782</updated>
+      <updated>1745344666572</updated>
     </task>
-    <task id="LOCAL-00009" summary="P2CSSS-24 product table load products from the database">
+    <task id="LOCAL-00009" summary="Layout change">
       <option name="closed" value="true" />
-      <created>1744880687816</created>
+      <created>1745416100930</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1744880687816</updated>
+      <updated>1745416100930</updated>
     </task>
-    <task id="LOCAL-00010" summary="updating the database file">
+    <task id="LOCAL-00010" summary="New layout">
       <option name="closed" value="true" />
-      <created>1744919039491</created>
+      <created>1745417400362</created>
       <option name="number" value="00010" />
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
-      <updated>1744919039491</updated>
+      <updated>1745417400362</updated>
     </task>
-    <task id="LOCAL-00011" summary="product table updates when a sale is maded">
+    <task id="LOCAL-00011" summary="Layout updated with image">
       <option name="closed" value="true" />
-      <created>1744967827429</created>
+      <created>1745426760046</created>
       <option name="number" value="00011" />
       <option name="presentableId" value="LOCAL-00011" />
       <option name="project" value="LOCAL" />
-      <updated>1744967827429</updated>
+      <updated>1745426760047</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Full makeover">
+      <option name="closed" value="true" />
+      <created>1745430632086</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745430632086</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Updated stock colour categories">
+      <option name="closed" value="true" />
+      <created>1745431477822</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1745431477822</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="move code files to src files" />
     <MESSAGE value="fixxing broken shit" />
     <MESSAGE value="Updated fields and cosmetic design" />
-    <MESSAGE value="PSCSSS-24 Add table location commentss" />
-    <MESSAGE value="P2CSSS-24 save" />
-    <MESSAGE value="P2CSSS-24 Added the new GUI to main" />
-    <MESSAGE value="P2CSSS-24 connect add item and add sale record buttons to correct GUI'S" />
-    <MESSAGE value="P2CSSS-24 product table load products from the database" />
-    <MESSAGE value="updating the database file" />
-    <MESSAGE value="product table updates when a sale is maded" />
-    <option name="LAST_COMMIT_MESSAGE" value="product table updates when a sale is maded" />
+    <MESSAGE value="Added search function." />
+    <MESSAGE value="P2CSSS-2 GUI updates" />
+    <MESSAGE value="admin only to update products" />
+    <MESSAGE value="Layout change" />
+    <MESSAGE value="New layout" />
+    <MESSAGE value="Layout updated with image" />
+    <MESSAGE value="Full makeover" />
+    <MESSAGE value="Updated stock colour categories" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated stock colour categories" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java</url>
+          <line>110</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Smart shopping system/src/Main.java</url>
+          <line>335</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Product.Product" memberName="category" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="products" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

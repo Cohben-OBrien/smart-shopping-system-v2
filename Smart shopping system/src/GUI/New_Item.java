@@ -1,10 +1,12 @@
 package GUI;
 
 import Product.Product;
+import Product.Product_Category;
+import jdk.jfr.Category;
 import manager.InventoryManager;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
+import java.awt.image.ImageProducer;
 import java.sql.SQLException;
 
 public class New_Item {
@@ -33,9 +35,15 @@ public class New_Item {
         Item_quantity_label.setBounds(2, 70, 200, 20);
         Item_quantity_textField.setBounds(100, 70, 340, 20);
 
-        JButton Add_item_button = new JButton("Add Item");
+        JLabel Item_Category_label = new JLabel("Item Category");
+        Item_Category_label.setBounds(2, 90, 200, 20);
 
-        Add_item_button.setBounds(200, 90, 80, 20);
+        JComboBox Category = new JComboBox();
+        Category.setBounds(100, 90, 340, 20);
+
+
+        JButton Add_item_button = new JButton("Add Item");
+        Add_item_button.setBounds(100, 120, 100, 20);
 
 
         frame.add(Item_name_label);
@@ -47,9 +55,15 @@ public class New_Item {
 
         frame.add(Item_quantity_label);
         frame.add(Item_quantity_textField);
+        frame.add(Item_Category_label);
+        frame.add(Category);
 
         frame.add(Add_item_button);
 
+
+        for(Product_Category category: Database.Data.LoadCategories()) {
+            Category.addItem(category.getCategoryName());
+        }
 
 
         frame.setVisible(true);
@@ -65,10 +79,15 @@ public class New_Item {
 
                     name = Item_name_textField.getText();
                     if (!name.isEmpty()) {
-                        try {
-                            manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity));
-                        } catch (SQLException a ) {}
-                        frame.dispose();
+                        if(item_price <= 0) {
+                            JOptionPane.showMessageDialog(null, "Invalid price");
+                        } else {
+                            try {
+                                manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, new Product_Category(Category.getSelectedItem().toString())));
+                            } catch (SQLException a ) {}
+
+                        }
+                       frame.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Please enter a name for the item");
                     }

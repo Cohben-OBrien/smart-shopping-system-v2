@@ -1,12 +1,9 @@
 package Records;
 // Import the Product class from the same package
 import Database.Data;
-import manager.InventoryManager;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 // This class represents a sales record.
 public class SalesRecord {
