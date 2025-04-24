@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="P2CSSS-37">
+    <list default="true" id="cd8cb356-c77e-4b3b-9fe1-85e62d996fcc" name="Changes" comment="Updated stock colour categories">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="P2CSSS-39-Updated-layout" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -39,13 +39,22 @@
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Cohben-OBrien/smart-shopping-system-v2.git&quot;,
     &quot;accountId&quot;: &quot;99a84528-4e13-4e45-bbb8-48274c1d94bf&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Cohben-OBrien&quot;,
+    &quot;repository&quot;: &quot;smart-shopping-system-v2&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2vMu7OE2yZRImm174lCwMvqbRkn" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -53,16 +62,16 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Data.executor": "Run",
-    "Application.InventoryManager.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.Mainv3.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "Application.newMain.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "P2CSSS-38-Add-products-categorys",
+    "git-widget-placeholder": "P2CSSS-39-Updated-layout",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar",
+    "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/swingx-all-1.6.4.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,6 +85,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pavit\Desktop\SmartShop\Smart shopping system\src\resources" />
       <recent name="C:\Users\cohbe\code\smart-shopping-system-v2\Smart shopping system\src" />
     </key>
   </component>
@@ -109,14 +119,16 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.test" />
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.test" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
       </set>
     </attachedChunks>
   </component>
@@ -136,6 +148,8 @@
       <workItem from="1744709838420" duration="42000" />
       <workItem from="1744715418797" duration="896000" />
       <workItem from="1744901570274" duration="351000" />
+      <workItem from="1745345515465" duration="619000" />
+      <workItem from="1745419609767" duration="13403000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -193,23 +207,55 @@
       <option name="project" value="LOCAL" />
       <updated>1745343892325</updated>
     </task>
-    <task id="LOCAL-00008" summary="P2CSSS-37 add date selector to the add sale GUI">
+    <task id="LOCAL-00008" summary="admin only to update products">
       <option name="closed" value="true" />
-      <created>1745398556871</created>
+      <created>1745344666572</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1745398556871</updated>
+      <updated>1745344666572</updated>
     </task>
-    <task id="LOCAL-00009" summary="P2CSSS-37">
+    <task id="LOCAL-00009" summary="Layout change">
       <option name="closed" value="true" />
-      <created>1745403799300</created>
+      <created>1745416100930</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1745403799300</updated>
+      <updated>1745416100930</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="New layout">
+      <option name="closed" value="true" />
+      <created>1745417400362</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1745417400362</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Layout updated with image">
+      <option name="closed" value="true" />
+      <created>1745426760046</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1745426760047</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Full makeover">
+      <option name="closed" value="true" />
+      <created>1745430632086</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745430632086</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Updated stock colour categories">
+      <option name="closed" value="true" />
+      <created>1745431477822</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1745431477822</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,9 +279,12 @@
     <MESSAGE value="Added search function." />
     <MESSAGE value="P2CSSS-2 GUI updates" />
     <MESSAGE value="admin only to update products" />
-    <MESSAGE value="P2CSSS-37 add date selector to the add sale GUI" />
-    <MESSAGE value="P2CSSS-37" />
-    <option name="LAST_COMMIT_MESSAGE" value="P2CSSS-37" />
+    <MESSAGE value="Layout change" />
+    <MESSAGE value="New layout" />
+    <MESSAGE value="Layout updated with image" />
+    <MESSAGE value="Full makeover" />
+    <MESSAGE value="Updated stock colour categories" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated stock colour categories" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -247,5 +296,15 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Product.Product" memberName="category" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="products" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

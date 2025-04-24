@@ -40,6 +40,7 @@ public class Product {
     public int getQuantity() {
         return quantity;
     }
+    public Product_Category getCategory() {return category;}
 
     public int getId() {return id; }
     // Decrease the quantity when the product is sold
