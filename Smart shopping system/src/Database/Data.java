@@ -220,12 +220,23 @@ public class Data {
         }
     }
 
-    public static void remove_Product(int ID) throws SQLException {
-        String sql = "DELETE FROM items WHERE id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, ID);
-        ps.executeUpdate();
-    }
+    public static void remove_Product(Product product) throws SQLException {
+        try {
+            String sql = "DELETE FROM items WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, product.getId());
+            ps.executeUpdate();
+            System.out.println("Product removed");
+
+            sql = "DROP TABLE " + product.getName().replace(" ", "_")+product.getId();
+            ps = connection.prepareStatement(sql);
+            ps.executeUpdate();
+            System.out.println("Product removed");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        }
 
    //add filter
 
