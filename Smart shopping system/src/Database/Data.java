@@ -69,7 +69,7 @@ public class Data {
         String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, product.getId());
-        ps.setString(2, product.getName().replace(" ", "_"));
+        ps.setString(2, product.getName());
         ps.setFloat(3, product.getPrice());
         ps.setInt(4, product.getQuantity());
 
