@@ -221,7 +221,7 @@ public class Main extends JFrame {
 
         frame = new JFrame("Smart Shopping System v1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(850, 700);
+        frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
 
         Container contentPane = frame.getContentPane();
@@ -386,7 +386,9 @@ public class Main extends JFrame {
 
         // Create a new panel to hold the main title and table controls
         JPanel titleAndControlPanel = new JPanel(new BorderLayout());
-        titleAndControlPanel.add(titleLabel, BorderLayout.NORTH);
+        // Add the vertical gap here
+        titleAndControlPanel.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH); // Add a 20-pixel gap
+        titleAndControlPanel.add(titleLabel, BorderLayout.CENTER); // Center the title
         titleAndControlPanel.add(tableControlPanel, BorderLayout.SOUTH); // Add the tableControlPanel to the SOUTH
 
         // Add the title and control panel to the NORTH of the centerPanel
