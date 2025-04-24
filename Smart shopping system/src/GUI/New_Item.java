@@ -2,6 +2,7 @@ package GUI;
 
 import Product.Product;
 import Product.Product_Category;
+import Product.Categories;
 import jdk.jfr.Category;
 import manager.InventoryManager;
 
@@ -83,8 +84,8 @@ public class New_Item {
                             JOptionPane.showMessageDialog(null, "Invalid price");
                         } else {
                             try {
-                                manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, new Product_Category(Category.getSelectedItem().toString())));
-                            } catch (SQLException a ) {}
+                                manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, Categories.findCategory(Category.getSelectedItem().toString())));
+                            } catch (Exception a ) {}
 
                         }
                        frame.dispose();
