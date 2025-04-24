@@ -452,7 +452,7 @@ public class Main extends JFrame {
                 });
                 try {
                     manager.addProduct(lastDeletedProduct);
-                } catch (SQLException ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, "Error undoing delete in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
