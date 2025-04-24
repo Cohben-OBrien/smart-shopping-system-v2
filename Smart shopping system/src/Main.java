@@ -39,6 +39,7 @@ public class Main extends JFrame {
     static JLabel dateLabel;
     static JTextField searchTextField;
     static JPanel leftButtonPanel = new JPanel();
+    static JLabel usernameLabelBottom; // Declare usernameLabelBottom here
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -213,7 +214,7 @@ public class Main extends JFrame {
         manager.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         manager.itemTable.setRowSelectionAllowed(true);
 
-        frame = new JFrame("Smart Shopping System v1");
+        frame = new JFrame("IntelliShop - Smart Shopping Management");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
@@ -221,14 +222,25 @@ public class Main extends JFrame {
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
+        // Create a panel to hold the spacing and the title
+        JPanel titleAreaPanel = new JPanel(new BorderLayout());
+
+        // Add an empty label with a preferred height for top spacing
+        JLabel topSpacingLabel = new JLabel("");
+        topSpacingLabel.setPreferredSize(new Dimension(0, 20)); // Adjust as needed
+        titleAreaPanel.add(topSpacingLabel, BorderLayout.NORTH);
+
         // Create the title label
-        JLabel titleLabel = new JLabel("InteliShop - Smart Shopping Management");
-        titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 28));
+        JLabel titleLabel = new JLabel("IntelliShop - Smart Shopping Management");
+        titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
         titleLabel.setForeground(Color.BLUE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleAreaPanel.add(titleLabel, BorderLayout.CENTER);
 
-        JPanel titlePanel = new JPanel(new BorderLayout());
-        titlePanel.add(titleLabel, BorderLayout.NORTH);
+        // Add an empty label with a preferred height for bottom padding
+        JLabel bottomSpacingLabel = new JLabel("");
+        bottomSpacingLabel.setPreferredSize(new Dimension(0, 10)); // Adjust this value for bottom padding
+        titleAreaPanel.add(bottomSpacingLabel, BorderLayout.SOUTH);
 
         leftButtonPanel.setLayout(new BoxLayout(leftButtonPanel, BoxLayout.Y_AXIS));
         leftButtonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -244,38 +256,34 @@ public class Main extends JFrame {
         JLabel imageLabel = new JLabel(scaledIcon);
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftButtonPanel.add(imageLabel);
-        leftButtonPanel.add(Box.createVerticalStrut(5));
 
-        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Some space before the first button
 
         JButton productsButton = new JButton("Add Product");
         deleteProductButton = new JButton("Delete");
         JButton recordSaleButton = new JButton("Record Sale");
-        JButton salesReportButton = new JButton("Sales");
-        JButton lowStockButton = new JButton("Stock");
+        JButton salesReportButton = new JButton("Sales Report");
+        JButton lowStockButton = new JButton("Stock Report");
         JButton exitButton = new JButton("Log-out");
 
         JButton[] buttons = {productsButton, deleteProductButton, recordSaleButton, salesReportButton, lowStockButton, exitButton};
         int maxWidth = 0;
         for (JButton button : buttons) {
-            button.setFont(new Font("Arial", Font.PLAIN, 16));
+            button.setFont(new Font("Arial", Font.PLAIN, 14));
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             maxWidth = Math.max(maxWidth, button.getPreferredSize().width);
         }
+        int padding = 20; // Adjust this padding value
         for (int i = 0; i < buttons.length; i++) {
             JButton button = buttons[i];
-            button.setMaximumSize(new Dimension(maxWidth, button.getPreferredSize().height));
+            button.setMaximumSize(new Dimension(maxWidth + padding, button.getPreferredSize().height));
             leftButtonPanel.add(button);
             if (i < buttons.length - 1) {
-                leftButtonPanel.add(Box.createVerticalGlue());
+                leftButtonPanel.add(Box.createVerticalGlue()); // Glue *between* buttons
             }
         }
-        leftButtonPanel.add(Box.createVerticalGlue());
 
-        JLabel versionLabel = new JLabel("Version 1.0.0");
-        versionLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        versionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftButtonPanel.add(versionLabel);
+        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Some space after the last button
 
         salesReportButton.addActionListener(e -> {
             Sales_Report report = new Sales_Report();
@@ -351,7 +359,7 @@ public class Main extends JFrame {
         exitButton.addActionListener(e -> System.exit(0));
 
         contentPane.add(leftButtonPanel, BorderLayout.WEST);
-        contentPane.add(titlePanel, BorderLayout.NORTH);
+        contentPane.add(titleAreaPanel, BorderLayout.NORTH); // Add the panel containing spacing and title
 
         JPanel centerPanel = new JPanel(new BorderLayout());
 
@@ -392,16 +400,41 @@ public class Main extends JFrame {
         ));
         centerPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        // Get the preferred width of the tableControlPanel
+        tableControlPanel.doLayout(); // Ensure layout is done to get accurate preferred size
+        Dimension tableControlPanelSize = tableControlPanel.getPreferredSize();
+
+        // Set the preferred width of the titleAreaPanel
+        titleAreaPanel.setPreferredSize(new Dimension(tableControlPanelSize.width, titleAreaPanel.getPreferredSize().height));
+
+        JPanel bottomPanel = new JPanel(new BorderLayout()); // Use BorderLayout
+
+        // Panel for version number with left spacing
+        JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // FlowLayout to arrange left to right
+        JLabel versionSpacer = new JLabel("      ");
+        JLabel versionLabelBottom = new JLabel("Version 1.0.0");
+        versionLabelBottom.setFont(new Font("Arial", Font.PLAIN, 14));
+        versionPanel.add(versionSpacer);
+        versionPanel.add(versionLabelBottom);
+        bottomPanel.add(versionPanel, BorderLayout.WEST);
+
+        // Panel to hold and center the date
+        JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         dateLabel = new JLabel(getCurrentDate() + "  " + getCurrentTime());
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        bottomPanel.add(dateLabel);
+        datePanel.add(dateLabel);
+        bottomPanel.add(datePanel, BorderLayout.CENTER);
 
-        JLabel usernameLabelBottom = new JLabel("  Logged in as: " + username);
+        // Panel for "Logged in as..." on the EAST with left padding
+        JPanel eastPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout to arrange within EAST
+        usernameLabelBottom = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logged in as: " + username + "</html>");
         usernameLabelBottom.setFont(new Font("Arial", Font.PLAIN, 14));
-        bottomPanel.add(usernameLabelBottom);
+        eastPanel.add(usernameLabelBottom);
+        JPanel eastSpacer = new JPanel();
+        eastPanel.add(eastSpacer); // Add the spacer to the east panel
 
-        bottomPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        bottomPanel.add(eastPanel, BorderLayout.EAST);
+
         contentPane.add(bottomPanel, BorderLayout.SOUTH);
 
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
