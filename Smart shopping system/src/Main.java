@@ -37,8 +37,9 @@ public class Main extends JFrame {
     static Timer undoTimer;
     static JPanel notificationPanel;
     static JLabel dateLabel;
-    static JTextField searchTextField; // Declare searchTextField at the class level
-    static JPanel leftButtonPanel = new JPanel(); // Declare leftButtonPanel here
+    static JTextField searchTextField;
+    static JPanel leftButtonPanel = new JPanel();
+    static JLabel usernameLabelBottom; // Declare usernameLabelBottom here
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -59,10 +60,9 @@ public class Main extends JFrame {
             setPreferredSize(new Dimension(400, 200));
             setLocationRelativeTo(null);
 
-            int fieldPadding = 5; // Padding around the text fields and button
-            int dialogMargin = 20; // Padding around the entire dialog
+            int fieldPadding = 5;
+            int dialogMargin = 20;
 
-            // Create an EmptyBorder for the content pane
             ((JPanel) getContentPane()).setBorder(BorderFactory.createEmptyBorder(
                     dialogMargin,
                     dialogMargin,
@@ -87,7 +87,7 @@ public class Main extends JFrame {
             add(usernameField);
             add(passwordLabel);
             add(passwordField);
-            add(new JLabel()); // Empty label for spacing
+            add(new JLabel());
             add(loginButton);
 
             loginButton.addActionListener(e -> {
@@ -98,18 +98,14 @@ public class Main extends JFrame {
                 try {
                     if (User_authenticator.User_Authemticator(username, passwordStr)) {
                         dispose();
-                        try {
-                            frame = createAndShowGUI();
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
+                        System.out.println("Login successful, calling createAndShowGUI with username: " + username);
+                        frame = createAndShowGUI(username);
+                        System.out.println("Returned from createAndShowGUI after login");
                     } else {
                         JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
                         passwordField.setText("");
                     }
-                } catch (Exception ex) { // Catch both SQLException and IOException
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(LoginDialog.this, "An error occurred during login: " + ex.getMessage(), "Login Error", JOptionPane.ERROR_MESSAGE);
                     System.err.println("Login error: " + ex.getMessage());
                     ex.printStackTrace();
@@ -139,17 +135,16 @@ public class Main extends JFrame {
     }
 
     private static void startClock() {
-        Timer timer = new Timer(1000, new ActionListener() { // Update every 1000 milliseconds (1 second)
+        Timer timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                dateLabel.setText(getCurrentDate() + "  " + getCurrentTime()); // Display date and time
+                dateLabel.setText(getCurrentDate() + "  " + getCurrentTime());
             }
         });
         timer.start();
     }
 
-    public static JFrame createAndShowGUI() throws SQLException, Exception {
+    public static JFrame createAndShowGUI(String username) throws SQLException, Exception {
         manager.loadInventory();
 
         manager.itemTable = new JTable(Product.tableModel) {
@@ -219,32 +214,41 @@ public class Main extends JFrame {
         manager.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         manager.itemTable.setRowSelectionAllowed(true);
 
-        frame = new JFrame("Smart Shopping System v1");
+        frame = new JFrame("IntelliShop - Smart Shopping Management");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(850, 700);
+        frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
 
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
+        // Create a panel to hold the spacing and the title
+        JPanel titleAreaPanel = new JPanel(new BorderLayout());
+
+        // Add an empty label with a preferred height for top spacing
+        JLabel topSpacingLabel = new JLabel("");
+        topSpacingLabel.setPreferredSize(new Dimension(0, 20)); // Adjust as needed
+        titleAreaPanel.add(topSpacingLabel, BorderLayout.NORTH);
+
         // Create the title label
-        JLabel titleLabel = new JLabel("InteliShop - Smart Shopping Management");
-        titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 28));
+        JLabel titleLabel = new JLabel("IntelliShop - Smart Shopping Management");
+        titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
         titleLabel.setForeground(Color.BLUE);
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the text within the label
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleAreaPanel.add(titleLabel, BorderLayout.CENTER);
+
+        // Add an empty label with a preferred height for bottom padding
+        JLabel bottomSpacingLabel = new JLabel("");
+        bottomSpacingLabel.setPreferredSize(new Dimension(0, 10)); // Adjust this value for bottom padding
+        titleAreaPanel.add(bottomSpacingLabel, BorderLayout.SOUTH);
 
         leftButtonPanel.setLayout(new BoxLayout(leftButtonPanel, BoxLayout.Y_AXIS));
         leftButtonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Load the image
         java.net.URL imageUrl = Main.class.getResource("/resources/shopping_cart_icon.png");
         System.out.println("Image URL: " + imageUrl);
         ImageIcon originalIcon = new ImageIcon(imageUrl);
-
-        // Get the Image from the ImageIcon
         Image originalImage = originalIcon.getImage();
-
-        // Define the desired width and height for the scaled image
         int scaledWidth = 75;
         int scaledHeight = 75;
         Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
@@ -252,39 +256,34 @@ public class Main extends JFrame {
         JLabel imageLabel = new JLabel(scaledIcon);
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftButtonPanel.add(imageLabel);
-        leftButtonPanel.add(Box.createVerticalStrut(5));
 
-        // Add a rigid area here to create space before the buttons
-        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 40))); // Increased space to 50 pixels
+        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Some space before the first button
 
         JButton productsButton = new JButton("Add Product");
         deleteProductButton = new JButton("Delete");
         JButton recordSaleButton = new JButton("Record Sale");
-        JButton salesReportButton = new JButton("Sales");
-        JButton lowStockButton = new JButton("Stock");
+        JButton salesReportButton = new JButton("Sales Report");
+        JButton lowStockButton = new JButton("Stock Report");
         JButton exitButton = new JButton("Log-out");
 
         JButton[] buttons = {productsButton, deleteProductButton, recordSaleButton, salesReportButton, lowStockButton, exitButton};
         int maxWidth = 0;
         for (JButton button : buttons) {
-            button.setFont(new Font("Arial", Font.PLAIN, 16));
+            button.setFont(new Font("Arial", Font.PLAIN, 14));
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             maxWidth = Math.max(maxWidth, button.getPreferredSize().width);
         }
+        int padding = 20; // Adjust this padding value
         for (int i = 0; i < buttons.length; i++) {
             JButton button = buttons[i];
-            button.setMaximumSize(new Dimension(maxWidth, button.getPreferredSize().height));
+            button.setMaximumSize(new Dimension(maxWidth + padding, button.getPreferredSize().height));
             leftButtonPanel.add(button);
             if (i < buttons.length - 1) {
-                leftButtonPanel.add(Box.createVerticalGlue());
+                leftButtonPanel.add(Box.createVerticalGlue()); // Glue *between* buttons
             }
         }
-        leftButtonPanel.add(Box.createVerticalGlue());
 
-        JLabel versionLabel = new JLabel("Version 1.0.0");
-        versionLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        versionLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the text
-        leftButtonPanel.add(versionLabel);
+        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Some space after the last button
 
         salesReportButton.addActionListener(e -> {
             Sales_Report report = new Sales_Report();
@@ -360,23 +359,22 @@ public class Main extends JFrame {
         exitButton.addActionListener(e -> System.exit(0));
 
         contentPane.add(leftButtonPanel, BorderLayout.WEST);
+        contentPane.add(titleAreaPanel, BorderLayout.NORTH); // Add the panel containing spacing and title
 
         JPanel centerPanel = new JPanel(new BorderLayout());
 
-        // Create the table control panel first
-        JPanel tableControlPanel = new JPanel(new BorderLayout()); // Use BorderLayout for tableControlPanel
-        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 1, 20)); // Increased horizontal padding
+        JPanel tableControlPanel = new JPanel(new BorderLayout());
+        tableControlPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 1, 20));
 
-        JPanel searchPanel = new JPanel(new BorderLayout(5, 0)); // Use BorderLayout for searchPanel
+        JPanel searchPanel = new JPanel(new BorderLayout(5, 0));
         JLabel searchLabel = new JLabel("Search:");
         searchLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         searchPanel.add(searchLabel, BorderLayout.LINE_START);
-        searchTextField = new JTextField(); // Let the TextField expand
+        searchTextField = new JTextField();
         searchTextField.setFont(new Font("Arial", Font.PLAIN, 16));
-        searchPanel.add(searchTextField, BorderLayout.CENTER); // TextField in the CENTER
+        searchPanel.add(searchTextField, BorderLayout.CENTER);
 
-        tableControlPanel.add(searchPanel, BorderLayout.NORTH); // Add searchPanel to the NORTH
-
+        tableControlPanel.add(searchPanel, BorderLayout.NORTH);
         tableControlPanel.add(Box.createVerticalStrut(10), BorderLayout.CENTER);
 
         JLabel tableTitleLabel = new JLabel("<html><u>Product Inventory</u></html>");
@@ -384,13 +382,7 @@ public class Main extends JFrame {
         tableTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         tableControlPanel.add(tableTitleLabel, BorderLayout.SOUTH);
 
-        // Create a new panel to hold the main title and table controls
-        JPanel titleAndControlPanel = new JPanel(new BorderLayout());
-        titleAndControlPanel.add(titleLabel, BorderLayout.NORTH);
-        titleAndControlPanel.add(tableControlPanel, BorderLayout.SOUTH); // Add the tableControlPanel to the SOUTH
-
-        // Add the title and control panel to the NORTH of the centerPanel
-        centerPanel.add(titleAndControlPanel, BorderLayout.NORTH);
+        centerPanel.add(tableControlPanel, BorderLayout.NORTH);
 
         String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
@@ -408,14 +400,42 @@ public class Main extends JFrame {
         ));
         centerPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel dateTimePanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Use FlowLayout.RIGHT
-        dateLabel = new JLabel(getCurrentDate() + "  " + getCurrentTime()); // Display date and time initially
-        dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        dateTimePanel.add(dateLabel);
-        // clockLabel is no longer added separately to dateTimePanel
+        // Get the preferred width of the tableControlPanel
+        tableControlPanel.doLayout(); // Ensure layout is done to get accurate preferred size
+        Dimension tableControlPanelSize = tableControlPanel.getPreferredSize();
 
-        dateTimePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        centerPanel.add(dateTimePanel, BorderLayout.SOUTH); // Added to centerPanel SOUTH
+        // Set the preferred width of the titleAreaPanel
+        titleAreaPanel.setPreferredSize(new Dimension(tableControlPanelSize.width, titleAreaPanel.getPreferredSize().height));
+
+        JPanel bottomPanel = new JPanel(new BorderLayout()); // Use BorderLayout
+
+        // Panel for version number with left spacing
+        JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // FlowLayout to arrange left to right
+        JLabel versionSpacer = new JLabel("      ");
+        JLabel versionLabelBottom = new JLabel("Version 1.0.0");
+        versionLabelBottom.setFont(new Font("Arial", Font.PLAIN, 14));
+        versionPanel.add(versionSpacer);
+        versionPanel.add(versionLabelBottom);
+        bottomPanel.add(versionPanel, BorderLayout.WEST);
+
+        // Panel to hold and center the date
+        JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        dateLabel = new JLabel(getCurrentDate() + "  " + getCurrentTime());
+        dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        datePanel.add(dateLabel);
+        bottomPanel.add(datePanel, BorderLayout.CENTER);
+
+        // Panel for "Logged in as..." on the EAST with left padding
+        JPanel eastPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout to arrange within EAST
+        usernameLabelBottom = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logged in as: " + username + "</html>");
+        usernameLabelBottom.setFont(new Font("Arial", Font.PLAIN, 14));
+        eastPanel.add(usernameLabelBottom);
+        JPanel eastSpacer = new JPanel();
+        eastPanel.add(eastSpacer); // Add the spacer to the east panel
+
+        bottomPanel.add(eastPanel, BorderLayout.EAST);
+
+        contentPane.add(bottomPanel, BorderLayout.SOUTH);
 
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
         manager.itemTable.setRowSorter(sorter);
@@ -435,24 +455,24 @@ public class Main extends JFrame {
 
         contentPane.add(centerPanel, BorderLayout.CENTER);
 
-        JPanel notificationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        notificationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         notificationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 20));
         notificationPanel.setVisible(false);
-        contentPane.add(notificationPanel, BorderLayout.SOUTH);
+        contentPane.add(notificationPanel, BorderLayout.EAST);
 
         undoDeleteButton = new JButton("Undo Delete");
         undoDeleteButton.setEnabled(false);
         undoDeleteButton.addActionListener(e -> {
             if (lastDeletedProduct != null && lastDeletedRow != -1) {
                 Product.tableModel.insertRow(lastDeletedRow, new Object[]{
-                        lastDeletedProduct.getId(),       // Add ID if required
+                        lastDeletedProduct.getId(),
                         lastDeletedProduct.getName(),
                         lastDeletedProduct.getPrice(),
                         lastDeletedProduct.getQuantity()
                 });
                 try {
                     manager.addProduct(lastDeletedProduct);
-                } catch (Exception ex) {
+                } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(frame, "Error undoing delete in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
@@ -485,10 +505,10 @@ public class Main extends JFrame {
                     }
                 }
             }
-        }); // Corrected: Added the missing semicolon here
+        });
 
         frame.setVisible(true);
-        startClock(); // Call startClock() after making the frame visible
+        startClock();
         return frame;
     }
 
@@ -497,7 +517,7 @@ public class Main extends JFrame {
         if (searchText.trim().length() == 0) {
             sorter.setRowFilter(null);
         } else {
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText)); // "(?i)" for case-insensitive search
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
         }
     }
 }

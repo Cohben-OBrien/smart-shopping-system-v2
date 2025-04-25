@@ -8,11 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Edit_Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Edit_Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Product/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Product/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="P2CSSS-35-update-products-GUI" />
+        <entry key="$PROJECT_DIR$" value="dynamic-total-label" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -76,7 +71,7 @@
     "Application.newMain.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "P2CSSS-38-Add-products-categorys",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/cohbe/Desktop/smart-shopping-system-v2/Smart shopping system/External Libs/swingx-all-1.6.4.jar",
@@ -301,6 +296,11 @@
           <url>file://$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java</url>
           <line>110</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Smart shopping system/src/Main.java</url>
+          <line>335</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
