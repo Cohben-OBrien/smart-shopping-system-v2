@@ -131,7 +131,7 @@ public class InventoryManager extends Main {
             products.get(products.indexOf(product)).setName(Name);
             products.get(products.indexOf(product)).setPrice(Price);
             products.get(products.indexOf(product)).setQuantity(Quantity);
-
+            products.get(products.indexOf(product)).setCategory(category);
 
             Data.update_Product(products.get(products.indexOf(product)), Previous_name);
             render_data();

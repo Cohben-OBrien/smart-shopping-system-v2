@@ -8,6 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Database/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Edit_Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Edit_Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/New_Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/Product/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/Product/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/manager/InventoryManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,22 +40,22 @@
     &quot;assignee&quot;: &quot;josecastroyupi2025&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Cohben-OBrien/smart-shopping-system-v2.git&quot;,
-    &quot;accountId&quot;: &quot;99a84528-4e13-4e45-bbb8-48274c1d94bf&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Cohben-OBrien/smart-shopping-system-v2.git",
+    "accountId": "a990a71b-5d58-4fc7-9578-e2783e60dc7e"
   },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
     },
-    &quot;owner&quot;: &quot;Cohben-OBrien&quot;,
-    &quot;repository&quot;: &quot;smart-shopping-system-v2&quot;
+    "owner": "Cohben-OBrien",
+    "repository": "smart-shopping-system-v2"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -65,7 +69,7 @@
   "keyToString": {
     "Application.Data.executor": "Run",
     "Application.InventoryManager.executor": "Run",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.Mainv3.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "Application.newMain.executor": "Run",
@@ -153,6 +157,7 @@
       <workItem from="1744901570274" duration="351000" />
       <workItem from="1745345515465" duration="619000" />
       <workItem from="1745419609767" duration="13403000" />
+      <workItem from="1745584023769" duration="2639000" />
     </task>
     <task id="LOCAL-00001" summary="move code files to src files">
       <option name="closed" value="true" />
@@ -302,6 +307,11 @@
           <line>335</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Smart shopping system/src/Main.java</url>
+          <line>305</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
@@ -312,6 +322,7 @@
     <watches-manager>
       <configuration name="Application">
         <watch expression="products" language="JAVA" />
+        <watch expression="GUI.Main.frame" />
       </configuration>
     </watches-manager>
   </component>

@@ -42,6 +42,8 @@ public class Product {
     }
     public Product_Category getCategory() {return category;}
 
+    public void setCategory(Product_Category category) { this.category = category; }
+
     public int getId() {return id; }
     // Decrease the quantity when the product is sold
     public void sell(int quantitySold) {
