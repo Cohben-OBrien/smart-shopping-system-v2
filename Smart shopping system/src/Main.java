@@ -51,24 +51,21 @@ public class Main extends JFrame {
         private JTextField usernameField;
         private JPasswordField passwordField;
         private JButton loginButton;
+        private JButton exitButton; // Added exit button
 
         public LoginDialog() {
             setTitle("Log In");
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             setModal(true);
-            setLayout(new GridLayout(3, 2, 15, 15));
-            setPreferredSize(new Dimension(400, 200));
+            setLayout(new BorderLayout(15, 15)); // Use BorderLayout for the main panel
+            setPreferredSize(new Dimension(400, 200)); // Adjust preferred size
             setLocationRelativeTo(null);
 
             int fieldPadding = 5;
             int dialogMargin = 20;
 
-            ((JPanel) getContentPane()).setBorder(BorderFactory.createEmptyBorder(
-                    dialogMargin,
-                    dialogMargin,
-                    dialogMargin,
-                    dialogMargin
-            ));
+            JPanel inputPanel = new JPanel(new GridLayout(2, 2, 15, 15)); // Panel for username and password
+            inputPanel.setBorder(BorderFactory.createEmptyBorder(dialogMargin, dialogMargin, 10, dialogMargin)); // Padding around inputs
 
             JLabel usernameLabel = new JLabel("Username:");
             usernameLabel.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
@@ -80,15 +77,32 @@ public class Main extends JFrame {
             passwordField = new JPasswordField(15);
             passwordField.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
 
+            inputPanel.add(usernameLabel);
+            inputPanel.add(usernameField);
+            inputPanel.add(passwordLabel);
+            inputPanel.add(passwordField);
+
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0)); // Panel for buttons
+            buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, dialogMargin, dialogMargin, dialogMargin)); // Padding around buttons
+
             loginButton = new JButton("Log In");
             loginButton.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
+            Dimension buttonSize = new Dimension(120, 30); // Set preferred width and height
+            loginButton.setPreferredSize(buttonSize);
+            loginButton.setMinimumSize(buttonSize);
+            loginButton.setMaximumSize(buttonSize);
 
-            add(usernameLabel);
-            add(usernameField);
-            add(passwordLabel);
-            add(passwordField);
-            add(new JLabel());
-            add(loginButton);
+            exitButton = new JButton("Exit"); // Initialize the exit button
+            exitButton.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
+            exitButton.setPreferredSize(buttonSize);
+            exitButton.setMinimumSize(buttonSize);
+            exitButton.setMaximumSize(buttonSize);
+
+            buttonPanel.add(loginButton);
+            buttonPanel.add(exitButton);
+
+            getContentPane().add(inputPanel, BorderLayout.CENTER);
+            getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
             loginButton.addActionListener(e -> {
                 String username = usernameField.getText();
@@ -111,6 +125,10 @@ public class Main extends JFrame {
                     ex.printStackTrace();
                     passwordField.setText("");
                 }
+            });
+
+            exitButton.addActionListener(e -> {
+                System.exit(0); // Terminate the entire application
             });
 
             pack();
@@ -242,6 +260,7 @@ public class Main extends JFrame {
         bottomSpacingLabel.setPreferredSize(new Dimension(0, 10)); // Adjust this value for bottom padding
         titleAreaPanel.add(bottomSpacingLabel, BorderLayout.SOUTH);
 
+        leftButtonPanel = new JPanel();
         leftButtonPanel.setLayout(new BoxLayout(leftButtonPanel, BoxLayout.Y_AXIS));
         leftButtonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -264,9 +283,9 @@ public class Main extends JFrame {
         JButton recordSaleButton = new JButton("Record Sale");
         JButton salesReportButton = new JButton("Sales Report");
         JButton lowStockButton = new JButton("Stock Report");
-        JButton exitButton = new JButton("Log-out");
+        JButton exitButtonMain = new JButton("Log-out");
 
-        JButton[] buttons = {productsButton, deleteProductButton, recordSaleButton, salesReportButton, lowStockButton, exitButton};
+        JButton[] buttons = {productsButton, deleteProductButton, recordSaleButton, salesReportButton, lowStockButton, exitButtonMain};
         int maxWidth = 0;
         for (JButton button : buttons) {
             button.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -360,7 +379,12 @@ public class Main extends JFrame {
             }
         });
 
-        exitButton.addActionListener(e -> System.exit(0));
+        exitButtonMain.addActionListener(e -> {
+            frame.dispose(); // Close the current main window
+            SwingUtilities.invokeLater(() -> {
+                new LoginDialog(); // Create and show a new login dialog
+            });
+        });
 
         contentPane.add(leftButtonPanel, BorderLayout.WEST);
         contentPane.add(titleAreaPanel, BorderLayout.NORTH); // Add the panel containing spacing and title
@@ -415,8 +439,7 @@ public class Main extends JFrame {
 
         // Panel for version number with left spacing
         JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // FlowLayout to arrange left to right
-        JLabel versionSpacer = new JLabel("      ");
-        JLabel versionLabelBottom = new JLabel("Version 1.0.0");
+        JLabel versionSpacer = new JLabel("      ");JLabel versionLabelBottom = new JLabel("Version 1.0.0");
         versionLabelBottom.setFont(new Font("Arial", Font.PLAIN, 14));
         versionPanel.add(versionSpacer);
         versionPanel.add(versionLabelBottom);
