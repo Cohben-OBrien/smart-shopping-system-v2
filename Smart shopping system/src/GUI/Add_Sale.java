@@ -31,8 +31,12 @@ public class Add_Sale {
         }
     }
 
-    private static void add_table_product(Product product, int quantity) {
-        ProductModel.addRow(new Object[]{product.getId(), product.getName(), quantity, String.format("£%.2f", product.getPrice()), String.format("£%.2f", product.getPrice() * quantity)});
+    private static void render_table() {
+        ProductModel.setRowCount(0);
+        for (int i = 0; i < products.size(); i++) {
+            ProductModel.addRow(new Object[]{products.get(i).getProduct().getId(), products.get(i).getProduct().getName(), products.get(i).getQuantity(), String.format("£%.2f", products.get(i).getProduct().getPrice()),  String.format("£%.2f", products.get(i).getTotal())});
+        }
+
 
 
     }
@@ -85,9 +89,20 @@ public class Add_Sale {
             Product product = manager.findProduct(ProductSelect.getSelectedItem().toString());
 
             try {
+                boolean update = false;
                 if (Database.Data.check_stock(product.getId(), Integer.valueOf(ProductQuantity.getText()))) {
-                    products.add(new ProductSale(product, Integer.parseInt(ProductQuantity.getText())));
-                    add_table_product(product, Integer.parseInt(ProductQuantity.getText()));
+                    for(ProductSale sale: products) {
+                        if(sale.getProduct() == product) {
+                            sale.updatesale(Integer.parseInt(ProductQuantity.getText()));
+                            System.out.println("same item");
+                            update = true;
+                        }
+                    }
+                    if(!update) {
+                        products.add(new ProductSale(product, Integer.parseInt(ProductQuantity.getText())));
+                    }
+
+                    render_table();
                     updateTotalLabel();
                     frame.dispose();
                 } else {

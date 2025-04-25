@@ -18,7 +18,7 @@ public class Sales_Report {
     public static void Sales_Report() throws SQLException {
         JFrame frame = new JFrame("Sales Report");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(450, 450);
+        frame.setSize(480, 480);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
