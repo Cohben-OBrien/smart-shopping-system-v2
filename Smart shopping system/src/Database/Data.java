@@ -66,12 +66,13 @@ public class Data {
     }
 
    public static void addProduct(Product product) throws SQLException {
-        String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO items (id, name, price, stock, Category) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, product.getId());
         ps.setString(2, product.getName());
         ps.setFloat(3, product.getPrice());
         ps.setInt(4, product.getQuantity());
+        ps.setString(5, product.getCategory().getCategoryName());
 
         ps.executeUpdate();
 
@@ -198,12 +199,13 @@ public class Data {
 
     public static void update_Product(Product product, String Previous_name) throws SQLException {
 
-        String sql = "UPDATE items SET name = ?, price = ?, stock = ? WHERE id = ?";
+        String sql = "UPDATE items SET name = ?, price = ?, stock = ?, Category = ? WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, product.getName());
         ps.setFloat(2, product.getPrice());
         ps.setInt(3, product.getQuantity());
-        ps.setInt(4, product.getId());
+        ps.setString(4, product.getCategory().getCategoryName());
+        ps.setInt(5, product.getId());
         ps.executeUpdate();
 
 
