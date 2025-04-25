@@ -77,7 +77,7 @@ public class Data {
         ps.executeUpdate();
 
         String name = product.getName().replace(" ", "_") + product.getId();
-        String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_total real, FOREIGN KEY (sale_id) REFERENCES sales(id))";
+        String query2 = "CREATE TABLE \'" + name + "\' (sale_id INTEGER, sale_quantity INTEGER, sale_total real, FOREIGN KEY (sale_id) REFERENCES sales(id))";
         PreparedStatement ps2 = connection.prepareStatement(query2);
         ps2.executeUpdate();
 
@@ -181,7 +181,8 @@ public class Data {
         ArrayList<ProductSale> products = new ArrayList<>();
 
         for(Product product : InventoryManager.getProducts()) {
-            String query = "SELECT * FROM " + product.getName().replace(" ", "_") + product.getId() + " WHERE sale_id = ?";
+            String query = "SELECT * FROM \'" + product.getName().replace(" ", "_") + product.getId() + "\' WHERE sale_id = ?";
+            System.out.println(query);
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale_id);
 
