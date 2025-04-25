@@ -138,7 +138,7 @@ public class Data {
 
         for (ProductSale productSale : Products) {
             String table = productSale.getProduct().getName().replace(" ", "_") + productSale.getProduct().getId();
-            String query = "INSERT INTO " + table + " VALUES (?, ?, ?)";
+            String query = "INSERT INTO \'" + table + "\' VALUES (?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale.get_id());
             ps.setInt(2, productSale.getQuantity());
