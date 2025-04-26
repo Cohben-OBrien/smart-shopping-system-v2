@@ -18,7 +18,7 @@ public class Sales_Report {
     public static void Sales_Report() throws SQLException {
         JFrame frame = new JFrame("Sales Report");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(480, 480);
+        frame.setSize(450, 450);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
@@ -80,7 +80,7 @@ public class Sales_Report {
 
         JFrame frame = new JFrame("Sales Report");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(750, 450);
+        frame.setSize(465, 450);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
@@ -94,21 +94,20 @@ public class Sales_Report {
         Productmodel.setColumnIdentifiers(headings);
 
         for(int i = 0; i < headings.length; i++) {
-            ProductTable.getColumnModel().getColumn(i).setPreferredWidth(150);
+            ProductTable.getColumnModel().getColumn(i).setPreferredWidth(90);
         }
 
 
 
 
         JScrollPane table = new JScrollPane(ProductTable);
-        table.setBounds(0, 0, 760, 450);
+        table.setBounds(0, 0, 450, 450);
         frame.getContentPane().add(table, BorderLayout.CENTER);
 
         frame.setVisible(true);
 
         for(ProductSale productSale: Data.getProductSales(sale_id)) {
             double total_cost = productSale.getQuantity() * productSale.getProduct().getPrice();
-            System.out.println(productSale.getProduct().getName());
             System.out.println(total_cost);
             Productmodel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), String.format("£%.2f", productSale.getProduct().getPrice()), productSale.getQuantity(), String.format("£%.2f", productSale.getProduct().getPrice() * productSale.getQuantity())});
         }
