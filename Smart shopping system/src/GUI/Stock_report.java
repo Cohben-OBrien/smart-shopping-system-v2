@@ -104,13 +104,15 @@ public class Stock_report {
         products = Data.getProducts();
         
         for(Product product : products) {
-            String status = getStockStatus(product.getQuantity());
-            ProductModel.addRow(new Object[]{
-                product.getId(),
-                product.getName(),
-                product.getQuantity(),
-                status
-            });
+            if(product.isSelling()) {
+                String status = getStockStatus(product.getQuantity());
+                ProductModel.addRow(new Object[]{
+                        product.getId(),
+                        product.getName(),
+                        product.getQuantity(),
+                        status
+                });
+            }
         }
     }
 
