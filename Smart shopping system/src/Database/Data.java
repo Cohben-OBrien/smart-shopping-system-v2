@@ -237,12 +237,6 @@ public class Data {
             System.out.println(e.getMessage());
         }
         }
-    public static void undo_remove_Product(Product product) throws SQLException {
-        String sql = "UPDATE items SET selling = true WHERE id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, product.getId());
-        ps.executeUpdate();
-    }
 
    //add filter
 
