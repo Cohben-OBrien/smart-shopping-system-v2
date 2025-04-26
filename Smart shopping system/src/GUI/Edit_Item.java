@@ -1,6 +1,7 @@
 package GUI;
 
 import Product.Product;
+import Product.Categories;
 import Product.Product_Category;
 import manager.InventoryManager;
 
@@ -55,6 +56,9 @@ public class Edit_Item {
         for(Product_Category category: Database.Data.LoadCategories()) {
             Category.addItem(category.getCategoryName());
         }
+        try {
+            Category.setSelectedItem(product.getCategory().getCategoryName());
+        } catch (Exception e){System.out.println(e);}
         frame.setVisible(true);
 
         updateButton.addActionListener(e -> {
@@ -67,9 +71,10 @@ public class Edit_Item {
                     float newPrice = Float.parseFloat(priceField.getText());
                     int newQuantity = Integer.parseInt(quantityField.getText());
 
-                    manager.Update_Product(product, newName, newPrice, newQuantity, new Product_Category(Category.getSelectedItem().toString()));
+                    manager.Update_Product(product, newName, newPrice, newQuantity, Categories.findCategory(Category.getSelectedItem().toString()));
                     frame.dispose();
                 }} catch (Exception a) {
+                    System.out.println(a);
                 }
 
         });
