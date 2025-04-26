@@ -47,7 +47,8 @@ public class Data {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category")), rs.getBoolean("selling")));
+
+            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category"))));
         }
 
         return products;
@@ -65,20 +66,17 @@ public class Data {
     }
 
    public static void addProduct(Product product) throws SQLException {
-        String query = "INSERT INTO items (id, name, price, stock, Category, selling) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, product.getId());
-        ps.setString(2, product.getName());
+        ps.setString(2, product.getName().replace(" ", "_"));
         ps.setFloat(3, product.getPrice());
         ps.setInt(4, product.getQuantity());
-        ps.setString(5, product.getCategory().getCategoryName());
-        ps.setBoolean(6, product.isSelling());
-
 
         ps.executeUpdate();
 
         String name = product.getName().replace(" ", "_") + product.getId();
-        String query2 = "CREATE TABLE \'" + name + "\' (sale_id INTEGER, sale_quantity INTEGER, sale_total real, FOREIGN KEY (sale_id) REFERENCES sales(id))";
+        String query2 = "CREATE TABLE " + name + " (sale_id INTEGER, sale_quantity INTEGER, sale_total real, FOREIGN KEY (sale_id) REFERENCES sales(id))";
         PreparedStatement ps2 = connection.prepareStatement(query2);
         ps2.executeUpdate();
 
@@ -139,7 +137,7 @@ public class Data {
 
         for (ProductSale productSale : Products) {
             String table = productSale.getProduct().getName().replace(" ", "_") + productSale.getProduct().getId();
-            String query = "INSERT INTO \'" + table + "\' VALUES (?, ?, ?)";
+            String query = "INSERT INTO " + table + " VALUES (?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale.get_id());
             ps.setInt(2, productSale.getQuantity());
@@ -182,8 +180,7 @@ public class Data {
         ArrayList<ProductSale> products = new ArrayList<>();
 
         for(Product product : InventoryManager.getProducts()) {
-            String query = "SELECT * FROM \'" + product.getName().replace(" ", "_") + product.getId() + "\' WHERE sale_id = ?";
-            System.out.println(query);
+            String query = "SELECT * FROM " + product.getName().replace(" ", "_") + product.getId() + " WHERE sale_id = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale_id);
 
@@ -201,13 +198,12 @@ public class Data {
 
     public static void update_Product(Product product, String Previous_name) throws SQLException {
 
-        String sql = "UPDATE items SET name = ?, price = ?, stock = ?, Category = ? WHERE id = ?";
+        String sql = "UPDATE items SET name = ?, price = ?, stock = ? WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, product.getName());
         ps.setFloat(2, product.getPrice());
         ps.setInt(3, product.getQuantity());
-        ps.setString(4, product.getCategory().getCategoryName());
-        ps.setInt(5, product.getId());
+        ps.setInt(4, product.getId());
         ps.executeUpdate();
 
 
@@ -224,23 +220,10 @@ public class Data {
         }
     }
 
-    public static void remove_Product(Product product) throws SQLException {
-        try {
-            String sql = "UPDATE items SET selling = false WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, product.getId());
-            ps.executeUpdate();
-            System.out.println("Product removed");
-
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        }
-    public static void undo_remove_Product(Product product) throws SQLException {
-        String sql = "UPDATE items SET selling = true WHERE id = ?";
+    public static void remove_Product(int ID) throws SQLException {
+        String sql = "DELETE FROM items WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, product.getId());
+        ps.setInt(1, ID);
         ps.executeUpdate();
     }
 

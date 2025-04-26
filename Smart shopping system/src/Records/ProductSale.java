@@ -25,16 +25,10 @@ public class ProductSale {
         return product;
     }
 
-    public void updatesale(int quantity) {
-        this.quantity = this.quantity + quantity;
-        this.total = this.product.getPrice() * quantity;
-    }
-
     public int getQuantity() {
         return quantity;
     }
 
-    public double getTotal() {return total;}
 
 
 
