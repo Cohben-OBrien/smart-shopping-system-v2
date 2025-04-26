@@ -47,8 +47,7 @@ public class Data {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-
-            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category"))));
+            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category")), rs.getBoolean("selling")));
         }
 
         return products;
@@ -66,13 +65,15 @@ public class Data {
     }
 
    public static void addProduct(Product product) throws SQLException {
-        String query = "INSERT INTO items (id, name, price, stock, Category) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO items (id, name, price, stock, Category, selling) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, product.getId());
         ps.setString(2, product.getName());
         ps.setFloat(3, product.getPrice());
         ps.setInt(4, product.getQuantity());
         ps.setString(5, product.getCategory().getCategoryName());
+        ps.setBoolean(6, product.isSelling());
+
 
         ps.executeUpdate();
 
@@ -225,16 +226,12 @@ public class Data {
 
     public static void remove_Product(Product product) throws SQLException {
         try {
-            String sql = "DELETE FROM items WHERE id = ?";
+            String sql = "UPDATE items SET selling = false WHERE id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, product.getId());
             ps.executeUpdate();
             System.out.println("Product removed");
 
-            sql = "DROP TABLE " + product.getName().replace(" ", "_")+product.getId();
-            ps = connection.prepareStatement(sql);
-            ps.executeUpdate();
-            System.out.println("Product removed");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

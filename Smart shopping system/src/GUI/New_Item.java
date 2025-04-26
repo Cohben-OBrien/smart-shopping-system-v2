@@ -84,7 +84,7 @@ public class New_Item {
                             JOptionPane.showMessageDialog(null, "Invalid price");
                         } else {
                             try {
-                                manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, Categories.findCategory(Category.getSelectedItem().toString())));
+                                manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, Categories.findCategory(Category.getSelectedItem().toString()), true));
                             } catch (Exception a ) {}
 
                         }
