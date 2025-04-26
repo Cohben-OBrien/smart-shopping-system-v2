@@ -16,6 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -498,7 +499,7 @@ public class Main extends JFrame {
                         lastDeletedProduct.getQuantity()
                 });
                 try {
-                    manager.addProduct(lastDeletedProduct);
+                    Data.undo_remove_Product(lastDeletedProduct);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(frame, "Error undoing delete in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
