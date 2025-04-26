@@ -1,6 +1,5 @@
 package GUI;
 
-import Database.Data;
 import Product.Product;
 import User.User_authenticator;
 import manager.InventoryManager;
@@ -9,14 +8,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.CompoundBorder;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,7 +36,7 @@ public class Main extends JFrame {
     static JLabel dateLabel;
     static JTextField searchTextField;
     static JPanel leftButtonPanel = new JPanel();
-    static JLabel usernameLabelBottom; // Declare usernameLabelBottom here
+    static JLabel usernameLabelBottom;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -52,14 +48,14 @@ public class Main extends JFrame {
         private JTextField usernameField;
         private JPasswordField passwordField;
         private JButton loginButton;
-        private JButton exitButton; // Added exit button
+        private JButton exitButton;
 
         public LoginDialog() {
             setTitle("Log In");
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             setModal(true);
-            setLayout(new BorderLayout(15, 15)); // Use BorderLayout for the main panel
-            setPreferredSize(new Dimension(400, 200)); // Adjust preferred size
+            setLayout(new BorderLayout(15, 15));
+            setPreferredSize(new Dimension(400, 200));
             setLocationRelativeTo(null);
 
             int fieldPadding = 5;
@@ -314,11 +310,7 @@ public class Main extends JFrame {
             }
         });
 
-        lowStockButton.addActionListener(e -> {
-            try {
-                Stock_report.Stock_Report();
-            } catch (SQLException a) {}
-        });
+        lowStockButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Low Stock Report functionality."));
 
         productsButton.addActionListener(e -> {
             New_Item item = new New_Item();
@@ -499,7 +491,7 @@ public class Main extends JFrame {
                         lastDeletedProduct.getQuantity()
                 });
                 try {
-                    Data.undo_remove_Product(lastDeletedProduct);
+                    manager.addProduct(lastDeletedProduct);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(frame, "Error undoing delete in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();

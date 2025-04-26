@@ -29,10 +29,8 @@ public class InventoryManager extends Main {
         Product.tableModel.setRowCount(0);
         loadInventory();
         for(Product product : getProducts()) {
-            if (product.isSelling() == true) {
-                System.out.println(product.getName() + product.getQuantity());
-                Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
-            }
+            System.out.println(product.getName() + product.getQuantity());
+            Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
         }
 
         itemTable.repaint();
@@ -133,14 +131,14 @@ public class InventoryManager extends Main {
             products.get(products.indexOf(product)).setName(Name);
             products.get(products.indexOf(product)).setPrice(Price);
             products.get(products.indexOf(product)).setQuantity(Quantity);
-            products.get(products.indexOf(product)).setCategory(category);
+
 
             Data.update_Product(products.get(products.indexOf(product)), Previous_name);
             render_data();
     }
 
     public static void removeProduct(Product product) throws SQLException {
-        Data.remove_Product(product);
+        Data.remove_Product(product.getId());
         products.remove(product);
     }
 }
