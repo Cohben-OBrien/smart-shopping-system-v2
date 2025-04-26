@@ -1,0 +1,171 @@
+package GUI;
+
+import Product.Product;
+import Records.ProductSale;
+import manager.InventoryManager;
+import org.jdesktop.swingx.JXDatePicker;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+public class Add_Sale {
+
+    static ArrayList<ProductSale> products = new ArrayList<>();
+    public static DefaultTableModel ProductModel = new DefaultTableModel();
+
+    private static void remove_Product(Product product, int row) {
+        ProductModel.removeRow(row);
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProduct().getId() == product.getId()) {
+                products.remove(i);
+            }
+        }
+    }
+
+    private static void add_table_product(Product product, int quantity) {
+        ProductModel.addRow(new Object[]{product.getId(), product.getName().replace("_", " "), quantity, String.format("£%.2f", product.getPrice()), String.format("£%.2f", product.getPrice() * quantity)});
+    }
+
+    private static void add_product(InventoryManager manager, JFrame parentFrame, JTable productTable) {
+        JFrame frame = new JFrame("Add Product");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLayout(new FlowLayout(FlowLayout.LEFT));
+        frame.setSize(500, 200);
+        frame.setLocationRelativeTo(parentFrame);
+
+        JLabel searchLabel = new JLabel("Search Product:");
+        JTextField searchTextField = new JTextField(15);
+        JLabel quantityLabel = new JLabel("Quantity sold:");
+        JTextField quantityTextField = new JTextField(10);
+        JComboBox<String> ProductSelect = new JComboBox<>();
+        List<Product> allProducts = InventoryManager.getProducts();
+        for (Product product : allProducts) {
+            ProductSelect.addItem(product.getName().replace("_", " "));
+        }
+        JButton Add = new JButton("Add Product to Sale");
+
+        frame.add(searchLabel);
+        frame.add(searchTextField);
+        frame.add(new JLabel("   "));
+        frame.add(quantityLabel);
+        frame.add(quantityTextField);
+        frame.add(new JLabel("   "));
+        frame.add(ProductSelect);
+        frame.add(Add);
+
+        searchTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String searchTerm = searchTextField.getText().trim().toLowerCase();
+                ProductSelect.removeAllItems();
+                for (Product product : allProducts) {
+                    if (product.getName().toLowerCase().contains(searchTerm)) {
+                        ProductSelect.addItem(product.getName().replace("_", " "));
+                    }
+                }
+            }
+        });
+
+        Add.addActionListener(e -> {
+            String selectedProductName = (String) ProductSelect.getSelectedItem();
+            Product product = manager.findProduct(selectedProductName.replace(" ", "_"));
+
+            try {
+                int qty = Integer.parseInt(quantityTextField.getText());
+                try { // Catch SQLException here
+                    if (Database.Data.check_stock(product.getId(), qty)) {
+                        products.add(new ProductSale(product, qty));
+                        add_table_product(product, qty);
+                        frame.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Product '" + selectedProductName + "' does not have enough stock");
+                    }
+                } catch (SQLException sqlException) {
+                    JOptionPane.showMessageDialog(frame, "Database error checking stock: " + sqlException.getMessage());
+                    sqlException.printStackTrace(); // For debugging
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Please enter a valid quantity");
+            } catch (NullPointerException ex) {
+                JOptionPane.showMessageDialog(frame, "Please select a product");
+            }
+        });
+
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public static void Add_Sale(InventoryManager manager) {
+        products.clear();
+        ProductModel.setRowCount(0);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.setResizable(false);
+        frame.setSize(800, 800);
+        frame.setLocationRelativeTo(null);
+
+        JTable productTable = new JTable();
+        productTable.setModel(ProductModel);
+
+        String[] columnNames = {"Product ID", "Product", "Quantity", "Price", "Total"};
+        ProductModel.setColumnCount(columnNames.length);
+        ProductModel.setColumnIdentifiers(columnNames);
+
+        JScrollPane ProductTableScrollPane = new JScrollPane(productTable);
+        frame.add(ProductTableScrollPane, BorderLayout.CENTER);
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton add_productButton = new JButton("Add Product");
+        JButton remove_productButton = new JButton("Remove Product");
+        JLabel dateLabel = new JLabel("Date of Sale: ");
+        JXDatePicker SaleDate = new JXDatePicker(new Date());
+        SaleDate.setFormats(new SimpleDateFormat("dd/MM/yyyy", Locale.UK));
+        JButton add_saleButton = new JButton("Add Sale");
+
+        bottomPanel.add(add_productButton);
+        bottomPanel.add(remove_productButton);
+        bottomPanel.add(dateLabel);
+        bottomPanel.add(SaleDate);
+        bottomPanel.add(add_saleButton);
+
+        frame.add(bottomPanel, BorderLayout.SOUTH);
+
+        add_productButton.addActionListener(e -> add_product(manager, frame, productTable));
+
+        remove_productButton.addActionListener(e -> {
+            int selectedRow = productTable.getSelectedRow();
+            if (selectedRow != -1) {
+                String product_name = productTable.getValueAt(selectedRow, 1).toString();
+                remove_Product(manager.findProduct(product_name.replace(" ", "_")), selectedRow);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select a product to remove");
+            }
+        });
+
+        add_saleButton.addActionListener(e -> {
+            if (products.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Please add products to the sale");
+            } else {
+                try {
+                    manager.recordSale(products, dateFormat.format(SaleDate.getDate()));
+                    frame.dispose();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame, "Error recording sale: " + ex.getMessage());
+                }
+            }
+        });
+
+        frame.setVisible(true);
+    }
+}
