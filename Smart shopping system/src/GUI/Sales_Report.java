@@ -18,7 +18,7 @@ public class Sales_Report {
     public static void Sales_Report() throws SQLException {
         JFrame frame = new JFrame("Sales Report");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(450, 450);
+        frame.setSize(500, 600);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
@@ -45,8 +45,13 @@ public class Sales_Report {
         salesTable.getColumnModel().getColumn(1).setPreferredWidth(150);
         salesTable.getColumnModel().getColumn(2).setPreferredWidth(150);
 
+
+        JLabel search = new JLabel("Search");
+        search.setBounds(0, 455, 450, 30);
+        frame.getContentPane().add(search, BorderLayout.SOUTH);
+
         JTextField searchField = new JTextField();
-        searchField.setBounds(0, 455, 450, 30);
+        searchField.setBounds(40, 455, 400, 30);
         frame.add(searchField);
 
         searchField.addKeyListener(new java.awt.event.KeyAdapter() {

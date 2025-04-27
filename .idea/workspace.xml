@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ca0b71e-b4bb-4aa1-b53c-963fd9bb617a" name="Changes" comment="bug fix">
+    <list default="true" id="9ca0b71e-b4bb-4aa1-b53c-963fd9bb617a" name="Changes" comment="total and search added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/Database/Shop.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Add_Sale.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/Smart shopping system/src/GUI/Sales_Report.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +16,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Sonya" />
+        <entry key="$PROJECT_DIR$" value="P2CSSS-43-undo-delete-function-2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -36,29 +34,28 @@
   }
 }]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 8
+  "associatedIndex": 5
 }]]></component>
-  <component name="ProjectId" id="2wJIf6raWc9Y53QP7LjItfWvcTy" />
+  <component name="ProjectId" id="2wJgzrpEpTLUHivwjmDVjkE6PAn" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "New__total",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Sonya&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -76,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1745742325223</updated>
       <workItem from="1745742326969" duration="3693000" />
-      <workItem from="1745753351632" duration="2323000" />
+      <workItem from="1745765356790" duration="760000" />
     </task>
     <task id="LOCAL-00001" summary="P2CSSS-43 deletion functions">
       <option name="closed" value="true" />
