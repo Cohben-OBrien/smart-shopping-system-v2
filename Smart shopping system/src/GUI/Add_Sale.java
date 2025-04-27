@@ -41,7 +41,7 @@ public class Add_Sale {
         for (ProductSale sale : products) {
             total += sale.getQuantity() * sale.getProduct().getPrice();
         }
-        totalLabel.setText("Total: " + String.format("%.2f", total));
+        totalLabel.setText("Total: " + String.format("£%.2f", total));
     }
 
 
@@ -60,7 +60,7 @@ public class Add_Sale {
         List<Product> allProducts = InventoryManager.getProducts();
         for (Product product : allProducts) {
             if(product.isSelling()) {
-                ProductSelect.addItem(product.getName().replace("_", " "));
+                ProductSelect.addItem(product.getName());
             }
             }
         JButton Add = new JButton("Add Product to Sale");
@@ -81,7 +81,7 @@ public class Add_Sale {
                 ProductSelect.removeAllItems();
                 for (Product product : allProducts) {
                     if (product.getName().toLowerCase().contains(searchTerm)) {
-                        ProductSelect.addItem(product.getName());
+                        ProductSelect.addItem(product.getName().replace("_", " "));
                     }
                 }
             }
@@ -89,7 +89,8 @@ public class Add_Sale {
 
         Add.addActionListener(e -> {
             String selectedProductName = (String) ProductSelect.getSelectedItem();
-            Product product = manager.findProduct(selectedProductName.replace(" ", "_"));
+            System.out.println(selectedProductName);
+            Product product = manager.findProduct(selectedProductName);
 
             try {
                 int qty = Integer.parseInt(quantityTextField.getText());
