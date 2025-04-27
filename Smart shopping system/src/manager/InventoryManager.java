@@ -138,7 +138,7 @@ public class InventoryManager extends Main {
     }
 
     public static void removeProduct(Product product) throws SQLException {
-        Data.remove_Product(product.getId());
+        Data.remove_Product(product);
         products.remove(product);
     }
 }
