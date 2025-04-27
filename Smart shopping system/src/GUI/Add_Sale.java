@@ -49,8 +49,10 @@ public class Add_Sale {
         JComboBox<String> ProductSelect = new JComboBox<>();
         List<Product> allProducts = InventoryManager.getProducts();
         for (Product product : allProducts) {
-            ProductSelect.addItem(product.getName().replace("_", " "));
-        }
+            if(product.isSelling()) {
+                ProductSelect.addItem(product.getName().replace("_", " "));
+            }
+            }
         JButton Add = new JButton("Add Product to Sale");
 
         frame.add(searchLabel);

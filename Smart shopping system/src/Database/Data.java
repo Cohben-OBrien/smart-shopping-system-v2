@@ -47,8 +47,7 @@ public class Data {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-
-            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category"))));
+            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category")), rs.getBoolean("Selling")));
         }
 
         return products;
