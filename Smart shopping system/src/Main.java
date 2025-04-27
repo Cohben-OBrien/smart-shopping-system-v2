@@ -311,7 +311,11 @@ public class Main extends JFrame {
             }
         });
 
-        lowStockButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Show Low Stock Report functionality."));
+        lowStockButton.addActionListener(e -> {
+            try {
+                Stock_report.Stock_Report();
+            } catch (SQLException a) {}
+        });
 
         productsButton.addActionListener(e -> {
             New_Item item = new New_Item();
