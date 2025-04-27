@@ -137,7 +137,7 @@ public class Data {
 
         for (ProductSale productSale : Products) {
             String table = productSale.getProduct().getName().replace(" ", "_") + productSale.getProduct().getId();
-            String query = "INSERT INTO " + table + " VALUES (?, ?, ?)";
+            String query = "INSERT INTO \'" + table + "\' VALUES (?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale.get_id());
             ps.setInt(2, productSale.getQuantity());
@@ -181,7 +181,8 @@ public class Data {
 
         for(Product product : InventoryManager.getProducts()) {
             System.out.println("product: " + product.getName());
-            String query = "SELECT * FROM " + product.getName().replace(" ", "_") + product.getId() + " WHERE sale_id = ?";
+            String query = "SELECT * FROM \"" + product.getName().replace(" ", "_") + product.getId() + "\" WHERE sale_id = ?";
+            System.out.println("query: " + query);
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale_id);
 

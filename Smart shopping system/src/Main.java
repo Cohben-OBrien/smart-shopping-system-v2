@@ -169,8 +169,8 @@ public class Main extends JFrame {
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
-                int stockColumn = 3;
-                int statusColumn = 4;
+                int stockColumn = 4;
+                int statusColumn = 5;
                 int priceColumn = 2;
 
                 c.setBackground(Color.WHITE);
@@ -416,7 +416,7 @@ public class Main extends JFrame {
 
         centerPanel.add(tableControlPanel, BorderLayout.NORTH);
 
-        String[] columnNames = {"Item ID", "Item Name", "Price", "Stock Levels", "Stock Status"};
+        String[] columnNames = {"Item ID", "Item Name", "Price", "Category", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
         Product.tableModel.setColumnIdentifiers(columnNames);
 

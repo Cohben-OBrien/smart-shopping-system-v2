@@ -31,7 +31,7 @@ public class InventoryManager extends Main {
         for(Product product : getProducts()) {
             if(product.isSelling()) {
                 System.out.println(product.getName() + product.getQuantity());
-                Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
+                Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getCategory().getCategoryName(), product.getQuantity()});
             }
             }
 
