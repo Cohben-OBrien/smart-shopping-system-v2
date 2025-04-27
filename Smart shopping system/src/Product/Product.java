@@ -15,14 +15,20 @@ public class Product {
     private float price;   // The price of the product
     private int quantity;  // The quantity of the product in stock
     private Product_Category category;
+    private boolean selling;
 
     // Constructor to initialize product details
-    public Product(int id, String name, float price, int quantity, Product_Category category) {
+    public Product(int id, String name, float price, int quantity, Product_Category category, boolean selling) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.category = category;
+        this.selling = selling;
+    }
+
+    public boolean isSelling() {
+        return selling;
     }
 
     public void setQuantity(int quantity){

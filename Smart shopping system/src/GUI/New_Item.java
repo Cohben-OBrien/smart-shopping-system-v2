@@ -4,7 +4,7 @@ import Product.Product;
 import Product.Product_Category;
 import jdk.jfr.Category;
 import manager.InventoryManager;
-
+import Product.Categories;
 import javax.swing.*;
 import java.awt.image.ImageProducer;
 import java.sql.SQLException;
@@ -83,7 +83,7 @@ public class New_Item {
                             JOptionPane.showMessageDialog(null, "Invalid price");
                         } else {
                             try {
-                                manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, new Product_Category(Category.getSelectedItem().toString())));
+                                manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, Categories.findCategory(Category.getSelectedItem().toString()), true));
                             } catch (SQLException a ) {}
 
                         }

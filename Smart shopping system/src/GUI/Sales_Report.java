@@ -80,7 +80,7 @@ public class Sales_Report {
 
         JFrame frame = new JFrame("Sales Report");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(465, 450);
+        frame.setSize(600, 450);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
@@ -94,14 +94,14 @@ public class Sales_Report {
         Productmodel.setColumnIdentifiers(headings);
 
         for(int i = 0; i < headings.length; i++) {
-            ProductTable.getColumnModel().getColumn(i).setPreferredWidth(90);
+            ProductTable.getColumnModel().getColumn(i).setPreferredWidth(120);
         }
 
 
 
 
         JScrollPane table = new JScrollPane(ProductTable);
-        table.setBounds(0, 0, 450, 450);
+        table.setBounds(0, 0, 610, 450);
         frame.getContentPane().add(table, BorderLayout.CENTER);
 
         frame.setVisible(true);

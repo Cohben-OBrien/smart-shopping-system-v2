@@ -47,8 +47,7 @@ public class Data {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-
-            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category"))));
+            products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"), rs.getInt("stock"), Categories.findCategory(rs.getString("Category")), rs.getBoolean("Selling")));
         }
 
         return products;
@@ -66,12 +65,13 @@ public class Data {
     }
 
    public static void addProduct(Product product) throws SQLException {
-        String query = "INSERT INTO items (id, name, price, stock) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO items (id, name, price, stock, Category, selling) VALUES (?, ?, ?, ?, ?, true)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, product.getId());
         ps.setString(2, product.getName().replace(" ", "_"));
         ps.setFloat(3, product.getPrice());
         ps.setInt(4, product.getQuantity());
+        ps.setString(5, product.getCategory().getCategoryName());
 
         ps.executeUpdate();
 
@@ -220,13 +220,20 @@ public class Data {
         }
     }
 
-    public static void remove_Product(int ID) throws SQLException {
-        String sql = "DELETE FROM items WHERE id = ?";
+    public static void remove_Product(Product product) throws SQLException {
+        String sql = "UPDATE items SET selling = FALSE WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, ID);
+        ps.setInt(1, product.getId());
         ps.executeUpdate();
     }
 
+    public static void undo_remove_Product(Product product) throws SQLException {
+        String sql = "UPDATE items SET selling = True WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, product.getId());
+        ps.executeUpdate();
+
+    }
 
    //add filter
 

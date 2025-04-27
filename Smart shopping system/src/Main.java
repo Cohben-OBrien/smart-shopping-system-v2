@@ -1,5 +1,6 @@
 package GUI;
 
+import Database.Data;
 import Product.Product;
 import User.User_authenticator;
 import manager.InventoryManager;
@@ -491,7 +492,7 @@ public class Main extends JFrame {
                         lastDeletedProduct.getQuantity()
                 });
                 try {
-                    manager.addProduct(lastDeletedProduct);
+                    Data.undo_remove_Product(lastDeletedProduct);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(frame, "Error undoing delete in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
