@@ -180,6 +180,7 @@ public class Data {
         ArrayList<ProductSale> products = new ArrayList<>();
 
         for(Product product : InventoryManager.getProducts()) {
+            System.out.println("product: " + product.getName());
             String query = "SELECT * FROM " + product.getName().replace(" ", "_") + product.getId() + " WHERE sale_id = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, sale_id);
