@@ -84,7 +84,10 @@ public class New_Item {
                         } else {
                             try {
                                 manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, Categories.findCategory(Category.getSelectedItem().toString()), true));
-                            } catch (SQLException a ) {}
+                                JOptionPane.showMessageDialog(null, "Product added successfully");
+                            } catch (SQLException a ) {
+                                JOptionPane.showMessageDialog(null, "Failed to add product");
+                            }
 
                         }
                        frame.dispose();

@@ -69,8 +69,10 @@ public class Edit_Item {
                     int newQuantity = Integer.parseInt(quantityField.getText());
 
                     manager.Update_Product(product, newName, newPrice, newQuantity, Categories.findCategory(Category.getSelectedItem().toString()));
+                    JOptionPane.showMessageDialog(frame, "Item updated successfully");
                     frame.dispose();
                 }} catch (Exception a) {
+                JOptionPane.showMessageDialog(frame, "Something went wrong");
                 }
 
         });
