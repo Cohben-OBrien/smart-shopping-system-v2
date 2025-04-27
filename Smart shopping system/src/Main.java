@@ -9,6 +9,7 @@ import manager.InventoryManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
@@ -137,7 +138,7 @@ public class Main extends JFrame {
     }
 
     public static void Add_product_to_table(Product product) {
-        Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getQuantity()});
+        Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getCategory(), product.getQuantity(), ""});
     }
 
     private static String getCurrentDate() {
@@ -169,8 +170,8 @@ public class Main extends JFrame {
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
-                int stockColumn = 4;
-                int statusColumn = 5;
+                int stockColumn = 4; // Index of "Stock Levels"
+                int statusColumn = 5; // Index of "Stock Status"
                 int priceColumn = 2;
 
                 c.setBackground(Color.WHITE);
@@ -185,42 +186,37 @@ public class Main extends JFrame {
                 }
 
                 if (column == statusColumn) {
-                    Object stockValue = getValueAt(row, stockColumn);
-                    try {
-                        int quantity = Integer.parseInt(stockValue.toString());
+                    Object stockValue = getValueAt(row, stockColumn); // Get value from "Stock Levels" column
+                    if (stockValue instanceof Number) {
+                        int quantity = ((Number) stockValue).intValue();
                         String statusText;
                         Color backgroundColor;
 
                         if (quantity == 0) {
-                            backgroundColor = new Color(255, 99, 71);
                             statusText = "Out of Stock";
+                            backgroundColor = new Color(255, 99, 71); // Tomato
                         } else if (quantity < 10) {
-                            backgroundColor = new Color(255, 200, 0);
-                            statusText = "Low";
+                            statusText = "Low Stock";
+                            backgroundColor = new Color(255, 200, 0); // Orange
                         } else if (quantity < 30) {
-                            backgroundColor = new Color(255, 255, 150);
-                            statusText = "Medium";
+                            statusText = "Medium Stock";
+                            backgroundColor = new Color(255, 255, 150); // Light Yellow
                         } else {
-                            backgroundColor = new Color(144, 238, 144);
-                            statusText = "High";
+                            statusText = "In Stock";
+                            backgroundColor = new Color(144, 238, 144); // Light Green
                         }
                         c.setBackground(backgroundColor);
-                        setValueAt(statusText, row, column);
+                        setValueAt(statusText, row, column); // Set the status text
 
-                        TableCellRenderer headerRenderer = getColumnModel().getColumn(column).getHeaderRenderer();
-                        if (headerRenderer == null) {
-                            headerRenderer = getTableHeader().getDefaultRenderer();
-                        }
-                        if (c instanceof JLabel) {
-                            ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
-                        }
-                    } catch (NumberFormatException e) {
+                    } else {
                         setValueAt("Error", row, column);
                         c.setBackground(Color.LIGHT_GRAY);
                     }
-                } else if (column == stockColumn) {
+                    c.setForeground(Color.BLACK); // Ensure text color is black
+                } else if (column == stockColumn) { // For "Stock Levels" column
                     c.setForeground(Color.BLACK);
                     c.setBackground(Color.WHITE);
+                    // No need to set value, it's already there
                 } else {
                     c.setForeground(Color.BLACK);
                     c.setBackground(Color.WHITE);
@@ -232,9 +228,13 @@ public class Main extends JFrame {
         manager.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         manager.itemTable.setRowSelectionAllowed(true);
 
+        // Create a center renderer
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
         frame = new JFrame("IntelliShop - Smart Shopping Management");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 700);
+        frame.setSize(1200, 800);
         frame.setLocationRelativeTo(null);
 
         Container contentPane = frame.getContentPane();
@@ -298,7 +298,7 @@ public class Main extends JFrame {
             button.setMaximumSize(new Dimension(maxWidth + padding, button.getPreferredSize().height));
             leftButtonPanel.add(button);
             if (i < buttons.length - 1) {
-                leftButtonPanel.add(Box.createVerticalGlue()); // Glue *between* buttons
+                leftButtonPanel.add(Box.createVerticalGlue()); // Glue*between* buttons
             }
         }
 
@@ -379,7 +379,7 @@ public class Main extends JFrame {
                     JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(frame, "Only a admin can delete products", "Access error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Only an admin can delete products", "Access error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -419,6 +419,9 @@ public class Main extends JFrame {
         String[] columnNames = {"Item ID", "Item Name", "Price", "Category", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
         Product.tableModel.setColumnIdentifiers(columnNames);
+
+        // Apply the center renderer to the "Stock Status" column (index 5)
+        manager.itemTable.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 
         try {
             manager.render_data();
@@ -499,6 +502,7 @@ public class Main extends JFrame {
                         lastDeletedProduct.getId(),
                         lastDeletedProduct.getName(),
                         lastDeletedProduct.getPrice(),
+                        lastDeletedProduct.getCategory(),
                         lastDeletedProduct.getQuantity()
                 });
                 try {
@@ -537,7 +541,7 @@ public class Main extends JFrame {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Only a admin can edit a product", "Access error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Only an admin can edit a product", "Access error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
