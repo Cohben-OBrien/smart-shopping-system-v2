@@ -71,7 +71,7 @@ public class Add_Sale {
                 ProductSelect.removeAllItems();
                 for (Product product : allProducts) {
                     if (product.getName().toLowerCase().contains(searchTerm)) {
-                        ProductSelect.addItem(product.getName().replace("_", " "));
+                        ProductSelect.addItem(product.getName());
                     }
                 }
             }
