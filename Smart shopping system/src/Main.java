@@ -251,7 +251,7 @@ public class Main extends JFrame {
         // Create the title label
         JLabel titleLabel = new JLabel("IntelliShop - Smart Shopping Management");
         titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
-        titleLabel.setForeground(Color.BLUE);
+        titleLabel.setForeground(Color.BLACK);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleAreaPanel.add(titleLabel, BorderLayout.CENTER);
 
