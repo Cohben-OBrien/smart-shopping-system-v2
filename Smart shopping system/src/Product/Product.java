@@ -31,6 +31,9 @@ public class Product {
         return selling;
     }
 
+    public void setCategory(Product_Category category) {
+        this.category = category;
+    }
     public void setQuantity(int quantity){
         this.quantity = quantity;
     }
