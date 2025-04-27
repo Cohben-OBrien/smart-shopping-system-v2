@@ -2,6 +2,8 @@ package GUI;
 
 import Database.Data;
 import Product.Product;
+import User.User;
+import User.User.access_levels;
 import User.User_authenticator;
 import manager.InventoryManager;
 
@@ -330,50 +332,54 @@ public class Main extends JFrame {
 
         deleteProductButton.setEnabled(false);
         deleteProductButton.addActionListener(e -> {
-            int selectedRow = manager.itemTable.getSelectedRow();
-            if (selectedRow != -1) {
-                int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow);
-                String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1);
+            if(User_authenticator.getCurrent_user().getAccessLevel() == access_levels.ADMIN) {
+                int selectedRow = manager.itemTable.getSelectedRow();
+                if (selectedRow != -1) {
+                    int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow);
+                    String productNameToDelete = (String) Product.tableModel.getValueAt(modelRow, 1);
 
-                int confirmation = JOptionPane.showConfirmDialog(
-                        frame,
-                        "Are you sure you want to delete '" + productNameToDelete + "'?",
-                        "Confirm Deletion",
-                        JOptionPane.YES_NO_OPTION
-                );
+                    int confirmation = JOptionPane.showConfirmDialog(
+                            frame,
+                            "Are you sure you want to delete '" + productNameToDelete + "'?",
+                            "Confirm Deletion",
+                            JOptionPane.YES_NO_OPTION
+                    );
 
-                if (confirmation == JOptionPane.YES_OPTION) {
-                    lastDeletedProduct = manager.findProduct(productNameToDelete);
-                    if (lastDeletedProduct != null) {
-                        lastDeletedRow = modelRow;
-                        Product.tableModel.removeRow(modelRow);
-                        undoDeleteButton.setEnabled(true);
-                        notificationPanel.setVisible(true);
+                    if (confirmation == JOptionPane.YES_OPTION) {
+                        lastDeletedProduct = manager.findProduct(productNameToDelete);
+                        if (lastDeletedProduct != null) {
+                            lastDeletedRow = modelRow;
+                            Product.tableModel.removeRow(modelRow);
+                            undoDeleteButton.setEnabled(true);
+                            notificationPanel.setVisible(true);
 
-                        undoTimer = new Timer(5000, new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent evt) {
-                                try {
-                                    manager.removeProduct(lastDeletedProduct);
-                                } catch (SQLException ex) {
-                                    JOptionPane.showMessageDialog(frame, "Error permanently deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
-                                    ex.printStackTrace();
+                            undoTimer = new Timer(5000, new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent evt) {
+                                    try {
+                                        manager.removeProduct(lastDeletedProduct);
+                                    } catch (SQLException ex) {
+                                        JOptionPane.showMessageDialog(frame, "Error permanently deleting product from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                                        ex.printStackTrace();
+                                    }
+                                    lastDeletedProduct = null;
+                                    lastDeletedRow = -1;
+                                    undoDeleteButton.setEnabled(false);
+                                    notificationPanel.setVisible(false);
+                                    undoTimer.stop();
                                 }
-                                lastDeletedProduct = null;
-                                lastDeletedRow = -1;
-                                undoDeleteButton.setEnabled(false);
-                                notificationPanel.setVisible(false);
-                                undoTimer.stop();
-                            }
-                        });
-                        undoTimer.setRepeats(false);
-                        undoTimer.start();
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "Product not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                            });
+                            undoTimer.setRepeats(false);
+                            undoTimer.start();
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "Product not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(frame, "Please select a product to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Only a admin can delete products", "Access error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -518,16 +524,20 @@ public class Main extends JFrame {
 
         manager.itemTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {
-                    int selectedRow = manager.itemTable.getSelectedRow();
-                    String productName = manager.itemTable.getValueAt(selectedRow, 1).toString();
-                    Product product = manager.findProduct(productName);
-                    try {
-                        Edit_Item.editItem(manager, product);
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Error loading product");
-                        e.printStackTrace();
+                if (User_authenticator.getCurrent_user().getAccessLevel() == access_levels.ADMIN) {
+                    if (evt.getClickCount() == 2 && manager.itemTable.getSelectedRow() != -1) {
+                        int selectedRow = manager.itemTable.getSelectedRow();
+                        String productName = manager.itemTable.getValueAt(selectedRow, 1).toString();
+                        Product product = manager.findProduct(productName);
+                        try {
+                            Edit_Item.editItem(manager, product);
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Error loading product");
+                            e.printStackTrace();
+                        }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Only a admin can edit a product", "Access error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
