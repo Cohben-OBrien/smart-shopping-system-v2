@@ -45,7 +45,20 @@ public class Sales_Report {
         salesTable.getColumnModel().getColumn(1).setPreferredWidth(150);
         salesTable.getColumnModel().getColumn(2).setPreferredWidth(150);
 
+        JTextField searchField = new JTextField();
+        searchField.setBounds(0, 455, 450, 30);
+        frame.add(searchField);
 
+        searchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                String searchText = searchField.getText();
+                if (searchText.trim().length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+                }
+            }
+        });
 
         for(SalesRecord record: Data.getSalesRecords()) {
             salesmodel.addRow(new Object[]{record.get_id(), String.format("£%.2f", record.get_total()), record.get_date()});

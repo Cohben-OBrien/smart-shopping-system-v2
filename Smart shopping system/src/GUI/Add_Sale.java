@@ -20,6 +20,7 @@ import java.util.Locale;
 public class Add_Sale {
 
     static ArrayList<ProductSale> products = new ArrayList<>();
+    private static JLabel totalLabel;
     public static DefaultTableModel ProductModel = new DefaultTableModel();
 
     private static void remove_Product(Product product, int row) {
@@ -34,6 +35,15 @@ public class Add_Sale {
     private static void add_table_product(Product product, int quantity) {
         ProductModel.addRow(new Object[]{product.getId(), product.getName().replace("_", " "), quantity, String.format("£%.2f", product.getPrice()), String.format("£%.2f", product.getPrice() * quantity)});
     }
+
+    private static void updateTotalLabel() {
+        double total = 0;
+        for (ProductSale sale : products) {
+            total += sale.getQuantity() * sale.getProduct().getPrice();
+        }
+        totalLabel.setText("Total: " + String.format("%.2f", total));
+    }
+
 
     private static void add_product(InventoryManager manager, JFrame parentFrame, JTable productTable) {
         JFrame frame = new JFrame("Add Product");
@@ -87,6 +97,7 @@ public class Add_Sale {
                     if (Database.Data.check_stock(product.getId(), qty)) {
                         products.add(new ProductSale(product, qty));
                         add_table_product(product, qty);
+                        updateTotalLabel();
                         frame.dispose();
                     } else {
                         JOptionPane.showMessageDialog(frame, "Product '" + selectedProductName + "' does not have enough stock");
@@ -155,6 +166,8 @@ public class Add_Sale {
             }
         });
 
+
+
         add_saleButton.addActionListener(e -> {
             if (products.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Please add products to the sale");
@@ -169,5 +182,10 @@ public class Add_Sale {
         });
 
         frame.setVisible(true);
+        totalLabel = new JLabel("Total: £0.00");
+        bottomPanel.add(totalLabel);
+
+        frame.setVisible(true);
+
     }
 }
