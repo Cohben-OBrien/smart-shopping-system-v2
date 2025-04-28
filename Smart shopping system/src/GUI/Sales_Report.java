@@ -10,6 +10,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -17,8 +18,9 @@ public class Sales_Report {
 
     public static void Sales_Report() throws SQLException {
         JFrame frame = new JFrame("Sales Report");
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(500, 600);
+        frame.setSize(450, 530);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
@@ -97,6 +99,7 @@ public class Sales_Report {
     public static void show_products(int sale_id) throws SQLException {
 
         JFrame frame = new JFrame("Sales Report");
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(900, 450);
         frame.setLocationRelativeTo(null);

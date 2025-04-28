@@ -39,7 +39,7 @@ public class Edit_Item {
         JComboBox Category = new JComboBox();
         Category.setBounds(120, 90, 340, 20);
 
-        JButton updateButton = new JButton("Update Item");
+        JButton updateButton = new JButton("Update");
         updateButton.setBounds(100, 120, 100, 22);
 
         frame.add(nameLabel);

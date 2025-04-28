@@ -41,6 +41,8 @@ public class Add_Sale {
         }
     }
 
+
+
     private static void updateTotalLabel() {
         double total = 0;
         for (ProductSale sale : products) {
@@ -179,8 +181,43 @@ public class Add_Sale {
                 JOptionPane.showMessageDialog(frame, "Please select a product to remove");
             }
         });
+        productTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                int selectedRow = productTable.getSelectedRow();
+                String product_name = productTable.getValueAt(selectedRow, 1).toString();
 
+                Product selectedProduct = manager.findProduct(product_name);
+                String currentQuantity = productTable.getValueAt(selectedRow, 2).toString();
+                String newQuantity = JOptionPane.showInputDialog(frame,"Enter new quantity for " + product_name + ":", currentQuantity);
 
+                if (newQuantity != null) {
+                    try {
+                        int newQuantityInt = Integer.parseInt(newQuantity);
+                        if (newQuantityInt <= 0) {
+                            JOptionPane.showMessageDialog(frame, "Please enter a valid quantity");
+                            return;
+                        }
+                        if (Database.Data.check_stock(selectedProduct.getId(), newQuantityInt)) {
+                            System.out.println(productTable.getSelectedColumnCount());
+                            for(ProductSale productSale : products) {
+                                if(productSale.getProduct().getId() == selectedProduct.getId()) {
+                                    productSale.setQuantity(newQuantityInt);
+                                    break;
+                                }
+                            }
+                            redner_table_data();
+                            updateTotalLabel();
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "Product '" + selectedProduct.getName() + "' does not have enough stock");
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(frame, "Please enter a valid quantity");
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(frame, "Database error checking stock: " + ex.getMessage());
+                    }
+                }
+            }
+        });
 
         add_saleButton.addActionListener(e -> {
             if (products.isEmpty()) {
