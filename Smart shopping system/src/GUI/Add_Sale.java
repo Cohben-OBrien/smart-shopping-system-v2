@@ -37,7 +37,7 @@ public class Add_Sale {
     private static void redner_table_data() {
         ProductModel.setRowCount(0);
         for(ProductSale productSale : products) {
-            ProductModel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), productSale.getQuantity(), productSale.getProduct().getPrice(), productSale.getProduct().getPrice() * productSale.getQuantity()});
+            ProductModel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), productSale.getQuantity(), String.format("£%.2f", productSale.getProduct().getPrice()), String.format("£%.2f", productSale.getProduct().getPrice() * productSale.getQuantity())});
         }
     }
 
