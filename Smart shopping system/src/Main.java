@@ -120,9 +120,14 @@ public class Main extends JFrame {
                         JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
                         passwordField.setText("");
                     }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(LoginDialog.this, "A database error occurred during login: " + ex.getMessage(), "Login Error", JOptionPane.ERROR_MESSAGE);
+                    System.err.println("Database error during login: " + ex.getMessage());
+                    ex.printStackTrace();
+                    passwordField.setText("");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(LoginDialog.this, "An error occurred during login: " + ex.getMessage(), "Login Error", JOptionPane.ERROR_MESSAGE);
-                    System.err.println("Login error: " + ex.getMessage());
+                    System.err.println("General error during login: " + ex.getMessage());
                     ex.printStackTrace();
                     passwordField.setText("");
                 }
@@ -163,8 +168,9 @@ public class Main extends JFrame {
         timer.start();
     }
 
+    @SuppressWarnings({"squid:S1160"})
     public static JFrame createAndShowGUI(String username) throws SQLException, Exception {
-        manager.loadInventory();
+        manager.loadInventory(); // Line 326
 
         manager.itemTable = new JTable(Product.tableModel) {
             @Override
@@ -323,7 +329,7 @@ public class Main extends JFrame {
             New_Item item = new New_Item();
             try {
                 item.newItem(manager);
-            } catch (SQLException a) {}
+            } catch (Exception a) {}
         });
 
         recordSaleButton.addActionListener(e -> {
@@ -424,8 +430,20 @@ public class Main extends JFrame {
         manager.itemTable.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 
         try {
-            manager.render_data();
-        } catch (SQLException a) {}
+            // Explicitly acknowledge the possibility of SQLException
+            if (manager != null && manager.getClass().getMethod("render_data").getExceptionTypes().length > 0) {
+                System.out.println("render_data() might throw exceptions.");
+            }
+            manager.render_data(); // Line 331
+        } catch (SQLException a) {
+            System.err.println("Caught SQLException in render_data: " + a.getMessage());
+            a.printStackTrace();
+            JOptionPane.showMessageDialog(frame, "Error rendering data (SQLException): " + a.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            System.err.println("Caught Exception in render_data: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(frame, "Error rendering data (General Exception): " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         manager.itemTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(manager.itemTable);

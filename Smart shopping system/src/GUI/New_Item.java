@@ -2,107 +2,139 @@ package GUI;
 
 import Product.Product;
 import Product.Product_Category;
-import jdk.jfr.Category;
 import manager.InventoryManager;
 import Product.Categories;
 import javax.swing.*;
-import java.awt.image.ImageProducer;
+import java.awt.*;
 import java.sql.SQLException;
+import java.io.IOException;
+import java.util.List;
 
 public class New_Item {
-    public void newItem(InventoryManager manager) throws SQLException {
+    public void newItem(InventoryManager manager) {
         JFrame frame = new JFrame("New Item");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLayout(null);
-        frame.setSize(500, 200);
+        frame.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0.5;
 
+        // --- Row 0: Name ---
         JLabel Item_name_label = new JLabel("New Item name");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        frame.add(Item_name_label, gbc);
         JTextField Item_name_textField = new JTextField(15);
+        gbc.gridx = 1;
+        frame.add(Item_name_textField, gbc);
 
+        // --- Row 1: Price ---
         JLabel Item_price_label = new JLabel("New Item price");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        frame.add(Item_price_label, gbc);
         JTextField Item_price_textField = new JTextField(15);
+        gbc.gridx = 1;
+        frame.add(Item_price_textField, gbc);
 
-
-        Item_name_label.setBounds(2, 20, 200, 20);
-        Item_name_textField.setBounds(100, 20, 340, 20);
-
-        Item_price_label.setBounds(2, 50, 200, 20);
-        Item_price_textField.setBounds(100, 50, 340, 20);
-
+        // --- Row 2: Quantity ---
         JLabel Item_quantity_label = new JLabel("Item quantity");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        frame.add(Item_quantity_label, gbc);
         JTextField Item_quantity_textField = new JTextField(15);
+        gbc.gridx = 1;
+        frame.add(Item_quantity_textField, gbc);
 
-        Item_quantity_label.setBounds(2, 70, 200, 20);
-        Item_quantity_textField.setBounds(100, 70, 340, 20);
-
+        // --- Row 3: Category ---
         JLabel Item_Category_label = new JLabel("Item Category");
-        Item_Category_label.setBounds(2, 90, 200, 20);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        frame.add(Item_Category_label, gbc);
+        JComboBox<String> Category_comboBox = new JComboBox<>();
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 0.1;
+        frame.add(Category_comboBox, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weighty = 0;
 
-        JComboBox Category = new JComboBox();
-        Category.setBounds(100, 90, 340, 20);
-
-
-        JButton Add_item_button = new JButton("Add Item");
-        Add_item_button.setBounds(100, 120, 100, 20);
-
-
-        frame.add(Item_name_label);
-        frame.add(Item_name_textField);
-
-
-        frame.add(Item_price_label);
-        frame.add(Item_price_textField);
-
-        frame.add(Item_quantity_label);
-        frame.add(Item_quantity_textField);
-        frame.add(Item_Category_label);
-        frame.add(Category);
-
-        frame.add(Add_item_button);
-
-
-        for(Product_Category category: Database.Data.LoadCategories()) {
-            Category.addItem(category.getCategoryName());
+        try {
+            Categories.LoadCategories(); // Ensure categories are loaded
+            for (Product_Category category : Categories.GetCategories()) { // Corrected method name
+                Category_comboBox.addItem(category.getCategoryName());
+            }
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "Error loading categories: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // Consider disabling the category combo box or handling the error more gracefully
         }
 
-
-        frame.setVisible(true);
+        // --- Row 4: Button ---
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        JButton Add_item_button = new JButton("Add Item");
+        frame.add(Add_item_button, gbc);
+        frame.getRootPane().setDefaultButton(Add_item_button);
 
         Add_item_button.addActionListener(e -> {
-            String name = "";
-            int quantity = 0;
+            String name = Item_name_textField.getText();
+            String priceText = Item_price_textField.getText();
+            String quantityText = Item_quantity_textField.getText();
+            String selectedCategoryName = (String) Category_comboBox.getSelectedItem();
+
+            if (name.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a name for the item");
+                return;
+            }
+            if (priceText.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter the item price");
+                return;
+            }
+            if (quantityText.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter the item quantity");
+                return;
+            }
 
             try {
-                float item_price = Float.parseFloat(Item_price_textField.getText());
+                float item_price = Float.parseFloat(priceText);
+                if (item_price <= 0) {
+                    JOptionPane.showMessageDialog(null, "Invalid price");
+                    return;
+                }
                 try {
-                    quantity = Integer.parseInt(Item_quantity_textField.getText());
-
-                    name = Item_name_textField.getText();
-                    if (!name.isEmpty()) {
-                        if(item_price <= 0) {
-                            JOptionPane.showMessageDialog(null, "Invalid price");
-                        } else {
-                            try {
-                                manager.addProduct(new Product(InventoryManager.product_next_id(),name, item_price, quantity, Categories.findCategory(Category.getSelectedItem().toString()), true));
-                                JOptionPane.showMessageDialog(null, "Product added successfully");
-                            } catch (SQLException a ) {
-                                JOptionPane.showMessageDialog(null, "Failed to add product");
-                            }
-
-                        }
-                       frame.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Please enter a name for the item");
+                    int quantity = Integer.parseInt(quantityText);
+                    if (quantity < 0) {
+                        JOptionPane.showMessageDialog(null, "Quantity cannot be negative");
+                        return;
                     }
 
-                }catch (NumberFormatException ex){
+                    Product_Category category = Categories.findCategory(selectedCategoryName);
+                    if (category == null) {
+                        JOptionPane.showMessageDialog(null, "Selected category not found");
+                        return;
+                    }
+
+                    Product newProduct = new Product(InventoryManager.product_next_id(), name, item_price, quantity, category, true);
+                    try {
+                        manager.addProduct(newProduct);
+                        JOptionPane.showMessageDialog(null, "Product added successfully");
+                        frame.dispose();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Failed to add product: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Invalid Quantity");
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Invalid price");
             }
+        });
 
-
-       });
+        frame.setSize(500, 250);
+        frame.setVisible(true);
     }
 }
