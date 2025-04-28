@@ -30,12 +30,14 @@ public class Add_Sale {
 
     private static boolean saleuodate = false;
 
-    private static void remove_Product(Product product, int row) {
-        ProductModel.removeRow(row);
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct().getId() == product.getId()) {
-                products.remove(i);
-            }
+    private static void remove_Product(InventoryManager manager, int row) {
+        if (row >= 0 && row < products.size() && row < ProductModel.getRowCount()) {
+            Product productToRemove = products.get(row).getProduct();
+            ProductModel.removeRow(row);
+            products.remove(row);
+            updateTotalLabel();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error: Could not remove product. Invalid row selected.");
         }
     }
 
@@ -74,7 +76,7 @@ public class Add_Sale {
             if(product.isSelling()) {
                 ProductSelect.addItem(product.getName());
             }
-            }
+        }
         JButton Add = new JButton("Add Product to Sale");
 
         frame.add(searchLabel);
@@ -108,13 +110,15 @@ public class Add_Sale {
                 int qty = Integer.parseInt(quantityTextField.getText());
                 try { // Catch SQLException here
                     if (Database.Data.check_stock(product.getId(), qty)) {
-                        for(ProductSale productSale : products) {
-                            if(productSale.getProduct().getId() == product.getId()) {
+                        boolean productUpdated = false;
+                        for (ProductSale productSale : products) {
+                            if (productSale.getProduct().getId() == product.getId()) {
                                 productSale.update(qty);
-                                saleuodate = true;
+                                productUpdated = true;
+                                break;
                             }
                         }
-                        if(!saleuodate) {
+                        if (!productUpdated) {
                             products.add(new ProductSale(product, qty));
                         }
                         redner_table_data();
@@ -142,7 +146,7 @@ public class Add_Sale {
         products.clear();
         ProductModel.setRowCount(0);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Record Sale");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setResizable(false);
@@ -180,8 +184,7 @@ public class Add_Sale {
         remove_productButton.addActionListener(e -> {
             int selectedRow = productTable.getSelectedRow();
             if (selectedRow != -1) {
-                String product_name = productTable.getValueAt(selectedRow, 1).toString();
-                remove_Product(manager.findProduct(product_name.replace(" ", "_")), selectedRow);
+                remove_Product(manager, selectedRow);
             } else {
                 JOptionPane.showMessageDialog(frame, "Please select a product to remove");
             }

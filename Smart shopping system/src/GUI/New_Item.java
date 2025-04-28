@@ -12,7 +12,7 @@ import java.util.List;
 
 public class New_Item {
     public void newItem(InventoryManager manager) {
-        JFrame frame = new JFrame("New Item");
+        JFrame frame = new JFrame("Add Product");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
