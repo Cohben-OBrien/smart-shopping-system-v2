@@ -23,6 +23,8 @@ public class Add_Sale {
     private static JLabel totalLabel;
     public static DefaultTableModel ProductModel = new DefaultTableModel();
 
+    private static boolean saleuodate = false;
+
     private static void remove_Product(Product product, int row) {
         ProductModel.removeRow(row);
         for (int i = 0; i < products.size(); i++) {
@@ -32,8 +34,11 @@ public class Add_Sale {
         }
     }
 
-    private static void add_table_product(Product product, int quantity) {
-        ProductModel.addRow(new Object[]{product.getId(), product.getName().replace("_", " "), quantity, String.format("£%.2f", product.getPrice()), String.format("£%.2f", product.getPrice() * quantity)});
+    private static void redner_table_data() {
+        ProductModel.setRowCount(0);
+        for(ProductSale productSale : products) {
+            ProductModel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName(), productSale.getQuantity(), productSale.getProduct().getPrice(), productSale.getProduct().getPrice() * productSale.getQuantity()});
+        }
     }
 
     private static void updateTotalLabel() {
@@ -96,8 +101,16 @@ public class Add_Sale {
                 int qty = Integer.parseInt(quantityTextField.getText());
                 try { // Catch SQLException here
                     if (Database.Data.check_stock(product.getId(), qty)) {
-                        products.add(new ProductSale(product, qty));
-                        add_table_product(product, qty);
+                        for(ProductSale productSale : products) {
+                            if(productSale.getProduct().getId() == product.getId()) {
+                                productSale.update(qty);
+                                saleuodate = true;
+                            }
+                        }
+                        if(!saleuodate) {
+                            products.add(new ProductSale(product, qty));
+                        }
+                        redner_table_data();
                         updateTotalLabel();
                         frame.dispose();
                     } else {

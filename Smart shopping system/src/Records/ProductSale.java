@@ -21,6 +21,11 @@ public class ProductSale {
         this.saleId = 1; // temp
     }
 
+    public void update(int quantity) {
+        this.quantity += quantity;
+        this.total = product.getPrice() * quantity;
+    }
+
     public Product getProduct() {
         return product;
     }
