@@ -41,6 +41,8 @@ public class Add_Sale {
         }
     }
 
+
+
     private static void updateTotalLabel() {
         double total = 0;
         for (ProductSale sale : products) {
@@ -183,7 +185,8 @@ public class Add_Sale {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 int selectedRow = productTable.getSelectedRow();
                 String product_name = productTable.getValueAt(selectedRow, 1).toString();
-                Product selectedProduct = manager.findProduct(product_name.replace(" ", "_"));
+
+                Product selectedProduct = manager.findProduct(product_name);
                 String currentQuantity = productTable.getValueAt(selectedRow, 2).toString();
                 String newQuantity = JOptionPane.showInputDialog(frame,"Enter new quantity for " + product_name + ":", currentQuantity);
 
@@ -195,9 +198,10 @@ public class Add_Sale {
                             return;
                         }
                         if (Database.Data.check_stock(selectedProduct.getId(), newQuantityInt)) {
+                            System.out.println(productTable.getSelectedColumnCount());
                             for(ProductSale productSale : products) {
                                 if(productSale.getProduct().getId() == selectedProduct.getId()) {
-                                    productSale.update(newQuantityInt);
+                                    productSale.setQuantity(newQuantityInt);
                                     break;
                                 }
                             }
