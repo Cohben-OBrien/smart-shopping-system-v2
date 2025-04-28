@@ -56,7 +56,7 @@ public class InventoryManager extends Main {
     public void addProduct(Product product) throws SQLException{
         products.add(product); // Add product to the list of products
         Data.addProduct(product);
-        Product.tableModel.addRow(new Object[]{product.getId(), product.getName() , product.getPrice(), product.getQuantity()});
+        Product.tableModel.addRow(new Object[]{product.getId(), product.getName() , product.getPrice(), product.getCategory().getCategoryName(), product.getQuantity()});
     }
 
 

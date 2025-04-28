@@ -20,7 +20,7 @@ public class New_Item {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 0.5;
 
-        // --- Row 0: Name ---
+        // New Item Name
         JLabel Item_name_label = new JLabel("New Item name");
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -29,7 +29,7 @@ public class New_Item {
         gbc.gridx = 1;
         frame.add(Item_name_textField, gbc);
 
-        // --- Row 1: Price ---
+        // Item Price
         JLabel Item_price_label = new JLabel("New Item price");
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -38,7 +38,7 @@ public class New_Item {
         gbc.gridx = 1;
         frame.add(Item_price_textField, gbc);
 
-        // --- Row 2: Quantity ---
+        // Item Quantity
         JLabel Item_quantity_label = new JLabel("Item quantity");
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -47,7 +47,7 @@ public class New_Item {
         gbc.gridx = 1;
         frame.add(Item_quantity_textField, gbc);
 
-        // --- Row 3: Category ---
+        // Item Category
         JLabel Item_Category_label = new JLabel("Item Category");
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -61,8 +61,8 @@ public class New_Item {
         gbc.weighty = 0;
 
         try {
-            Categories.LoadCategories(); // Ensure categories are loaded
-            for (Product_Category category : Categories.GetCategories()) { // Corrected method name
+            Categories.LoadCategories();
+            for (Product_Category category : Categories.GetCategories()) {
                 Category_comboBox.addItem(category.getCategoryName());
             }
         } catch (SQLException | IOException e) {
@@ -70,7 +70,7 @@ public class New_Item {
             // Consider disabling the category combo box or handling the error more gracefully
         }
 
-        // --- Row 4: Button ---
+        // Add Button
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
