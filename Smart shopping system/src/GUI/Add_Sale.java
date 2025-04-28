@@ -21,7 +21,12 @@ public class Add_Sale {
 
     static ArrayList<ProductSale> products = new ArrayList<>();
     private static JLabel totalLabel;
-    public static DefaultTableModel ProductModel = new DefaultTableModel();
+    public static DefaultTableModel ProductModel = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
 
     private static boolean saleuodate = false;
 

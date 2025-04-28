@@ -13,7 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Stock_report {
-    static DefaultTableModel ProductModel = new DefaultTableModel();
+    static DefaultTableModel ProductModel = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
     static ArrayList<Product> products = new ArrayList<>();
 
     public static void Stock_Report() throws SQLException {
@@ -30,6 +35,7 @@ public class Stock_report {
 
         // Custom renderer for status column
         stockTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                                                            boolean isSelected, boolean hasFocus, int row, int column) {

@@ -27,7 +27,12 @@ public class Sales_Report {
 
        JTable salesTable = new JTable();
        salesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-       DefaultTableModel salesmodel = new DefaultTableModel();
+       DefaultTableModel salesmodel = new DefaultTableModel() {
+           @Override
+           public boolean isCellEditable(int row, int column) {
+               return false;
+           }
+       };
        salesTable.setModel(salesmodel);
 
        String[] headings = {"Sale ID", "Sale total", "Sale date"};
@@ -106,8 +111,14 @@ public class Sales_Report {
         frame.setLayout(null);
 
         JTable ProductTable = new JTable();
+        ProductTable.setCellSelectionEnabled(false);
         ProductTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        DefaultTableModel Productmodel = new DefaultTableModel();
+        DefaultTableModel Productmodel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         ProductTable.setModel(Productmodel);
 
         String[] headings = {"Product ID", "Product Name", "Product Price", "Quantity Sold", "Total cost"};
