@@ -1,4 +1,4 @@
-==============================
+
 IntelliShop - Java Application
 ==============================
 
@@ -24,6 +24,6 @@ Key Features:
 - Sales and stock reports
 - Clean, user-friendly interface
 
-===========================================
-Created by: he Algorithmic Pub Crawl Aliens
-===========================================
+
+Created by: The Algorithmic Pub Crawl Aliens
+============================================
