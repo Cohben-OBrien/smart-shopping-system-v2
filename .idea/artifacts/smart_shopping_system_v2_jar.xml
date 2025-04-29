@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="smart-shopping-system-v2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/smart_shopping_system_v2_jar</output-path>
+    <root id="archive" name="smart-shopping-system-v2.jar">
+      <element id="module-output" name="Smart shopping system" />
+      <element id="module-output" name="smart-shopping-system-programming-2-cw-2-" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Smart shopping system/External Libs/sqlite-jdbc-3.49.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Smart shopping system/External Libs/swingx-all-1.6.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

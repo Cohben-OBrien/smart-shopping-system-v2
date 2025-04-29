@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -22,13 +21,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.Timer;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
 
+/**
+ * Main class for IntelliShop application
+ */
 public class Main extends JFrame {
 
+    // Global variables and components
     static InventoryManager manager = new InventoryManager();
     static JFrame frame;
     static JButton deleteProductButton;
@@ -43,11 +44,15 @@ public class Main extends JFrame {
     static JLabel usernameLabelBottom;
 
     public static void main(String[] args) {
+        // Launch the application with the login screen
         SwingUtilities.invokeLater(() -> {
             new LoginDialog();
         });
     }
 
+    /**
+     * Login dialog for user authentication
+     */
     static class LoginDialog extends JDialog {
         private JTextField usernameField;
         private JPasswordField passwordField;
@@ -65,8 +70,9 @@ public class Main extends JFrame {
             int fieldPadding = 5;
             int dialogMargin = 20;
 
-            JPanel inputPanel = new JPanel(new GridLayout(2, 2, 15, 15)); // Panel for username and password
-            inputPanel.setBorder(BorderFactory.createEmptyBorder(dialogMargin, dialogMargin, 10, dialogMargin)); // Padding around inputs
+            // Panel for username and password fields
+            JPanel inputPanel = new JPanel(new GridLayout(2, 2, 15, 15));
+            inputPanel.setBorder(BorderFactory.createEmptyBorder(dialogMargin, dialogMargin, 10, dialogMargin));
 
             JLabel usernameLabel = new JLabel("Username:");
             usernameLabel.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
@@ -83,21 +89,18 @@ public class Main extends JFrame {
             inputPanel.add(passwordLabel);
             inputPanel.add(passwordField);
 
-            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0)); // Panel for buttons
-            buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, dialogMargin, dialogMargin, dialogMargin)); // Padding around buttons
+            // Panel for buttons (Login and Exit)
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
+            buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, dialogMargin, dialogMargin, dialogMargin));
 
             loginButton = new JButton("Login");
             loginButton.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
-            Dimension buttonSize = new Dimension(120, 30); // Set preferred width and height
+            Dimension buttonSize = new Dimension(120, 30);
             loginButton.setPreferredSize(buttonSize);
-            loginButton.setMinimumSize(buttonSize);
-            loginButton.setMaximumSize(buttonSize);
 
-            exitButton = new JButton("Exit"); // Initialize the exit button
+            exitButton = new JButton("Exit");
             exitButton.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
             exitButton.setPreferredSize(buttonSize);
-            exitButton.setMinimumSize(buttonSize);
-            exitButton.setMaximumSize(buttonSize);
 
             buttonPanel.add(loginButton);
             buttonPanel.add(exitButton);
@@ -105,6 +108,7 @@ public class Main extends JFrame {
             getContentPane().add(inputPanel, BorderLayout.CENTER);
             getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
+            // Action listeners for login and exit buttons
             loginButton.addActionListener(e -> {
                 String username = usernameField.getText();
                 char[] password = passwordField.getPassword();
@@ -112,29 +116,31 @@ public class Main extends JFrame {
 
                 try {
                     if (User_authenticator.User_Authemticator(username, passwordStr)) {
-                        dispose();
+                        dispose(); // Close login dialog
                         System.out.println("Login successful, calling createAndShowGUI with username: " + username);
                         frame = createAndShowGUI(username);
                         System.out.println("Returned from createAndShowGUI after login");
                     } else {
+                        // Show error if credentials are invalid
                         JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password.", "Log In Error", JOptionPane.ERROR_MESSAGE);
                         passwordField.setText("");
                     }
                 } catch (SQLException ex) {
+                    // Handle database errors
                     JOptionPane.showMessageDialog(LoginDialog.this, "A database error occurred during login: " + ex.getMessage(), "Login Error", JOptionPane.ERROR_MESSAGE);
-                    System.err.println("Database error during login: " + ex.getMessage());
                     ex.printStackTrace();
                     passwordField.setText("");
                 } catch (Exception ex) {
+                    // Handle general errors
                     JOptionPane.showMessageDialog(LoginDialog.this, "An error occurred during login: " + ex.getMessage(), "Login Error", JOptionPane.ERROR_MESSAGE);
-                    System.err.println("General error during login: " + ex.getMessage());
                     ex.printStackTrace();
                     passwordField.setText("");
                 }
             });
 
+            // Exit the application
             exitButton.addActionListener(e -> {
-                System.exit(0); // Terminate the entire application
+                System.exit(0);
             });
 
             pack();
@@ -142,22 +148,42 @@ public class Main extends JFrame {
         }
     }
 
+
+    /**
+     * Add a product to the table model
+     */
     public static void Add_product_to_table(Product product) {
-        Product.tableModel.addRow(new Object[]{product.getId(), product.getName(), product.getPrice(), product.getCategory(), product.getQuantity(), ""});
+        Product.tableModel.addRow(new Object[]{
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getCategory(),
+                product.getQuantity(),
+                ""
+        });
     }
 
+    /**
+     * Get the current date as a formatted string
+     */
     private static String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return currentDate.format(formatter);
     }
 
+    /**
+     * Get the current time as a formatted string
+     */
     private static String getCurrentTime() {
         LocalTime currentTime = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         return currentTime.format(formatter);
     }
 
+    /**
+     * Start a live clock that updates the date and time every second
+     */
     private static void startClock() {
         Timer timer = new Timer(1000, new ActionListener() {
             @Override
@@ -168,21 +194,26 @@ public class Main extends JFrame {
         timer.start();
     }
 
+    /**
+     * Create and display the main GUI after successful login
+     */
     @SuppressWarnings({"squid:S1160"})
     public static JFrame createAndShowGUI(String username) throws SQLException, Exception {
-        manager.loadInventory(); // Line 326
+        manager.loadInventory(); // Load inventory from database
 
+        // Setup JTable with custom rendering for stock status and price formatting
         manager.itemTable = new JTable(Product.tableModel) {
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
-                int stockColumn = 4; // Index of "Stock Levels"
-                int statusColumn = 5; // Index of "Stock Status"
+                int stockColumn = 4;
+                int statusColumn = 5;
                 int priceColumn = 2;
 
                 c.setBackground(Color.WHITE);
                 c.setForeground(Color.BLACK);
 
+                // Format price column as currency
                 if (column == priceColumn) {
                     Object value = getValueAt(row, column);
                     if (value instanceof Number) {
@@ -191,8 +222,9 @@ public class Main extends JFrame {
                     }
                 }
 
+                // Color background of stock status based on quantity
                 if (column == statusColumn) {
-                    Object stockValue = getValueAt(row, stockColumn); // Get value from "Stock Levels" column
+                    Object stockValue = getValueAt(row, stockColumn);
                     if (stockValue instanceof Number) {
                         int quantity = ((Number) stockValue).intValue();
                         String statusText;
@@ -200,29 +232,27 @@ public class Main extends JFrame {
 
                         if (quantity == 0) {
                             statusText = "Out of Stock";
-                            backgroundColor = new Color(255, 99, 71); // Tomato
+                            backgroundColor = new Color(255, 99, 71);
                         } else if (quantity < 10) {
                             statusText = "Low Stock";
-                            backgroundColor = new Color(255, 200, 0); // Orange
+                            backgroundColor = new Color(255, 200, 0);
                         } else if (quantity < 30) {
                             statusText = "Medium Stock";
-                            backgroundColor = new Color(255, 255, 150); // Light Yellow
+                            backgroundColor = new Color(255, 255, 150);
                         } else {
                             statusText = "In Stock";
-                            backgroundColor = new Color(144, 238, 144); // Light Green
+                            backgroundColor = new Color(144, 238, 144);
                         }
                         c.setBackground(backgroundColor);
-                        setValueAt(statusText, row, column); // Set the status text
-
+                        setValueAt(statusText, row, column);
                     } else {
                         setValueAt("Error", row, column);
                         c.setBackground(Color.LIGHT_GRAY);
                     }
-                    c.setForeground(Color.BLACK); // Ensure text color is black
-                } else if (column == stockColumn) { // For "Stock Levels" column
+                    c.setForeground(Color.BLACK);
+                } else if (column == stockColumn) {
                     c.setForeground(Color.BLACK);
                     c.setBackground(Color.WHITE);
-                    // No need to set value, it's already there
                 } else {
                     c.setForeground(Color.BLACK);
                     c.setBackground(Color.WHITE);
@@ -230,14 +260,16 @@ public class Main extends JFrame {
                 return c;
             }
         };
-        manager.itemTable.setDefaultEditor(Object.class, null);
+
+        manager.itemTable.setDefaultEditor(Object.class, null); // Make table cells non-editable
         manager.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         manager.itemTable.setRowSelectionAllowed(true);
 
-        // Create a center renderer
+        // Center align some table cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
+        // Create main application frame
         frame = new JFrame("IntelliShop - Smart Shopping Management");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 800);
@@ -246,30 +278,30 @@ public class Main extends JFrame {
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-        // Create a panel to hold the spacing and the title
+        // Create panel to hold title with spacing
         JPanel titleAreaPanel = new JPanel(new BorderLayout());
 
-        // Add an empty label with a preferred height for top spacing
         JLabel topSpacingLabel = new JLabel("");
-        topSpacingLabel.setPreferredSize(new Dimension(0, 20)); // Adjust as needed
+        topSpacingLabel.setPreferredSize(new Dimension(0, 20));
         titleAreaPanel.add(topSpacingLabel, BorderLayout.NORTH);
 
-        // Create the title label
         JLabel titleLabel = new JLabel("IntelliShop - Smart Shopping Management");
         titleLabel.setFont(new Font("Lucida Console", Font.BOLD, 36));
         titleLabel.setForeground(Color.BLACK);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleAreaPanel.add(titleLabel, BorderLayout.CENTER);
 
-        // Add an empty label with a preferred height for bottom padding
         JLabel bottomSpacingLabel = new JLabel("");
-        bottomSpacingLabel.setPreferredSize(new Dimension(0, 10)); // Adjust this value for bottom padding
+        bottomSpacingLabel.setPreferredSize(new Dimension(0, 10));
         titleAreaPanel.add(bottomSpacingLabel, BorderLayout.SOUTH);
 
+
+        // Left side panel for buttons and logo
         leftButtonPanel = new JPanel();
         leftButtonPanel.setLayout(new BoxLayout(leftButtonPanel, BoxLayout.Y_AXIS));
         leftButtonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        // Load and resize shopping cart icon
         java.net.URL imageUrl = Main.class.getResource("/resources/shopping_cart_icon.png");
         System.out.println("Image URL: " + imageUrl);
         ImageIcon originalIcon = new ImageIcon(imageUrl);
@@ -282,8 +314,9 @@ public class Main extends JFrame {
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftButtonPanel.add(imageLabel);
 
-        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Some space before the first button
+        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space after logo
 
+        // Buttons for actions
         JButton productsButton = new JButton("Add Product");
         deleteProductButton = new JButton("Delete");
         JButton recordSaleButton = new JButton("Record Sale");
@@ -291,6 +324,7 @@ public class Main extends JFrame {
         JButton lowStockButton = new JButton("Stock Report");
         JButton exitButtonMain = new JButton("Logout");
 
+        // Set size and alignment for all buttons
         JButton[] buttons = {productsButton, deleteProductButton, recordSaleButton, salesReportButton, lowStockButton, exitButtonMain};
         int maxWidth = 0;
         for (JButton button : buttons) {
@@ -298,18 +332,21 @@ public class Main extends JFrame {
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             maxWidth = Math.max(maxWidth, button.getPreferredSize().width);
         }
-        int padding = 20; // Adjust this padding value
+        int padding = 20;
         for (int i = 0; i < buttons.length; i++) {
             JButton button = buttons[i];
             button.setMaximumSize(new Dimension(maxWidth + padding, button.getPreferredSize().height));
             leftButtonPanel.add(button);
             if (i < buttons.length - 1) {
-                leftButtonPanel.add(Box.createVerticalGlue()); // Glue*between* buttons
+                leftButtonPanel.add(Box.createVerticalGlue()); // Add vertical glue between buttons
             }
         }
 
-        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Some space after the last button
+        leftButtonPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space after last button
 
+        // Button actions
+
+        // Open Sales Report
         salesReportButton.addActionListener(e -> {
             Sales_Report report = new Sales_Report();
             try {
@@ -319,26 +356,34 @@ public class Main extends JFrame {
             }
         });
 
+        // Open Stock Report
         lowStockButton.addActionListener(e -> {
             try {
                 Stock_report.Stock_Report();
-            } catch (SQLException a) {}
+            } catch (SQLException a) {
+                // Ignore
+            }
         });
 
+        // Open New Item window
         productsButton.addActionListener(e -> {
             New_Item item = new New_Item();
             try {
                 item.newItem(manager);
-            } catch (Exception a) {}
+            } catch (Exception a) {
+                // Ignore
+            }
         });
 
+        // Open Record Sale window
         recordSaleButton.addActionListener(e -> {
             Add_Sale.Add_Sale(manager);
         });
 
+        // Handle delete product action
         deleteProductButton.setEnabled(false);
         deleteProductButton.addActionListener(e -> {
-            if(User_authenticator.getCurrent_user().getAccessLevel() == access_levels.ADMIN) {
+            if (User_authenticator.getCurrent_user().getAccessLevel() == access_levels.ADMIN) {
                 int selectedRow = manager.itemTable.getSelectedRow();
                 if (selectedRow != -1) {
                     int modelRow = manager.itemTable.convertRowIndexToModel(selectedRow);
@@ -359,6 +404,7 @@ public class Main extends JFrame {
                             undoDeleteButton.setEnabled(true);
                             notificationPanel.setVisible(true);
 
+                            // Start undo timer (5 seconds)
                             undoTimer = new Timer(5000, new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent evt) {
@@ -389,18 +435,23 @@ public class Main extends JFrame {
             }
         });
 
+        // Handle logout button
         exitButtonMain.addActionListener(e -> {
-            frame.dispose(); // Close the current main window
+            frame.dispose(); // Close the current window
             SwingUtilities.invokeLater(() -> {
-                new LoginDialog(); // Create and show a new login dialog
+                new LoginDialog(); // Open login dialog again
             });
         });
 
-        contentPane.add(leftButtonPanel, BorderLayout.WEST);
-        contentPane.add(titleAreaPanel, BorderLayout.NORTH); // Add the panel containing spacing and title
 
+        // Add the left button panel and title panel to the frame
+        contentPane.add(leftButtonPanel, BorderLayout.WEST);
+        contentPane.add(titleAreaPanel, BorderLayout.NORTH);
+
+        // Center panel to hold table and search
         JPanel centerPanel = new JPanel(new BorderLayout());
 
+        // Panel above the table for search bar
         JPanel tableControlPanel = new JPanel(new BorderLayout());
         tableControlPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 1, 20));
 
@@ -415,6 +466,7 @@ public class Main extends JFrame {
         tableControlPanel.add(searchPanel, BorderLayout.NORTH);
         tableControlPanel.add(Box.createVerticalStrut(10), BorderLayout.CENTER);
 
+        // Title above the table
         JLabel tableTitleLabel = new JLabel("<html><u>Product Inventory</u></html>");
         tableTitleLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         tableTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -422,19 +474,20 @@ public class Main extends JFrame {
 
         centerPanel.add(tableControlPanel, BorderLayout.NORTH);
 
+        // Setup product table columns
         String[] columnNames = {"Item ID", "Item Name", "Price", "Category", "Stock Levels", "Stock Status"};
         Product.tableModel.setColumnCount(columnNames.length);
         Product.tableModel.setColumnIdentifiers(columnNames);
 
-        // Apply the center renderer to the "Stock Status" column (index 5)
+        // Center-align the Stock Status column
         manager.itemTable.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 
         try {
-            // Explicitly acknowledge the possibility of SQLException
+            // Try rendering the data in the table
             if (manager != null && manager.getClass().getMethod("render_data").getExceptionTypes().length > 0) {
                 System.out.println("render_data() might throw exceptions.");
             }
-            manager.render_data(); // Line 331
+            manager.render_data();
         } catch (SQLException a) {
             System.err.println("Caught SQLException in render_data: " + a.getMessage());
             a.printStackTrace();
@@ -453,45 +506,47 @@ public class Main extends JFrame {
         ));
         centerPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Get the preferred width of the tableControlPanel
-        tableControlPanel.doLayout(); // Ensure layout is done to get accurate preferred size
+        // Set the preferred width of the title area
+        tableControlPanel.doLayout();
         Dimension tableControlPanelSize = tableControlPanel.getPreferredSize();
-
-        // Set the preferred width of the titleAreaPanel
         titleAreaPanel.setPreferredSize(new Dimension(tableControlPanelSize.width, titleAreaPanel.getPreferredSize().height));
 
-        JPanel bottomPanel = new JPanel(new BorderLayout()); // Use BorderLayout
+        // Bottom panel for version, date, and username
+        JPanel bottomPanel = new JPanel(new BorderLayout());
 
-        // Panel for version number with left spacing
-        JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // FlowLayout to arrange left to right
-        JLabel versionSpacer = new JLabel("      ");JLabel versionLabelBottom = new JLabel("Version 1.0.0");
+        // Version label (left)
+        JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel versionSpacer = new JLabel("      ");
+        JLabel versionLabelBottom = new JLabel("Version 1.0.0");
         versionLabelBottom.setFont(new Font("Arial", Font.PLAIN, 14));
         versionPanel.add(versionSpacer);
         versionPanel.add(versionLabelBottom);
         bottomPanel.add(versionPanel, BorderLayout.WEST);
 
-        // Panel to hold and center the date
+        // Date and time label (center)
         JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         dateLabel = new JLabel(getCurrentDate() + "  " + getCurrentTime());
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         datePanel.add(dateLabel);
         bottomPanel.add(datePanel, BorderLayout.CENTER);
 
-        // Panel for "Logged in as..." on the EAST with left padding
-        JPanel eastPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout to arrange within EAST
+        // Logged in user (right)
+        JPanel eastPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         usernameLabelBottom = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logged in as: " + username + "</html>");
         usernameLabelBottom.setFont(new Font("Arial", Font.PLAIN, 14));
         eastPanel.add(usernameLabelBottom);
         JPanel eastSpacer = new JPanel();
-        eastPanel.add(eastSpacer); // Add the spacer to the east panel
+        eastPanel.add(eastSpacer);
 
         bottomPanel.add(eastPanel, BorderLayout.EAST);
 
         contentPane.add(bottomPanel, BorderLayout.SOUTH);
 
+        // Enable table sorting and filtering
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(Product.tableModel);
         manager.itemTable.setRowSorter(sorter);
 
+        // Add live search functionality
         JTextField finalSearchTextField = searchTextField;
         finalSearchTextField.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -507,11 +562,13 @@ public class Main extends JFrame {
 
         contentPane.add(centerPanel, BorderLayout.CENTER);
 
+        // Panel for Undo Delete notification
         notificationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         notificationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 20));
         notificationPanel.setVisible(false);
         contentPane.add(notificationPanel, BorderLayout.EAST);
 
+        // Undo delete button
         undoDeleteButton = new JButton("Undo Delete");
         undoDeleteButton.setEnabled(false);
         undoDeleteButton.addActionListener(e -> {
@@ -540,10 +597,12 @@ public class Main extends JFrame {
         });
         notificationPanel.add(undoDeleteButton);
 
+        // Enable delete button only if a row is selected
         manager.itemTable.getSelectionModel().addListSelectionListener(event -> {
             deleteProductButton.setEnabled(manager.itemTable.getSelectedRow() != -1);
         });
 
+        // Enable double-click to edit product if admin
         manager.itemTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (User_authenticator.getCurrent_user().getAccessLevel() == access_levels.ADMIN) {
@@ -564,11 +623,14 @@ public class Main extends JFrame {
             }
         });
 
-        frame.setVisible(true);
-        startClock();
+        frame.setVisible(true); // Show the frame
+        startClock(); // Start clock updating every second
         return frame;
     }
 
+    /**
+     * Filter the table based on search input
+     */
     private static void filterTable(String searchText) {
         TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) manager.itemTable.getRowSorter();
         if (searchText.trim().length() == 0) {
