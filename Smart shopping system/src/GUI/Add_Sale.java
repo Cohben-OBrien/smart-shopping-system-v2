@@ -222,7 +222,10 @@ public class Add_Sale {
                             System.out.println(productTable.getSelectedColumnCount());
                             for(ProductSale productSale : products) {
                                 if(productSale.getProduct().getId() == selectedProduct.getId()) {
-                                    productSale.setQuantity(newQuantityInt);
+                                    boolean check = productSale.setQuantity(newQuantityInt);
+                                    if(!check) {
+                                        JOptionPane.showMessageDialog(frame, "not enough stock");
+                                    }
                                     break;
                                 }
                             }
