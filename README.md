@@ -1,4 +1,3 @@
-
 IntelliShop - Java Application
 ==============================
 
@@ -8,20 +7,20 @@ How to Run:
     - run the smart-shopping-system-v2.jar in the finish project file ensuring the database is in the Smart Shop System / Database directory
 
 - Option 2 
-    - clone the github repo
+    - Clone the github repo
     - Open the project in your Java IDE.
-    - add the Swingx and SQLite external libraries are added to the project structure 
+    - Add the Swingx and SQLite external libraries are added to the project structure 
     - Run the file: GUI/Main.java
 
 
 Prerequisites:
 --------------
 - Option 1 
-    -   java run time environment
+    -   Java run time environment
 
 - Option 2 
     - Java JDK 17 or higher
-    -  Java IDE (IntelliJ, Eclipse, NetBeans)
+    - Java IDE (IntelliJ, Eclipse, NetBeans)
 
 
 Key Features:
@@ -37,4 +36,3 @@ Key Features:
 
 Created by: The Algorithmic Pub Crawl Aliens
 ============================================
-
