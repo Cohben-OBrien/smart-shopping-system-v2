@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.InterfaceAddress;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,34 +108,43 @@ public class Add_Sale {
             Product product = manager.findProduct(selectedProductName);
 
             try {
-                int qty = Integer.parseInt(quantityTextField.getText());
-                try { // Catch SQLException here
-                    if (Database.Data.check_stock(product.getId(), qty)) {
-                        boolean productUpdated = false;
-                        for (ProductSale productSale : products) {
-                            if (productSale.getProduct().getId() == product.getId()) {
-                                productSale.update(qty);
-                                productUpdated = true;
-                                break;
+                if (Integer.parseInt(quantityTextField.getText()) <= 0) {
+
+                    JOptionPane.showMessageDialog(parentFrame, "please enter a valid quantity");
+                } else {
+                    try {
+                        int qty = Integer.parseInt(quantityTextField.getText());
+                        try { // Catch SQLException here
+                            if (Database.Data.check_stock(product.getId(), qty)) {
+                                boolean productUpdated = false;
+                                for (ProductSale productSale : products) {
+                                    if (productSale.getProduct().getId() == product.getId()) {
+                                        productSale.update(qty);
+                                        productUpdated = true;
+                                        break;
+                                    }
+                                }
+                                if (!productUpdated) {
+                                    products.add(new ProductSale(product, qty));
+                                }
+                                redner_table_data();
+                                updateTotalLabel();
+                                frame.dispose();
+                            } else {
+                                JOptionPane.showMessageDialog(frame, "Product '" + selectedProductName + "' does not have enough stock");
                             }
+                        } catch (SQLException sqlException) {
+                            JOptionPane.showMessageDialog(frame, "Database error checking stock: " + sqlException.getMessage());
+                            sqlException.printStackTrace(); // For debugging
                         }
-                        if (!productUpdated) {
-                            products.add(new ProductSale(product, qty));
-                        }
-                        redner_table_data();
-                        updateTotalLabel();
-                        frame.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "Product '" + selectedProductName + "' does not have enough stock");
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(frame, "Please enter a valid quantity");
+                    } catch (NullPointerException ex) {
+                        JOptionPane.showMessageDialog(frame, "Please select a product");
                     }
-                } catch (SQLException sqlException) {
-                    JOptionPane.showMessageDialog(frame, "Database error checking stock: " + sqlException.getMessage());
-                    sqlException.printStackTrace(); // For debugging
                 }
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(frame, "Please enter a valid quantity");
-            } catch (NullPointerException ex) {
-                JOptionPane.showMessageDialog(frame, "Please select a product");
+                JOptionPane.showMessageDialog(parentFrame, "Please enter a valid quantity");
             }
         });
 
