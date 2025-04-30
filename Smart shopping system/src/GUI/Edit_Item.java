@@ -68,8 +68,8 @@ public class Edit_Item {
                     float newPrice = Float.parseFloat(priceField.getText());
                     int newQuantity = Integer.parseInt(quantityField.getText());
 
-                    if (newPrice > 0){
-                        if(newQuantity > 0){
+                    if (newPrice >= 0){
+                        if(newQuantity >= 0){
                             manager.Update_Product(product, newName, newPrice, newQuantity, Categories.findCategory(Category.getSelectedItem().toString()));
                             frame.dispose();
                             JOptionPane.showMessageDialog(frame, "Item updated successfully");
