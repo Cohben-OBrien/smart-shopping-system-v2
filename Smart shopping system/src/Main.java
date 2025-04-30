@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -264,6 +265,10 @@ public class Main extends JFrame {
         manager.itemTable.setDefaultEditor(Object.class, null); // Make table cells non-editable
         manager.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         manager.itemTable.setRowSelectionAllowed(true);
+
+        // Locks in Columns
+        JTableHeader header = manager.itemTable.getTableHeader();
+        header.setReorderingAllowed(false);
 
         // Center align some table cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
