@@ -125,7 +125,7 @@ public class Data {
         ResultSet rs = ps.executeQuery();
         ArrayList<SalesRecord> records = new ArrayList<>();
         while (rs.next()) {
-            records.add(new SalesRecord(rs.getInt("sale_ID"), rs.getInt("sale_total"), rs.getString("sale_date")));
+            records.add(new SalesRecord(rs.getInt("sale_ID"), rs.getDouble("sale_total"), rs.getString("sale_date")));
         }
         return records;
     }
