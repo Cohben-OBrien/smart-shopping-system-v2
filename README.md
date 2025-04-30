@@ -10,7 +10,7 @@ How to Run:
     - Clone the github repo
     - Open the project in your Java IDE.
     - Add the Swingx and SQLite external libraries are added to the project structure 
-    - Run the file: GUI/Main.java
+    - Run the file: Main.java
 
 
 Prerequisites:
