@@ -115,16 +115,26 @@ public class New_Item {
                     if (category == null) {
                         JOptionPane.showMessageDialog(null, "Selected category not found");
                         return;
+
                     }
 
-                    Product newProduct = new Product(InventoryManager.product_next_id(), name, item_price, quantity, category, true);
-                    try {
-                        manager.addProduct(newProduct);
-                        JOptionPane.showMessageDialog(null, "Product added successfully");
-                        frame.dispose();
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Failed to add product: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    if(quantity >= 0) {
+                        if(item_price >= 0) {
+                            Product newProduct = new Product(InventoryManager.product_next_id(), name, item_price, quantity, category, true);
+                            try {
+                                manager.addProduct(newProduct);
+                                JOptionPane.showMessageDialog(null, "Product added successfully");
+                                frame.dispose();
+                            } catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(null, "Failed to add product: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "please enter a valid price");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please enter a valid quantity");
                     }
+
 
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Invalid Quantity");

@@ -68,11 +68,19 @@ public class Edit_Item {
                     float newPrice = Float.parseFloat(priceField.getText());
                     int newQuantity = Integer.parseInt(quantityField.getText());
 
-                    manager.Update_Product(product, newName, newPrice, newQuantity, Categories.findCategory(Category.getSelectedItem().toString()));
-                    JOptionPane.showMessageDialog(frame, "Item updated successfully");
-                    frame.dispose();
+                    if (newPrice > 0){
+                        if(newQuantity > 0){
+                            manager.Update_Product(product, newName, newPrice, newQuantity, Categories.findCategory(Category.getSelectedItem().toString()));
+                            frame.dispose();
+                            JOptionPane.showMessageDialog(frame, "Item updated successfully");
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "Please enter a valid quantity");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Please enter a valid price");
+                    }
                 }} catch (Exception a) {
-                JOptionPane.showMessageDialog(frame, "Something went wrong");
+                    JOptionPane.showMessageDialog(frame, "Something went wrong");
                 }
 
         });
