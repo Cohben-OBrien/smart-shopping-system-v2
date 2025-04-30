@@ -21,22 +21,31 @@ public class ProductSale {
         this.saleId = 1; // temp
     }
 
-    public void update(int quantity) {
+    public boolean update(int quantity) {
         this.quantity += quantity;
-        this.total = product.getPrice() * quantity;
+        if (this.quantity > this.product.getQuantity()) {
+            this.quantity -= quantity;
+            return false;
+        } else {
+            this.total = product.getPrice() * quantity;
+            return true;
+        }
     }
 
     public Product getProduct() {
         return product;
     }
 
-    public void setQuantity(int quantity) {this.quantity = quantity;}
+    public boolean setQuantity(int quantity) {
+        if (quantity <= this.product.getQuantity()) {
+            this.quantity = quantity;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public int getQuantity() {
         return quantity;
     }
-
-
-
-
-
 }

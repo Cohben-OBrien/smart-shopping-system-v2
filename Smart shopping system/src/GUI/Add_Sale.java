@@ -119,7 +119,10 @@ public class Add_Sale {
                                 boolean productUpdated = false;
                                 for (ProductSale productSale : products) {
                                     if (productSale.getProduct().getId() == product.getId()) {
-                                        productSale.update(qty);
+                                        boolean check = productSale.update(qty);
+                                        if(!check) {
+                                            JOptionPane.showMessageDialog(parentFrame, "not enough stock");
+                                        }
                                         productUpdated = true;
                                         break;
                                     }
