@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 public class Sales_Report {
 
+    // This method displays the main Sales Report window
     public static void Sales_Report() throws SQLException {
         JFrame frame = new JFrame("Sales Report");
         frame.setResizable(false);
@@ -24,35 +25,38 @@ public class Sales_Report {
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
+        // Create and configure the sales table
+        JTable salesTable = new JTable();
+        salesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        DefaultTableModel salesmodel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make table cells not editable
+            }
+        };
+        salesTable.setModel(salesmodel);
 
-       JTable salesTable = new JTable();
-       salesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-       DefaultTableModel salesmodel = new DefaultTableModel() {
-           @Override
-           public boolean isCellEditable(int row, int column) {
-               return false;
-           }
-       };
-       salesTable.setModel(salesmodel);
+        // Set table column headers
+        String[] headings = {"Sale ID", "Sale total", "Sale date"};
+        salesmodel.setColumnCount(headings.length);
+        salesmodel.setColumnIdentifiers(headings);
+        salesTable.setFillsViewportHeight(true);
 
-       String[] headings = {"Sale ID", "Sale total", "Sale date"};
-       salesmodel.setColumnCount(headings.length);
-       salesmodel.setColumnIdentifiers(headings);
-
-       salesTable.setFillsViewportHeight(true);
-
-
+        // Enable row sorting for the table
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(salesmodel);
         salesTable.setRowSorter(sorter);
 
-       JScrollPane table = new JScrollPane(salesTable);
+        // Put the table in a scroll pane and add to the window
+        JScrollPane table = new JScrollPane(salesTable);
         table.setBounds(0, 0, 450, 450);
         frame.getContentPane().add(table, BorderLayout.CENTER);
+
+        // Set the preferred width of each column
         salesTable.getColumnModel().getColumn(0).setPreferredWidth(150);
         salesTable.getColumnModel().getColumn(1).setPreferredWidth(150);
         salesTable.getColumnModel().getColumn(2).setPreferredWidth(150);
 
-
+        // Create and add the search label and input field
         JLabel search = new JLabel("Search");
         search.setBounds(0, 455, 450, 30);
         frame.getContentPane().add(search, BorderLayout.SOUTH);
@@ -61,6 +65,7 @@ public class Sales_Report {
         searchField.setBounds(40, 455, 400, 30);
         frame.add(searchField);
 
+        // Filter table rows as user types in the search field
         searchField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 String searchText = searchField.getText();
@@ -72,11 +77,16 @@ public class Sales_Report {
             }
         });
 
+        // Fill the table with sales data from the database
         for(SalesRecord record: Data.getSalesRecords()) {
-            salesmodel.addRow(new Object[]{record.get_id(), String.format("£%.2f", record.get_total()), record.get_date()});
+            salesmodel.addRow(new Object[]{
+                    record.get_id(),
+                    String.format("£%.2f", record.get_total()),
+                    record.get_date()
+            });
         }
 
-
+        // Handle row clicks to show products from the selected sale
         salesTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -86,21 +96,17 @@ public class Sales_Report {
                 System.out.println(id);
 
                 try{
-                    show_products(id);
+                    show_products(id); // Open product list window
                 } catch (SQLException ex){
                     System.out.println(ex.getMessage());
                 }
-
-
             }
         });
 
-
-       frame.setVisible(true);
-
-
+        frame.setVisible(true);
     }
 
+    // This method shows the list of products for a selected sale
     public static void show_products(int sale_id) throws SQLException {
 
         JFrame frame = new JFrame("Sales Report");
@@ -110,6 +116,7 @@ public class Sales_Report {
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
+        // Create and configure the product table
         JTable ProductTable = new JTable();
         ProductTable.setCellSelectionEnabled(false);
         ProductTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -121,28 +128,34 @@ public class Sales_Report {
         };
         ProductTable.setModel(Productmodel);
 
+        // Set column headers
         String[] headings = {"Product ID", "Product Name", "Product Price", "Quantity Sold", "Total cost"};
         Productmodel.setColumnCount(headings.length);
         Productmodel.setColumnIdentifiers(headings);
 
+        // Set width for each column
         for(int i = 0; i < headings.length; i++) {
             ProductTable.getColumnModel().getColumn(i).setPreferredWidth(180);
         }
 
-
-
-
+        // Add table to scroll pane and then to frame
         JScrollPane table = new JScrollPane(ProductTable);
         table.setBounds(0, 0, 910, 450);
         frame.getContentPane().add(table, BorderLayout.CENTER);
 
         frame.setVisible(true);
 
+        // Load product data for this sale into the table
         for(ProductSale productSale: Data.getProductSales(sale_id)) {
             double total_cost = productSale.getQuantity() * productSale.getProduct().getPrice();
             System.out.println(total_cost);
-            Productmodel.addRow(new Object[]{productSale.getProduct().getId(), productSale.getProduct().getName().replace("_", " "), String.format("£%.2f", productSale.getProduct().getPrice()), productSale.getQuantity(), String.format("£%.2f", productSale.getProduct().getPrice() * productSale.getQuantity())});
+            Productmodel.addRow(new Object[]{
+                    productSale.getProduct().getId(),
+                    productSale.getProduct().getName().replace("_", " "),
+                    String.format("£%.2f", productSale.getProduct().getPrice()),
+                    productSale.getQuantity(),
+                    String.format("£%.2f", productSale.getProduct().getPrice() * productSale.getQuantity())
+            });
         }
     }
-
 }
