@@ -60,7 +60,7 @@ public class Main extends JFrame {
         private JButton exitButton;
 
         public LoginDialog() {
-            setTitle("Log In");
+            setTitle("Login");
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             setModal(true);
             setLayout(new BorderLayout(15, 15));
@@ -93,7 +93,7 @@ public class Main extends JFrame {
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
             buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, dialogMargin, dialogMargin, dialogMargin));
 
-            loginButton = new JButton("Log In");
+            loginButton = new JButton("Login");
             loginButton.setBorder(BorderFactory.createEmptyBorder(fieldPadding, fieldPadding, fieldPadding, fieldPadding));
             Dimension buttonSize = new Dimension(120, 30);
             loginButton.setPreferredSize(buttonSize);
@@ -322,7 +322,7 @@ public class Main extends JFrame {
         JButton recordSaleButton = new JButton("Record Sale");
         JButton salesReportButton = new JButton("Sales Report");
         JButton lowStockButton = new JButton("Stock Report");
-        JButton exitButtonMain = new JButton("Log-out");
+        JButton exitButtonMain = new JButton("Logout");
 
         // Set size and alignment for all buttons
         JButton[] buttons = {productsButton, deleteProductButton, recordSaleButton, salesReportButton, lowStockButton, exitButtonMain};
